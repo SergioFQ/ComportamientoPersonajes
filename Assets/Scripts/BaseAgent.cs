@@ -8,20 +8,21 @@ public class BaseAgent : MonoBehaviour
     public List<RaycastHit2D> hits;
     public float maxPerceptionL;
     public int maxPerceptionA;
-    private string predatorTag;
+    [SerializeField]private string predatorTag;
     private string[] foodTag = new string[3];
 
     private NavMeshAgent _agent;
 
+    private NavMeshAgent _evadeTarget, _pursuitTarget;
+
+    private float _wanderRadius = 5;
+
     protected enum state
     {
-        Seek,
         Wander,
         Pursuit,
         Evade,
-        Avoid,
-        Eat,
-        Dead
+        Eat
     }
 
     [HideInInspector] public enum tagsAgents
@@ -37,7 +38,7 @@ public class BaseAgent : MonoBehaviour
         Plantas
 
     }
-    state currentState;
+    [SerializeField] private state currentState;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +69,7 @@ public class BaseAgent : MonoBehaviour
             case "Pez":
                 predatorTag = tagsAgents.Rana.ToString();
                 foodTag[0] = tagsAgents.HuevosRana.ToString();
+                foodTag[1] = tagsAgents.Renacuajo.ToString();
                 break;
             case "Mosca":
                 predatorTag = tagsAgents.Rana.ToString();
@@ -88,7 +90,7 @@ public class BaseAgent : MonoBehaviour
     protected void Vision()
     {//añadir esfera alrededor
         hits.Clear();
-        for (int i = -maxPerceptionA; i < maxPerceptionA; i += 4)
+        for (int i = -maxPerceptionA; i < maxPerceptionA; i += 1)
         {
             Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, v, maxPerceptionL);
@@ -96,21 +98,27 @@ public class BaseAgent : MonoBehaviour
             hits.Add(hit);
         }
 
+        ChangeState(state.Wander);
         foreach (RaycastHit2D h in hits)
         {
             if (h.collider != null)
             {
-                CollisionDetected(h.collider);
+                if (CollisionDetected(h.collider)) return;
             }
         }
     }
 
-    protected void CollisionDetected (Collider2D collider)
+    protected bool CollisionDetected (Collider2D collider)
     {
+        if (gameObject.tag == collider.tag) return false;
         if (predatorTag != null && collider.gameObject.CompareTag(predatorTag))
         {
+            NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
+            if (colAgent == null) return false;
+            _evadeTarget = colAgent;
             ChangeState(state.Evade);
             //huir
+            return true;
         }
         else
         {
@@ -118,43 +126,56 @@ public class BaseAgent : MonoBehaviour
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
-                    if (collider.gameObject.CompareTag(foodTag[i]))
+                    if (foodTag[i] != null && collider.gameObject.CompareTag(foodTag[i]))
                     {
+                        NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
+                        if (colAgent == null) return false;
+                        _pursuitTarget = colAgent;
                         ChangeState(state.Pursuit);
                         //perseguir
-                        return;
+                        return false;
                     }
                 }
-                ChangeState(state.Wander);
             }
         }
-
+        return false;
         
     }
     protected void ChangeState(state nextState) {//habría que comprobar inicialmente en que estado nos encontramos
+
+        if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
+        (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null) || 
+        (currentState == state.Evade && nextState == state.Pursuit) || 
+        currentState == nextState) return;
+
+        StopCoroutine(currentState.ToString());
         currentState = nextState;
         StartCoroutine(currentState.ToString());
     }
-    protected virtual void SeekAction()
-    {
 
+    protected void WanderAction()
+    {
+        _agent.SetDestination(transform.position + transform.forward*_agent.speed + new Vector3(Random.Range(-_wanderRadius,_wanderRadius), Random.Range(-_wanderRadius,_wanderRadius), 0));
     }
-
-    protected virtual void WanderAction()
+    protected void PursuitAction()
     {
-
+        if (_pursuitTarget == null || _pursuitTarget.gameObject == null || Vector3.Distance(transform.position, _pursuitTarget.transform.position) > maxPerceptionL) 
+        {
+            _pursuitTarget = null;
+            return;
+        }
+        Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
+        _agent.SetDestination(targetPos);
     }
-    protected virtual void PursuitAction()
+    protected void EvadeAction()
     {
-
-    }
-    protected virtual void EvadeAction()
-    {
-
-    }
-    protected virtual void AvoidAction()
-    {
-
+        if (_evadeTarget == null || _evadeTarget.gameObject == null || Vector3.Distance(transform.position, _evadeTarget.transform.position) > maxPerceptionL) 
+        {
+            _evadeTarget = null;
+            return;
+        }
+        Vector3 targetPos = transform.position - _evadeTarget.transform.position + _evadeTarget.transform.forward * _evadeTarget.speed;
+         _agent.SetDestination(targetPos);
     }
     protected virtual void EatAction()
     {
@@ -165,14 +186,6 @@ public class BaseAgent : MonoBehaviour
 
     }
     //coroutines
-    IEnumerator Seek()
-    {
-        while (currentState.Equals(state.Seek))
-        {
-            SeekAction();
-            yield return 0;//retornamos algo cualquiera
-        }
-    }
 
     IEnumerator Wander()
     {
@@ -200,28 +213,11 @@ public class BaseAgent : MonoBehaviour
             yield return 0;//retornamos algo cualquiera
         }
     }
-
-    IEnumerator Avoid()
-    {
-        while (currentState.Equals(state.Avoid))
-        {
-            AvoidAction();
-            yield return 0;//retornamos algo cualquiera
-        }
-    }
     IEnumerator Eat()
     {
         while (currentState.Equals(state.Eat))
         {
             EatAction();
-            yield return 0;//retornamos algo cualquiera
-        }
-    }
-    IEnumerator Dead()
-    {
-        while (currentState.Equals(state.Dead))
-        {
-            DeadAction();
             yield return 0;//retornamos algo cualquiera
         }
     }
