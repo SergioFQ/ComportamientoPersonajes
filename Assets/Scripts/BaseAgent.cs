@@ -107,7 +107,7 @@ public class BaseAgent : MonoBehaviour
 
     protected void CollisionDetected (Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(predatorTag))
+        if (predatorTag != null && collider.gameObject.CompareTag(predatorTag))
         {
             ChangeState(state.Evade);
             //huir
