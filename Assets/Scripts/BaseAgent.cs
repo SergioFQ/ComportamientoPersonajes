@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseAgent : MonoBehaviour
 {
     public List<RaycastHit2D> hits;
     public float maxPerceptionL;
     public int maxPerceptionA;
+
+    private NavMeshAgent _agent;
 
     protected enum state
     {
@@ -26,6 +29,8 @@ public class BaseAgent : MonoBehaviour
         hits = new List<RaycastHit2D>();
         maxPerceptionA = 15;
         maxPerceptionL = 10;
+
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -44,7 +49,7 @@ public class BaseAgent : MonoBehaviour
         hits.Clear();
         for (int i = -maxPerceptionA; i < maxPerceptionA; i += 4)
         {
-            Vector2 v = Quaternion.Euler(0, 0, i) * transform.up;
+            Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, v, maxPerceptionL);
             Debug.DrawRay(transform.position, v * maxPerceptionL);
             hits.Add(hit);
