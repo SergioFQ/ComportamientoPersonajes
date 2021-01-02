@@ -66,6 +66,7 @@ public class BaseAgent : MonoBehaviour
     }
     protected void ChangeState(state nextState) {
         currentState = nextState;
+        StartCoroutine(currentState.ToString());
     }
     protected virtual void SeekAction()
     {
