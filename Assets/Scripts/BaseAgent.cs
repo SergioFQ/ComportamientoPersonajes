@@ -5,20 +5,21 @@ using UnityEngine.AI;
 
 public class BaseAgent : MonoBehaviour
 {
-    public List<RaycastHit2D> hits;
+    public List<RaycastHit> hits;
     public float maxPerceptionL;
     public int maxPerceptionA;
     [SerializeField]private string predatorTag;
     private string[] foodTag = new string[3];
 
-    private NavMeshAgent _agent;
+    protected NavMeshAgent _agent;
 
     private NavMeshAgent _evadeTarget, _pursuitTarget;
 
-    private float _wanderRadius = 5;
+    protected float _wanderRadius = 5;
 
     protected enum state
     {
+        None,
         Wander,
         Pursuit,
         Evade,
@@ -41,20 +42,14 @@ public class BaseAgent : MonoBehaviour
     [SerializeField] private state currentState;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        hits = new List<RaycastHit2D>();
+        hits = new List<RaycastHit>();
         maxPerceptionA = 15;
         maxPerceptionL = 10;
 
         _agent = GetComponent<NavMeshAgent>();
         SetTags(gameObject.tag);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -93,13 +88,14 @@ public class BaseAgent : MonoBehaviour
         for (int i = -maxPerceptionA; i < maxPerceptionA; i += 1)
         {
             Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, v, maxPerceptionL);
-            Debug.DrawRay(transform.position, v * maxPerceptionL);
+            RaycastHit hit;
+            Physics.Raycast(transform.position, v, out hit, maxPerceptionL);
+            Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
             hits.Add(hit);
         }
 
         ChangeState(state.Wander);
-        foreach (RaycastHit2D h in hits)
+        foreach (RaycastHit h in hits)
         {
             if (h.collider != null)
             {
@@ -108,7 +104,7 @@ public class BaseAgent : MonoBehaviour
         }
     }
 
-    protected bool CollisionDetected (Collider2D collider)
+    protected bool CollisionDetected (Collider collider)
     {
         if (gameObject.tag == collider.tag) return false;
         if (predatorTag != null && collider.gameObject.CompareTag(predatorTag))
@@ -153,9 +149,9 @@ public class BaseAgent : MonoBehaviour
         StartCoroutine(currentState.ToString());
     }
 
-    protected void WanderAction()
+    protected virtual void WanderAction()
     {
-        _agent.SetDestination(transform.position + transform.forward*_agent.speed + new Vector3(Random.Range(-_wanderRadius,_wanderRadius), Random.Range(-_wanderRadius,_wanderRadius), 0));
+        _agent.SetDestination(transform.position + transform.forward*_agent.speed + Random.insideUnitSphere*_wanderRadius);
     }
     protected void PursuitAction()
     {
