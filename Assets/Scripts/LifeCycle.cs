@@ -7,14 +7,18 @@ using Random = UnityEngine.Random;
 public class LifeCycle : MonoBehaviour
 {
     [SerializeField] private GameObject agent;
+    public bool canBeEaten;
     private BaseAgent baseAgent;
     private float duration = 1f;
     private float probabilityOfSucces;
     private float probabilityOfDead;
     private float rand;
+    private Plant plantComponent;
 
     public void Start()
     {
+        plantComponent = gameObject.GetComponent<Plant>();
+        if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); return; }
         rand = Random.value;
         probabilityOfSucces = rand;
         //Debug.Log("S: "+ probabilityOfSucces);
@@ -41,14 +45,12 @@ public class LifeCycle : MonoBehaviour
         {
             //corrutina de muerte
             StartCoroutine(DeadAgent(duration));
-
         }
         else
         {
             StartCoroutine(StartPhase(duration));
             //corrutina de muerte
             StartCoroutine(DeadAgent(duration));
-
         }
     }
     public void NewPhase()
@@ -102,4 +104,21 @@ public class LifeCycle : MonoBehaviour
 
         }
     }
+
+    #region Plant things
+
+    public void EatPlant() 
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = plantComponent.sprites[0];
+        canBeEaten = false;
+        StartCoroutine(GrowPlant(plantComponent.plantGrowTime));
+    }
+    IEnumerator GrowPlant(float dur)
+    {
+        yield return new WaitForSeconds(dur);
+        gameObject.GetComponent<SpriteRenderer>().sprite = plantComponent.sprites[1];
+        canBeEaten = true;
+        StopCoroutine(GrowPlant(dur));
+    }
+    #endregion Plant things
 }

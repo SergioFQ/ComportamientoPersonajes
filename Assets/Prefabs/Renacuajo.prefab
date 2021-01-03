@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4117162685643756181}
   - component: {fileID: 3200366507835977552}
   - component: {fileID: 7316171194807195304}
+  - component: {fileID: 8854738317247998743}
   m_Layer: 8
   m_Name: Renacuajo
   m_TagString: Renacuajo
@@ -52,6 +53,13 @@ MonoBehaviour:
   maxPerceptionL: 0
   maxPerceptionA: 0
   predatorTag: 
+  foodTag:
+  - 
+  - 
+  - 
+  _agent: {fileID: 0}
+  isHungry: 0
+  hunger: 0
   currentState: 0
 --- !u!212 &1490385472755137515
 SpriteRenderer:
@@ -161,6 +169,13 @@ MonoBehaviour:
   maxPerceptionL: 0
   maxPerceptionA: 0
   predatorTag: 
+  foodTag:
+  - 
+  - 
+  - 
+  _agent: {fileID: 0}
+  isHungry: 0
+  hunger: 0
   currentState: 0
   renLayer:
     serializedVersion: 2
@@ -176,11 +191,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490385472755137514}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 0.69, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8854738317247998743
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490385472755137514}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1490385472854208175
 GameObject:
   m_ObjectHideFlags: 0

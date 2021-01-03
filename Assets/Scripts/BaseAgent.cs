@@ -8,17 +8,18 @@ public class BaseAgent : MonoBehaviour
     public List<RaycastHit> hits;
     public float maxPerceptionL;
     public int maxPerceptionA;
-    [SerializeField]private string predatorTag;
-    private string[] foodTag = new string[3];
+    public string predatorTag;
+    public string[] foodTag = new string[3];
 
     public NavMeshAgent _agent;
 
     private NavMeshAgent _evadeTarget, _pursuitTarget;
+    private Transform _pursuitPlant;
 
     protected float _wanderRadius = 5;
 
-    private bool isHungry;
-    private float hunger;
+    public bool isHungry;
+    public float hunger;
 
     protected enum state
     {
@@ -56,20 +57,22 @@ public class BaseAgent : MonoBehaviour
         hunger = 1;
 
         _agent = GetComponent<NavMeshAgent>();
-        SetTags(gameObject.tag);
     }
-
+    private void Awake()
+    {
+        SetTags();
+    }
     private void FixedUpdate()
     {
         Vision();
         hunger -= 0.05f*Time.fixedDeltaTime;
-        if (hunger < 0.6 && currentState!=state.Eat) currentState = state.Eat;
+        if (hunger < 0.6 && !isHungry) isHungry = true;
         if (hunger < 0) DeadAction();
     }
 
-    private void SetTags(string tag)
+    private void SetTags()
     {
-        switch (tag)
+        switch (gameObject.tag)
         {
             case "Pez":
                 predatorTag = tagsAgents.Rana.ToString();
@@ -128,16 +131,30 @@ public class BaseAgent : MonoBehaviour
         }
         else
         {
-            if (!collider.gameObject.CompareTag(gameObject.tag))
+            if (!collider.gameObject.CompareTag(gameObject.tag) && isHungry)
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
                     if (foodTag[i] != null && collider.gameObject.CompareTag(foodTag[i]))
                     {
-                        NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
-                        if (colAgent == null) return false;
-                        _pursuitTarget = colAgent;
-                        ChangeState(state.Pursuit);
+                        
+                        if (collider.CompareTag("Plantas"))
+                        {
+                            if (collider.gameObject.GetComponent<LifeCycle>().canBeEaten)
+                            {
+                                _pursuitPlant = collider.transform;
+                                _pursuitTarget = null;
+                                ChangeState(state.Pursuit);
+                            }
+                        }
+                        else
+                        {
+                            NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
+                            if (colAgent == null) return false;
+                            _pursuitTarget = colAgent;
+                            ChangeState(state.Pursuit);
+                            _pursuitPlant = null;
+                        }
                         //perseguir
                         return false;
                     }
@@ -145,8 +162,33 @@ public class BaseAgent : MonoBehaviour
             }
         }
         return false;
-        
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag != null && isHungry)
+        {
+            for (int i = 0; i < foodTag.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(foodTag[i]))
+                {
+                    if (collision.gameObject.CompareTag(foodTag[i]))
+                    {
+                        EatAction();
+                        if (collision.gameObject.CompareTag("Plantas"))
+                        {
+                            if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
+                                collision.gameObject.GetComponent<LifeCycle>().EatPlant();
+                        }
+                        else
+                            collision.gameObject.GetComponent<BaseAgent>().DeadAction();
+                    }
+                }
+                else return;
+            }
+        }
+    }
+    
     protected void ChangeState(state nextState) {//habría que comprobar inicialmente en que estado nos encontramos
 
         if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
@@ -168,6 +210,7 @@ public class BaseAgent : MonoBehaviour
         if (_pursuitTarget == null || _pursuitTarget.gameObject == null || Vector3.Distance(transform.position, _pursuitTarget.transform.position) > maxPerceptionL) 
         {
             _pursuitTarget = null;
+            if (_pursuitPlant != null) _agent.SetDestination(_pursuitPlant.position);
             return;
         }
         Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
@@ -186,6 +229,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void EatAction()
     {
         hunger = 1;
+        isHungry = false;
     }
     public virtual void DeadAction()
     {        
