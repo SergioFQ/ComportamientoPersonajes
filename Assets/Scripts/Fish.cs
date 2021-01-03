@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Fish : BaseAgent
 {
-    
-
+   
     private System.Random random;
     public List<int> dna;
     private float mutationRate;
@@ -21,49 +20,36 @@ public class Fish : BaseAgent
         random = r;
         worstFish = worst;
         perfectFish = perfect;
-        worstFish = worst;
     }
 
-
-
-    /*// Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(CalculateFitness());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }*/
     
     // Una vez se ha detectado un pez con el que poder reproducirse se calculan las posibilidades y si son favorables se lleva a cabo
-    public void Reproduction (Fish OtherFish)
+    public void Reproduction (Fish otherFish)
     {
-        if(!OtherFish.juvenile && !juvenile)
+        if(!otherFish.juvenile && !juvenile)
         {
-            double av = (CalculateFitness() + OtherFish.CalculateFitness())/ 2;
+            double av = (CalculateFitness() + otherFish.CalculateFitness())/ 2;
 
             // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
             if(random.NextDouble() < av)
             {
-                int offspringNumber = (dna[3] + OtherFish.dna[3]) / 2;
+                int offspringNumber = (dna[3] + otherFish.dna[3]) / 2;
                 for(int i = 0; i < offspringNumber; i++)
                 {
-                    Crossover(OtherFish);
+                    Crossover(otherFish);
                 }
             }
         }
     }
 
-    public FishRoe Crossover(Fish otherParent)
+    public Roe Crossover(Fish otherParent)
     {
         
         GameObject g = new GameObject();
-        g.AddComponent<FishRoe>();
-        FishRoe child = g.GetComponent<FishRoe>();
-        child.Init(random, mutationRate, perfectFish, worstFish);
+        g.AddComponent<Roe>();
+        Roe child = g.GetComponent<Roe>();
+        string type = "Fish";
+        child.Init(random, mutationRate, perfectFish, worstFish, type);
 
 
         child.dna = new List<int>();
@@ -92,4 +78,6 @@ public class Fish : BaseAgent
 
         return score;
     }
+
+    
 }
