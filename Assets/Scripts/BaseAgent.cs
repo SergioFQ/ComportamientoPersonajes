@@ -27,7 +27,9 @@ public class BaseAgent : MonoBehaviour
         Wander,
         Pursuit,
         Evade,
-        Eat
+        Eat,
+        FrogOut,
+        FrogIn
     }
 
     [HideInInspector] public enum tagsAgents
@@ -43,7 +45,7 @@ public class BaseAgent : MonoBehaviour
         Plantas
 
     }
-    [SerializeField] private state currentState;
+    [SerializeField] protected state currentState;
     public void initObject(NavMeshAgent agente)
     {
         _agent = agente;
@@ -62,7 +64,8 @@ public class BaseAgent : MonoBehaviour
     {
         SetTags();
     }
-    private void FixedUpdate()
+
+    protected virtual void FixedUpdate()
     {
         Vision();
         hunger -= 0.05f*Time.fixedDeltaTime;
@@ -135,9 +138,8 @@ public class BaseAgent : MonoBehaviour
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
-                    if (foodTag[i] != null && collider.gameObject.CompareTag(foodTag[i]))
+                    if (string.IsNullOrEmpty(foodTag[i]))
                     {
-                        
                         if (collider.CompareTag("Plantas"))
                         {
                             if (collider.gameObject.GetComponent<LifeCycle>().canBeEaten)
@@ -189,7 +191,8 @@ public class BaseAgent : MonoBehaviour
         }
     }
     
-    protected void ChangeState(state nextState) {//habría que comprobar inicialmente en que estado nos encontramos
+   
+    protected virtual void ChangeState(state nextState) {//habría que comprobar inicialmente en que estado nos encontramos
 
         if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
         (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null) || 
@@ -231,10 +234,21 @@ public class BaseAgent : MonoBehaviour
         hunger = 1;
         isHungry = false;
     }
+   
+    protected virtual void FrogOutAction()
+    {
+
+    }
+    protected virtual void FrogInAction()
+    {
+
+    }
     public virtual void DeadAction()
     {        
         Destroy(gameObject);
     }
+
+
     //coroutines
 
     IEnumerator Wander()
@@ -268,6 +282,25 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.Eat))
         {
             EatAction();
+            yield return 0;//retornamos algo cualquiera
+        }
+    }
+
+    IEnumerator FrogIn()
+    {
+        while (currentState.Equals(state.FrogIn))
+        {
+            FrogInAction();
+            yield return 0;//retornamos algo cualquiera
+        }
+    }
+
+
+    IEnumerator FrogOut()
+    {
+        while (currentState.Equals(state.FrogOut))
+        {
+           FrogOutAction();
             yield return 0;//retornamos algo cualquiera
         }
     }

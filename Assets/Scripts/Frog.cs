@@ -9,6 +9,12 @@ public class Frog : BaseAgent
     private float mutationRate;
     private List<int> perfectFrog;
     private List<int> worstFrog;
+    private bool isWet;
+    [SerializeField]
+    private float wetness;
+    private bool isDry;
+    [SerializeField]
+    private float dryness;
 
     public void Init(List<int> d, System.Random r, float m, List<int> perfect, List<int> worst)
     {
@@ -20,7 +26,52 @@ public class Frog : BaseAgent
         perfectFrog = perfect;
 
     }
-    
+
+    protected override void Start()
+    {
+        base.Start();
+        wetness = 1;
+        dryness = 1;
+
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2))
+        {
+            
+            wetness += 0.05f * Time.fixedDeltaTime;
+            dryness -= 0.05f * Time.fixedDeltaTime;
+            if (dryness < 0.6) ChangeState(state.FrogOut);
+            if (dryness < 0) DeadAction();
+            
+            if (wetness > 1)
+            {
+                wetness = 1;
+            }
+
+        }
+        else
+        {
+            wetness -= 0.05f * Time.fixedDeltaTime;
+            if (wetness < 0.6 ) ChangeState(state.FrogIn);
+            if (wetness < 0) DeadAction();
+
+            dryness += 0.05f * Time.fixedDeltaTime;
+          
+           
+            if (dryness > 1)
+            {
+                dryness = 1;
+            }
+
+        }
+
+
+       
+    }
+
 
     // Una vez se ha detectado una rana con la que poder reproducirse se calculan las posibilidades y si son favorables se lleva a cabo
     public void Reproduction(Frog otherFrog)
@@ -75,5 +126,61 @@ public class Frog : BaseAgent
         score = (float)media / dna.Count;
 
         return score;
+    }
+
+    protected override void ChangeState(state nextState)
+    {//habría que comprobar inicialmente en que estado nos encontramos
+
+        if (currentState == state.Pursuit && nextState==state.FrogIn && wetness>hunger) 
+        {
+            return;
+        }
+        if (currentState == state.Pursuit && nextState == state.FrogOut && dryness > hunger)
+        {
+            return;
+        }
+
+        if (currentState==state.FrogIn||currentState==state.FrogOut) 
+        {
+            switch (nextState)
+            {
+                case state.Wander:
+                case state.Evade:
+                    return;
+
+                case state.Pursuit:
+                    if (currentState == state.FrogIn)
+                    {
+                        if (wetness < hunger)
+                        {
+                            return;
+                        }
+                    }
+                    else if (currentState == state.FrogOut) 
+                    {
+                        if (dryness < hunger)
+                        {
+                            return;
+                        }
+                    }
+                    break;
+            }    
+        }
+      
+
+        base.ChangeState(nextState);
+    }
+
+
+    protected override void FrogOutAction()
+    {
+        _agent.SetDestination(transform.position.normalized * 22);
+       // Debug.DrawRay(transform.position, transform.position.normalized*22-transform.position);
+    } 
+    
+    protected override void FrogInAction() 
+    {
+        _agent.SetDestination(Vector3.zero);
+       // Debug.DrawRay(transform.position, -transform.position);
     }
 }
