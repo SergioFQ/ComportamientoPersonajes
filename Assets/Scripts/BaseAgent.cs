@@ -11,7 +11,7 @@ public class BaseAgent : MonoBehaviour
     [SerializeField]private string predatorTag;
     private string[] foodTag = new string[3];
 
-    private NavMeshAgent _agent;
+    public NavMeshAgent _agent;
 
     private NavMeshAgent _evadeTarget, _pursuitTarget;
 
@@ -39,7 +39,10 @@ public class BaseAgent : MonoBehaviour
 
     }
     [SerializeField] private state currentState;
-
+    public void initObject(NavMeshAgent agente)
+    {
+        _agent = agente;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -181,9 +184,9 @@ public class BaseAgent : MonoBehaviour
     {
 
     }
-    protected virtual void DeadAction()
-    {
-
+    public virtual void DeadAction()
+    {        
+        Destroy(gameObject);
     }
     //coroutines
 

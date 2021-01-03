@@ -2,86 +2,104 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Phase
-{
-    public string name;
-    public float duration;
-    public float probabilityOfSucces;
-
-    public Phase()
-    {
-        name = "Null Phase";
-        duration = 0f;
-        probabilityOfSucces = 1f;
-    }
-    public Phase(string name, float duration, float probabilityOfSucces)
-    {
-        this.name = name;
-        this.duration = duration;
-        this.probabilityOfSucces = probabilityOfSucces;
-    }
-}
+using Random = UnityEngine.Random;
 
 public class LifeCycle : MonoBehaviour
 {
-    enum AgentType 
-    {
-        RANA,
-        PEZ,
-        MOSCA,
-        PLANTA
-    }
-    [SerializeField] private AgentType type;
-    public List<Phase> fullCycle = new List<Phase>();
-    private int stage = 0;
+    [SerializeField] private GameObject agent;
+    private BaseAgent baseAgent;
+    private float duration = 1f;
+    private float probabilityOfSucces;
+    private float probabilityOfDead;
+    private float rand;
 
     public void Start()
     {
-        CreateFullCycle();
-        StartCoroutine(StartPhase(fullCycle[stage]));
+        rand = Random.value;
+        probabilityOfSucces = rand;
+        //Debug.Log("S: "+ probabilityOfSucces);
+        rand = Random.Range(0.50f, 1);
+        probabilityOfDead = rand;
+        //Debug.Log("D: " + probabilityOfDead);
+        baseAgent = GetComponent<BaseAgent>();
+        //CreateFullCycle();
+        if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez") && !gameObject.CompareTag("Player")) return;
+        if (agent != null)
+        {
+
+            StartCoroutine(StartPhase(duration));
+        }
+        StartCoroutine(DeadAgent(duration));
     }
 
-    private void CreateFullCycle()
+    public void initCycle(float _duration, float _succes, float _dead)
     {
-        switch (type) 
+        duration = _duration;
+        probabilityOfSucces = _succes;
+        probabilityOfDead = _dead;
+        if (gameObject.CompareTag("Rana") || gameObject.CompareTag("Pez"))
         {
-            case AgentType.RANA:
-                fullCycle.Add(new Phase("Huevo de rana",1,1));
-                fullCycle.Add(new Phase("Renacuajo", 1, 1));
-                fullCycle.Add(new Phase("Rana", 1, 1));
-                break;
-            case AgentType.PEZ:
-                fullCycle.Add(new Phase("Huevo de pez", 1, 1));
-                fullCycle.Add(new Phase("Pez joven", 1, 1));
-                fullCycle.Add(new Phase("Pez adulto", 1, 1));
-                break;
-            case AgentType.MOSCA:
-                fullCycle.Add(new Phase("Mosca joven", 1, 1));
-                fullCycle.Add(new Phase("Mosca adulta", 1, 1));
-                break;
-            case AgentType.PLANTA:
-                fullCycle.Add(new Phase("Planta", 1, 1));
-                break;
+            //corrutina de muerte
+            StartCoroutine(DeadAgent(duration));
+
+        }
+        else
+        {
+            StartCoroutine(StartPhase(duration));
+            //corrutina de muerte
+            StartCoroutine(DeadAgent(duration));
+
+        }
+    }
+    public void NewPhase()
+    {
+        if (agent != null)
+        {
+            GameObject obj = Instantiate(agent, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
+
+            obj.GetComponent<BaseAgent>().initObject(baseAgent._agent);
+        
+        obj.GetComponent<LifeCycle>().initCycle(duration, probabilityOfSucces, probabilityOfDead);
+
+        Destroy(gameObject);
         }
     }
 
-    public void NewPhase() 
+    IEnumerator StartPhase(float dur)
     {
-        if (stage + 1 >= fullCycle.Count) 
+        yield return new WaitForSeconds(dur);
+        rand = Random.value;
+        if (rand <= probabilityOfSucces)
         {
-            Destroy(gameObject);
-            return;
+            StopCoroutine(DeadAgent(dur));
+            StopCoroutine(StartPhase(duration));
+            NewPhase();
         }
-        stage++;
-        StartCoroutine(StartPhase(fullCycle[stage]));
+        else
+        {
+            StopCoroutine(StartPhase(duration));
+            StartCoroutine(StartPhase(duration));
+        }
     }
 
-    IEnumerator StartPhase(Phase ph)
+    IEnumerator DeadAgent(float dur)
     {
-        yield return new WaitForSeconds(ph.duration);
-        //Temas de probabilidad
-        NewPhase();
-    }
+        yield return new WaitForSeconds(dur);
+        rand = Random.value;
+        if (rand<=probabilityOfDead)
+        {
+            if (agent != null)
+            {
+                StopCoroutine(StartPhase(duration));
+            }
+            StopCoroutine(DeadAgent(duration));
+            baseAgent.DeadAction();
+        }
+        else
+        {
+            StopCoroutine(DeadAgent(duration));
+            StartCoroutine(DeadAgent(duration));
 
+        }
+    }
 }
