@@ -17,6 +17,9 @@ public class BaseAgent : MonoBehaviour
 
     protected float _wanderRadius = 5;
 
+    private bool isHungry;
+    private float hunger;
+
     protected enum state
     {
         None,
@@ -50,6 +53,7 @@ public class BaseAgent : MonoBehaviour
         hits = new List<RaycastHit>();
         maxPerceptionA = 15;
         maxPerceptionL = 10;
+        hunger = 1;
 
         _agent = GetComponent<NavMeshAgent>();
         SetTags(gameObject.tag);
@@ -58,6 +62,9 @@ public class BaseAgent : MonoBehaviour
     private void FixedUpdate()
     {
         Vision();
+        hunger -= 0.05f*Time.fixedDeltaTime;
+        if (hunger < 0.6 && currentState!=state.Eat) currentState = state.Eat;
+        if (hunger < 0) DeadAction();
     }
 
     private void SetTags(string tag)
@@ -178,7 +185,7 @@ public class BaseAgent : MonoBehaviour
     }
     protected virtual void EatAction()
     {
-
+        hunger = 1;
     }
     public virtual void DeadAction()
     {        
