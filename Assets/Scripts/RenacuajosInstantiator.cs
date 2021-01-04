@@ -17,7 +17,7 @@ public class RenacuajosInstantiator : MonoBehaviour
         //Instancia un renacuajo por cada unidad indicada en el campo
         for (int i = 0; i < numeroRenacuajos; i++)
         {
-            Instantiate(renacuajoPrefab, Vector3.zero, Quaternion.identity);
+            Instantiate(renacuajoPrefab, transform.position, Quaternion.identity);
         }
     }
 }
