@@ -57,88 +57,58 @@ public class PopulationInstantiator : MonoBehaviour
     [Range(0.1f, 1)] public float maxTadMutationRate = 1;
 
     // Huevos Pez
-    public float maxFishVel = 10;
-    public float minFishVel = 0.1f;
-    public float maxFishAcceleration = 10;
-    public float minFishAcceleration = 0.1f;
-    public float maxFishPhys = 10;
-    public float minFishPhys = 0.1f;
-    public float maxFishOffspring = 10;
-    public float minFishOffspring = 0.1f;
-    public float maxFishEggLayingTime = 10;
-    public float minFishEggLayingTime = 0.1f;
-    public float maxFishGrowingTime = 10;
-    public float minFishGrowingTime = 0.1f;
-    public float maxFishHatchingTime = 10;
-    public float minFishHatchingTime = 0.1f;
-    public float maxFishNutritionalValue = 10;
-    public float minFishNutritionalValue = 0.1f;
-    public float maxFishLifespan = 10;
-    public float minFishLifespan = 0.1f;
-    public float maxFishPossibilityOfSuccess = 10;
-    public float minFishPossibilityOfSuccess = 0.1f;
-    public float minFishMutationRate = 0.01f;
-    public float maxFishMutationRate = 1;
+    [Range(0.1f, 10)] public float maxFishVel = 10;
+    [Range(0.1f, 10)] public float minFishVel = 0.1f;
+    [Range(0.1f, 10)] public float maxFishAcceleration = 10;
+    [Range(0.1f, 10)] public float minFishAcceleration = 0.1f;
+    [Range(0.1f, 10)] public float maxFishPhys = 10;
+    [Range(0.1f, 10)] public float minFishPhys = 0.1f;
+    [Range(0.1f, 10)] public float maxFishOffspring = 10;
+    [Range(0.1f, 10)] public float minFishOffspring = 0.1f;
+    [Range(0.1f, 10)] public float maxFishEggLayingTime = 10;
+    [Range(0.1f, 10)] public float minFishEggLayingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFishGrowingTime = 10;
+    [Range(0.1f, 10)] public float minFishGrowingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFishHatchingTime = 10;
+    [Range(0.1f, 10)] public float minFishHatchingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFishNutritionalValue = 10;
+    [Range(0.1f, 10)] public float minFishNutritionalValue = 0.1f;
+    [Range(0.1f, 10)] public float maxFishLifespan = 10;
+    [Range(0.1f, 10)] public float minFishLifespan = 0.1f;
+    [Range(0.1f, 10)] public float maxFishPossibilityOfSuccess = 10;
+    [Range(0.1f, 10)] public float minFishPossibilityOfSuccess = 0.1f;
+    [Range(0.1f, 1)]  public float minFishMutationRate = 0.01f;
+    [Range(0.1f, 1)] public float maxFishMutationRate = 1;
 
     //Huevos Rana
-    private List<Frog> frogPopulation;
-    public float frogPopulationSize;
-    public float maxFrogVel = 10;
-    public float minFrogVel = 0.1f;
-    public float maxFrogAcceleration = 10;
-    public float minFrogAcceleration = 0.1f;
-    public float maxFrogPhys = 10;
-    public float minFrogPhys = 0.1f;
-    public float maxFrogOffspring = 10;
-    public float minFrogOffspring = 0.1f;
-    public float maxFrogEggLayingTime = 10;
-    public float minFrogEggLayingTime = 0.1f;
-    public float maxFrogGrowingTime = 10;
-    public float minFrogGrowingTime = 0.1f;
-    public float maxFrogHatchingTime = 10;
-    public float minFrogHatchingTime = 0.1f;
-    public float maxFrogNutritionalValue = 10;
-    public float minFrogNutritionalValue = 0.1f;
-    public float maxFrogLifespan = 10;
-    public float minFrogLifespan = 0.1f;
-    public float maxFrogPossibilityOfSuccess = 10;
-    public float minFrogPossibilityOfSuccess = 0.1f;
-    public float minFrogMutationRate = 0.01f;
-    public float maxFrogMutationRate = 1;
+    [Range(0.1f, 10)] public float maxFrogVel = 10;
+    [Range(0.1f, 10)] public float minFrogVel = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogAcceleration = 10;
+    [Range(0.1f, 10)] public float minFrogAcceleration = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogPhys = 10;
+    [Range(0.1f, 10)] public float minFrogPhys = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogOffspring = 10;
+    [Range(0.1f, 10)] public float minFrogOffspring = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogEggLayingTime = 10;
+    [Range(0.1f, 10)] public float minFrogEggLayingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogGrowingTime = 10;
+    [Range(0.1f, 10)] public float minFrogGrowingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogHatchingTime = 10;
+    [Range(0.1f, 10)] public float minFrogHatchingTime = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogNutritionalValue = 10;
+    [Range(0.1f, 10)] public float minFrogNutritionalValue = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogLifespan = 10;
+    [Range(0.1f, 10)] public float minFrogLifespan = 0.1f;
+    [Range(0.1f, 10)] public float maxFrogPossibilityOfSuccess = 10;
+    [Range(0.1f, 10)] public float minFrogPossibilityOfSuccess = 0.1f;
+    [Range(0.1f, 1)] public float minFrogMutationRate = 0.01f;
+    [Range(0.1f, 1)] public float maxFrogMutationRate = 1;
 
 
     // Start is called before the first frame update
     private void Start()
     { 
-    
         System.Random r = new System.Random();
-
-        //Renacuajos perfect y worst
-        List<float> perfectTadDna = new List<float>();
-        perfectTadDna.Add(maxTadVel);
-        perfectTadDna.Add(maxTadAcceleration);
-        perfectTadDna.Add(maxTadPhys);
-        perfectTadDna.Add(maxTadOffspring);
-        perfectTadDna.Add(maxTadEggLayingTime);
-        perfectTadDna.Add(maxTadGrowingTime);
-        perfectTadDna.Add(maxTadHatchingTime);
-        perfectTadDna.Add(maxTadNutritionalValue);
-        perfectTadDna.Add(maxTadLifespan);
-        perfectTadDna.Add(maxTadPossibilityOfSuccess);
-        perfectTadDna.Add(minTadMutationRate);
-
-        List<float> worstTadDna = new List<float>();
-        worstTadDna.Add(minTadVel);
-        worstTadDna.Add(minTadAcceleration);
-        worstTadDna.Add(minTadPhys);
-        worstTadDna.Add(minTadOffspring);
-        worstTadDna.Add(minTadEggLayingTime);
-        worstTadDna.Add(minTadGrowingTime);
-        worstTadDna.Add(minTadHatchingTime);
-        worstTadDna.Add(minTadNutritionalValue);
-        worstTadDna.Add(minTadLifespan);
-        worstTadDna.Add(minTadPossibilityOfSuccess);
-        perfectTadDna.Add(maxTadMutationRate);
 
         //Peces perfect y worst
         List<float> perfectFishDna = new List<float>();
@@ -152,7 +122,7 @@ public class PopulationInstantiator : MonoBehaviour
         perfectFishDna.Add(maxFishNutritionalValue);
         perfectFishDna.Add(maxFishLifespan);
         perfectFishDna.Add(maxFishPossibilityOfSuccess);
-        perfectTadDna.Add(minFishMutationRate);
+        perfectFishDna.Add(minFishMutationRate);
 
         List<float> worstFishDna = new List<float>();
         worstFishDna.Add(minFishVel);
@@ -165,7 +135,7 @@ public class PopulationInstantiator : MonoBehaviour
         worstFishDna.Add(minFishNutritionalValue);
         worstFishDna.Add(minFishLifespan);
         worstFishDna.Add(minFishPossibilityOfSuccess);
-        perfectTadDna.Add(maxFishMutationRate);
+        perfectFishDna.Add(maxFishMutationRate);
 
         //Ranas perfect y worst
         List<float> perfectFrogDna = new List<float>();
@@ -179,7 +149,7 @@ public class PopulationInstantiator : MonoBehaviour
         perfectFrogDna.Add(maxFrogNutritionalValue);
         perfectFrogDna.Add(maxFrogLifespan);
         perfectFrogDna.Add(maxFrogPossibilityOfSuccess);
-        perfectTadDna.Add(minFrogMutationRate);
+        perfectFrogDna.Add(minFrogMutationRate);
 
         List<float> worstFrogDna = new List<float>();
         worstFrogDna.Add(minFrogVel);
@@ -192,32 +162,7 @@ public class PopulationInstantiator : MonoBehaviour
         worstFrogDna.Add(minFrogNutritionalValue);
         worstFrogDna.Add(minFrogLifespan);
         worstFrogDna.Add(minFrogPossibilityOfSuccess);
-        perfectTadDna.Add(maxFrogMutationRate);
-
-        /*
-        //Instanciador de renacuajos
-        List<float> tadDna;
-        for (int i = 0; i<numeroRenacuajos; i++)
-        {
-            tadDna = new List<float>();
-            tadDna.Add(Random.Range(minTadVel, maxTadVel));
-            tadDna.Add(Random.Range(minTadAcceleration, maxTadAcceleration));
-            tadDna.Add(Random.Range(minTadPhys, maxTadPhys));
-            tadDna.Add(Random.Range(minTadOffspring, maxTadOffspring));
-            tadDna.Add(Random.Range(minTadEggLayingTime, maxTadEggLayingTime));
-            tadDna.Add(Random.Range(minTadGrowingTime, maxTadGrowingTime));
-            tadDna.Add(Random.Range(minTadHatchingTime, maxTadHatchingTime));
-            tadDna.Add(Random.Range(minTadNutritionalValue, maxTadNutritionalValue));
-            tadDna.Add(Random.Range(minTadLifespan, maxTadLifespan));
-            tadDna.Add(Random.Range(minTadPossibilityOfSuccess, maxTadPossibilityOfSuccess));
-            tadDna.Add(Random.Range(minTadMutationRate, maxTadMutationRate));
-
-
-            Renacuajo tad = Instantiate(renacuajoPrefab, transform.position, Quaternion.identity).GetComponent<Renacuajo>();
-            
-            tad.Init(tadDna, r, perfectTadDna, worstTadDna);
-            
-        }*/
+        perfectFrogDna.Add(maxFrogMutationRate);
 
         //Instanciador de huevos de pez
         List<float> fishRoeDna;
