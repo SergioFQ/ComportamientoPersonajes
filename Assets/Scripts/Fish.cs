@@ -4,26 +4,8 @@ using UnityEngine;
 
 public class Fish : BaseAgent
 {
-    [SerializeField] private LifeCycle ciclo;
-    private System.Random random;
-    public List<float> dna;
-    private float mutationRate;
-    private List<float> perfectFish;
-    private List<float> worstFish;
     public bool juvenile;
-
-    public void Init(List<float> d,  System.Random r, float m, List<float> perfect, List<float> worst)
-    {
-        dna = d;
-        ciclo.dna = dna;
-        mutationRate = m;
-        random = r;
-        worstFish = worst;
-        perfectFish = perfect;  
-        ciclo.perfectDna = perfectFish;
-        ciclo.worstDna = worstFish;
-    }
-
+    public GameObject pezPrefab;
     
     // Una vez se ha detectado un pez con el que poder reproducirse se calculan las posibilidades y si son favorables se lleva a cabo
     public void Reproduction (Fish otherFish)
@@ -44,42 +26,24 @@ public class Fish : BaseAgent
         }
     }
 
-    public Roe Crossover(Fish otherParent)
+    public void Crossover(Fish otherParent)
     {
-        
-        GameObject g = new GameObject();
-        g.AddComponent<Roe>();
-        Roe child = g.GetComponent<Roe>();
-        string type = "Fish";
-        child.Init(random, mutationRate, perfectFish, worstFish, type);
-
-
-        child.dna = new List<float>();
+        List<float> newDna = new List<float>();
         float stat;
-        for(int i = 0; i < dna.Count; i++)
+        for (int i = 0; i < dna.Count; i++)
         {
             stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];
-            child.dna.Add(stat);
+            newDna.Add(stat);
         }
-        
-        child.Mutate();
-        return child;
+
+        Roe roeFish = Instantiate(pezPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
+        roeFish.Init(newDna, random, perfectDna, worstDna, "fish");
+
+        roeFish.Mutate();
     }
 
     
 
-    float CalculateFitness()
-    {
-        float score;
-        float media = 0;
-        for (int i = 0; i < perfectFish.Count; i++)
-        {
-            media += (float)dna[i] / perfectFish[i];
-        }
-        score = (float) media/dna.Count;
-
-        return score;
-    }
 
     
 }

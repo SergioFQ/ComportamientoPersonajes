@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Frog : BaseAgent
 {
-    [SerializeField] private LifeCycle ciclo;
-    private System.Random random;
-    public List<float> dna;
-    private float mutationRate;
-    private List<float> perfectFrog;
-    private List<float> worstFrog;
+   
     private bool isWet;
     [SerializeField]
     private float wetness;
@@ -17,18 +12,7 @@ public class Frog : BaseAgent
     private bool isDry;
     [SerializeField]
     private float dryness;
-
-    public void Init(List<float> d, System.Random r, float m, List<float> perfect, List<float> worst)
-    {
-        dna = d;
-        ciclo.dna = dna;
-        mutationRate = m;
-        random = r;
-        worstFrog = worst;
-        perfectFrog = perfect;
-        ciclo.perfectDna = perfectFrog;
-        ciclo.worstDna = worstFrog;
-    }
+    public GameObject ranaPrefab;
 
     protected override void Start()
     {
@@ -105,41 +89,22 @@ public class Frog : BaseAgent
     }
 
     
-    public Roe Crossover(Frog otherParent)
+    public void Crossover(Frog otherParent)
     {
-
-        GameObject g = new GameObject();
-        g.AddComponent<Roe>();
-        Roe child = g.GetComponent<Roe>();
-        string type = "frog";
-        child.Init(random, mutationRate, perfectFrog, worstFrog, type);
-
-
-        child.dna = new List<float>();
+        List<float> newDna = new List<float>();
         float stat;
         for (int i = 0; i < dna.Count; i++)
         {
             stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];
-            child.dna.Add(stat);
+            newDna.Add(stat);
         }
 
-        child.Mutate();
-        return child;
+        Roe roeFrog = Instantiate(ranaPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
+        roeFrog.Init(newDna, random,perfectDna, worstDna, "frog");
+
+        roeFrog.Mutate();
     }
 
-
-    float CalculateFitness()
-    {
-        float score;
-        float media = 0;
-        for (int i = 0; i < perfectFrog.Count; i++)
-        {
-            media += (float)dna[i] / perfectFrog[i];
-        }
-        score = (float)media / dna.Count;
-
-        return score;
-    }
 
     protected override void ChangeState(state nextState)
     {

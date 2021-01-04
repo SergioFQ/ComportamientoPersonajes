@@ -21,6 +21,12 @@ public class BaseAgent : MonoBehaviour
     public bool isHungry;
     public float hunger;
 
+    public List<float> dna;
+    public List<float> perfectDna;
+    public List<float> worstDna;
+    protected System.Random random;
+    protected float mutationRate;
+
     protected enum state
     {
         None,
@@ -46,6 +52,15 @@ public class BaseAgent : MonoBehaviour
 
     }
     [SerializeField] protected state currentState;
+
+    public  void Init(List<float> d, System.Random r, List<float> perfect, List<float> worst) {
+
+        dna = d;
+        random = r;
+        worstDna = worst;
+        perfectDna = perfect;
+    }
+
     public void initObject(NavMeshAgent agente)
     {
         _agent = agente;
@@ -68,7 +83,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         Vision();
-        hunger -= 0.05f*Time.fixedDeltaTime;
+        hunger -= ((perfectDna[2]-dna[2])*0.5f)*Time.fixedDeltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
         if (hunger < 0) DeadAction();
     }
@@ -241,19 +256,27 @@ public class BaseAgent : MonoBehaviour
         isHungry = false;
     }
    
-    protected virtual void FrogOutAction()
-    {
-
-    }
-    protected virtual void FrogInAction()
-    {
-
-    }
+    protected virtual void FrogOutAction() {}
+    protected virtual void FrogInAction() {}
     public virtual void DeadAction()
     {        
         Destroy(gameObject);
     }
 
+
+
+    protected float CalculateFitness()
+    {
+        float score;
+        float media = 0;
+        for (int i = 0; i < perfectDna.Count-1; i++)
+        {
+            media += (float)dna[i] / perfectDna[i];
+        }
+        score = (float)media / (dna.Count-1);
+
+        return score;
+    }
 
     //coroutines
 

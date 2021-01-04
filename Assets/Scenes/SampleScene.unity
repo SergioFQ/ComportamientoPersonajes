@@ -1026,7 +1026,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renacuajoPrefab: {fileID: 1490385472755137514, guid: 5a43a5b16100458499a4f2698caf7f55,
     type: 3}
+  huevoPezPrefab: {fileID: 1490385472755137514, guid: 07efe4fce0362bf4d888eb01e8d8cbaf,
+    type: 3}
+  huevoRanaPrefab: {fileID: 1490385472755137514, guid: aad21d07c2456f04ca82104df27cda9d,
+    type: 3}
   numeroRenacuajos: 30
+  numeroHuevosPez: 15
+  numeroHuevosRana: 15
+  maxTadVel: 10
+  minTadVel: 0.1
+  maxTadAcceleration: 10
+  minTadAcceleration: 0.1
+  maxTadPhys: 10
+  minTadPhys: 0.1
+  maxTadOffspring: 10
+  minTadOffspring: 0.1
+  maxTadEggLayingTime: 10
+  minTadEggLayingTime: 0.1
+  maxTadGrowingTime: 10
+  minTadGrowingTime: 0.1
+  maxTadHatchingTime: 10
+  minTadHatchingTime: 0.1
+  maxTadNutritionalValue: 10
+  minTadNutritionalValue: 0.1
+  maxTadLifespan: 10
+  minTadLifespan: 0.1
+  maxTadPossibilityOfSuccess: 10
+  minTadPossibilityOfSuccess: 0.1
+  minTadMutationRate: 0.01
+  maxTadMutationRate: 1
+  maxFishVel: 10
+  minFishVel: 0.1
+  maxFishAcceleration: 10
+  minFishAcceleration: 0.1
+  maxFishPhys: 10
+  minFishPhys: 0.1
+  maxFishOffspring: 10
+  minFishOffspring: 0.1
+  maxFishEggLayingTime: 10
+  minFishEggLayingTime: 0.1
+  maxFishGrowingTime: 10
+  minFishGrowingTime: 0.1
+  maxFishHatchingTime: 10
+  minFishHatchingTime: 0.1
+  maxFishNutritionalValue: 10
+  minFishNutritionalValue: 0.1
+  maxFishLifespan: 10
+  minFishLifespan: 0.1
+  maxFishPossibilityOfSuccess: 10
+  minFishPossibilityOfSuccess: 0.1
+  minFishMutationRate: 0.01
+  maxFishMutationRate: 1
+  frogPopulationSize: 0
+  maxFrogVel: 10
+  minFrogVel: 0.1
+  maxFrogAcceleration: 10
+  minFrogAcceleration: 0.1
+  maxFrogPhys: 10
+  minFrogPhys: 0.1
+  maxFrogOffspring: 10
+  minFrogOffspring: 0.1
+  maxFrogEggLayingTime: 10
+  minFrogEggLayingTime: 0.1
+  maxFrogGrowingTime: 10
+  minFrogGrowingTime: 0.1
+  maxFrogHatchingTime: 10
+  minFrogHatchingTime: 0.1
+  maxFrogNutritionalValue: 10
+  minFrogNutritionalValue: 0.1
+  maxFrogLifespan: 10
+  minFrogLifespan: 0.1
+  maxFrogPossibilityOfSuccess: 10
+  minFrogPossibilityOfSuccess: 0.1
+  minFrogMutationRate: 0.01
+  maxFrogMutationRate: 1
 --- !u!4 &1668280765
 Transform:
   m_ObjectHideFlags: 0

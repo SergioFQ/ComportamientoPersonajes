@@ -19,7 +19,7 @@ public class LifeCycle : MonoBehaviour
     public List<float> dna;
     public List<float> perfectDna;
     public List<float> worstDna;
-
+    
     public void Start()
     {
         
@@ -33,9 +33,18 @@ public class LifeCycle : MonoBehaviour
         //Debug.Log("D: " + probabilityOfDead);
         baseAgent = GetComponent<BaseAgent>();
         //CreateFullCycle();
-        if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez")) return;
+        if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez"))
+        {
+            dna = baseAgent.dna;
+            perfectDna = baseAgent.perfectDna;
+            worstDna = baseAgent.worstDna;
+            return;
+        }
         if (agent != null)
         {
+            dna = gameObject.GetComponent<Roe>().dna;
+            perfectDna = gameObject.GetComponent<Roe>().perfectDna;
+            worstDna = gameObject.GetComponent<Roe>().worstDna;
             StartCoroutine(StartPhase(dna[5]));
         }
         timeOfLive = 0.0f;
@@ -78,11 +87,11 @@ public class LifeCycle : MonoBehaviour
             }
             else
             {
+                System.Random r = new System.Random();
+                obj.GetComponent<BaseAgent>().Init(dna, r, perfect, worst);
                 obj.GetComponent<BaseAgent>().initObject(gameObject.GetComponent<NavMeshAgent>());
             }
             
-        
-
 
             obj.GetComponent<LifeCycle>().initCycle(dna, timeOfLive, worst, perfect);
 

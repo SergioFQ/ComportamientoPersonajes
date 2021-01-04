@@ -6,9 +6,6 @@ using UnityEngine.AI;
 
 public class Renacuajo : BaseAgent
 {
-    public List<float> dna;
-    public List<float> perfectDna;
-    public List<float> worstDna;
 
     public LayerMask renLayer;
 
@@ -20,16 +17,18 @@ public class Renacuajo : BaseAgent
     public float radioRenacuajosVecinos = 3f;
 
 
-    public void Init(List<float> d, System.Random r, float m, List<float> perfect, List<float> worst)
+    public void Init(List<float> d, System.Random r, List<float> perfect, List<float> worst)
     {
         dna = d;
-       /*ciclo.dna = dna;
-       mutationRate = m;
-       random = r;
-       worstFrog = worst;
-       perfectFrog = perfect;
-       ciclo.perfectDna = perfectFrog;
-       ciclo.worstDna = worstFrog;*/
+        perfectDna = perfect;
+        worstDna = worst;
+        /*ciclo.dna = dna;
+        mutationRate = m;
+        random = r;
+        worstFrog = worst;
+        perfectFrog = perfect;
+        ciclo.perfectDna = perfectFrog;
+        ciclo.worstDna = worstFrog;*/
     }
 
 
