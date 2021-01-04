@@ -13,12 +13,13 @@ public class LifeCycle : MonoBehaviour
     private float probabilityOfSucces;
     private float probabilityOfDead;
     private float rand;
+    private float timeOfLive;
     private Plant plantComponent;
 
     public void Start()
     {
         plantComponent = gameObject.GetComponent<Plant>();
-        if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); return; }
+        if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); timeOfLive = 0.0f; return;  }
         rand = Random.value;
         probabilityOfSucces = rand;
         //Debug.Log("S: "+ probabilityOfSucces);
@@ -33,14 +34,21 @@ public class LifeCycle : MonoBehaviour
 
             StartCoroutine(StartPhase(duration));
         }
+        timeOfLive = 0.0f;
         StartCoroutine(DeadAgent(duration));
     }
 
-    public void initCycle(float _duration, float _succes, float _dead)
+    private void Update()
+    {
+        timeOfLive += Time.deltaTime;
+    }
+
+    public void initCycle(float _duration, float _succes, float _dead, float _timeLived)
     {
         duration = _duration;
         probabilityOfSucces = _succes;
         probabilityOfDead = _dead;
+        timeOfLive = _timeLived;
         if (gameObject.CompareTag("Rana") || gameObject.CompareTag("Pez"))
         {
             //corrutina de muerte
@@ -61,7 +69,7 @@ public class LifeCycle : MonoBehaviour
 
             obj.GetComponent<BaseAgent>().initObject(baseAgent._agent);
         
-        obj.GetComponent<LifeCycle>().initCycle(duration, probabilityOfSucces, probabilityOfDead);
+            obj.GetComponent<LifeCycle>().initCycle(duration, probabilityOfSucces, probabilityOfDead, timeOfLive);
 
         Destroy(gameObject);
         }
