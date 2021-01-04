@@ -13,7 +13,7 @@ public class BaseAgent : MonoBehaviour
 
     public NavMeshAgent _agent;
 
-    private NavMeshAgent _evadeTarget, _pursuitTarget;
+    protected NavMeshAgent _evadeTarget, _pursuitTarget;
     private Transform _pursuitPlant;
 
     protected float _wanderRadius = 5;
@@ -123,7 +123,7 @@ public class BaseAgent : MonoBehaviour
     protected bool CollisionDetected (Collider collider)
     {
         if (gameObject.tag == collider.tag) return false;
-        if (predatorTag != null && collider.gameObject.CompareTag(predatorTag))
+        if (!string.IsNullOrEmpty(predatorTag) && collider.gameObject.CompareTag(predatorTag))
         {
             NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
             if (colAgent == null) return false;
@@ -138,7 +138,7 @@ public class BaseAgent : MonoBehaviour
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
-                    if (string.IsNullOrEmpty(foodTag[i]))
+                    if (!string.IsNullOrEmpty(foodTag[i]))
                     {
                         if (collider.CompareTag("Plantas"))
                         {
@@ -182,8 +182,14 @@ public class BaseAgent : MonoBehaviour
                             if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
                                 collision.gameObject.GetComponent<LifeCycle>().EatPlant();
                         }
+                        else if (collision.gameObject.CompareTag("HuevosRana") || collision.gameObject.CompareTag("HuevosPez"))
+                        {
+                            collision.GetComponent<Roe>().DeadRoe();
+                        }
                         else
+                        {
                             collision.gameObject.GetComponent<BaseAgent>().DeadAction();
+                        }
                     }
                 }
                 else return;

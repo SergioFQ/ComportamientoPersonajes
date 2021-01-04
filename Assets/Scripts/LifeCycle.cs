@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class LifeCycle : MonoBehaviour
@@ -32,7 +33,7 @@ public class LifeCycle : MonoBehaviour
         //Debug.Log("D: " + probabilityOfDead);
         baseAgent = GetComponent<BaseAgent>();
         //CreateFullCycle();
-        if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez") && !gameObject.CompareTag("Player")) return;
+        if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez")) return;
         if (agent != null)
         {
             StartCoroutine(StartPhase(dna[5]));
@@ -71,8 +72,15 @@ public class LifeCycle : MonoBehaviour
         if (agent != null)
         {
             GameObject obj = Instantiate(agent, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
-
-            obj.GetComponent<BaseAgent>().initObject(baseAgent._agent);
+            if (baseAgent!=null)
+            {
+                obj.GetComponent<BaseAgent>().initObject(baseAgent._agent);
+            }
+            else
+            {
+                obj.GetComponent<BaseAgent>().initObject(gameObject.GetComponent<NavMeshAgent>());
+            }
+            
         
 
 
@@ -110,7 +118,14 @@ public class LifeCycle : MonoBehaviour
                 StopCoroutine(StartPhase(dna[5]));
             }
             StopCoroutine(DeadAgent(dna[5]));
-            baseAgent.DeadAction();
+            if (gameObject.CompareTag("HuevosPez") || gameObject.CompareTag("HuevosRana"))
+            {
+                gameObject.GetComponent<Roe>().DeadRoe();
+            }
+            else
+            {
+                baseAgent.DeadAction();
+            }
         }
         else
         {

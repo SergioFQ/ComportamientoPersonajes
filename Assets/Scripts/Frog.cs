@@ -142,8 +142,8 @@ public class Frog : BaseAgent
     }
 
     protected override void ChangeState(state nextState)
-    {//habría que comprobar inicialmente en que estado nos encontramos
-
+    {
+        if (nextState == state.Pursuit && _pursuitTarget!=null && _pursuitTarget.gameObject!=null && _pursuitTarget.gameObject.CompareTag("Pez") && _pursuitTarget.GetComponent<Fish>()?.juvenile==false) return;
         if (currentState == state.Pursuit && nextState==state.FrogIn && wetness>hunger) 
         {
             return;

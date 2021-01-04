@@ -43,6 +43,11 @@ public class Roe : MonoBehaviour
             }
         }
     }
+
+    public void DeadRoe()
+    {
+        Destroy(gameObject);
+    }
     /*
     public void Grow()
     {
