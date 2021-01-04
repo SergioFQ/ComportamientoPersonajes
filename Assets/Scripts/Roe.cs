@@ -6,16 +6,14 @@ using Random = UnityEngine.Random;
 public class Roe : MonoBehaviour
 {
     // Start is called before the first frame update
-    private System.Random random;
     public string type;
     public List<float> dna;
     public List<float> worstDna;
     public List<float> perfectDna;
 
-    public void Init(List<float> d, System.Random r, List<float> perfect, List<float> worst, string t)
+    public void Init(List<float> d, List<float> perfect, List<float> worst, string t)
     {
         dna = d;
-        random = r;
         perfectDna = perfect;
         worstDna = worst;
         type = t; // Como los huevos de pez y rana tienen los mismos atributos con type se controlaria a que especie pertenecen para luego crecer
@@ -26,7 +24,7 @@ public class Roe : MonoBehaviour
     {
         for (int i = 0; i < dna.Count-1; i++)
         {
-            if (random.NextDouble() < dna[10])
+            if (Random.value < dna[10])
             {
                 dna[i] = Random.Range(worstDna[i], perfectDna[i]);
             }

@@ -26,6 +26,7 @@ public class Frog : BaseAgent
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (hunger < 0) return;
         if (Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2))
         {
             
@@ -77,7 +78,7 @@ public class Frog : BaseAgent
         double av = (CalculateFitness() + otherFrog.CalculateFitness()) / 2;
 
         // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
-        if (random.NextDouble() < av)
+        if (Random.value < av)
         {
             float offspringNumber = (dna[3] + otherFrog.dna[3]) / 2;
             for (int i = 0; i < offspringNumber; i++)
@@ -95,12 +96,12 @@ public class Frog : BaseAgent
         float stat;
         for (int i = 0; i < dna.Count; i++)
         {
-            stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];
+            stat = Random.value < 0.5 ? dna[i] : otherParent.dna[i];
             newDna.Add(stat);
         }
 
         Roe roeFrog = Instantiate(ranaPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
-        roeFrog.Init(newDna, random,perfectDna, worstDna, "frog");
+        roeFrog.Init(newDna, perfectDna, worstDna, "frog");
 
         roeFrog.Mutate();
     }
@@ -122,10 +123,23 @@ public class Frog : BaseAgent
         {
             switch (nextState)
             {
-                case state.Wander:
+                /*case state.Wander:
                 case state.Evade:
-                    return;
-
+                    if (currentState == state.FrogIn)
+                    {
+                        if (wetness < 0.6)
+                        {
+                            return;
+                        }
+                    }
+                    else if (currentState == state.FrogOut) 
+                    {
+                        if (dryness < 0.6)
+                        {
+                            return;
+                        }
+                    }
+                    break;*/
                 case state.Pursuit:
                     if (currentState == state.FrogIn)
                     {
@@ -152,13 +166,14 @@ public class Frog : BaseAgent
 
     protected override void FrogOutAction()
     {
-        _agent.SetDestination(transform.position.normalized * 22);
-       // Debug.DrawRay(transform.position, transform.position.normalized*22-transform.position);
+        Vector2 dest = new Vector2(transform.position.x, transform.position.y);
+        _agent.SetDestination(dest.normalized * 22);
+        Debug.DrawRay(transform.position, transform.position.normalized*22-transform.position);
     } 
     
     protected override void FrogInAction() 
     {
         _agent.SetDestination(Vector3.zero);
-       // Debug.DrawRay(transform.position, -transform.position);
+        Debug.DrawRay(transform.position, -transform.position);
     }
 }

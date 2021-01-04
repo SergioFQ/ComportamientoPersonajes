@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InitialPopulation : MonoBehaviour
 {
-
-   
     // Moscas
     private List<Fly> flyPopulation;
     public int flyPopulationSize;
@@ -19,11 +17,6 @@ public class InitialPopulation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
-        System.Random r = new System.Random();
-
-       
-
         GameObject g;
         
 
@@ -34,13 +27,9 @@ public class InitialPopulation : MonoBehaviour
             g.AddComponent<Fly>();
             Fly fly = g.GetComponent<Fly>();
 
-            fly.Init( r);
+            fly.Init();
             flyPopulation.Add(fly);
         }
-
-      
-
-
       
     }
 

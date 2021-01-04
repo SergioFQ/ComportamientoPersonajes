@@ -15,7 +15,7 @@ public class Fish : BaseAgent
             double av = (CalculateFitness() + otherFish.CalculateFitness())/ 2;
 
             // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
-            if(random.NextDouble() < av)
+            if(Random.value < av)
             {
                 float offspringNumber = (dna[3] + otherFish.dna[3]) / 2;
                 for(int i = 0; i < offspringNumber; i++)
@@ -32,12 +32,12 @@ public class Fish : BaseAgent
         float stat;
         for (int i = 0; i < dna.Count; i++)
         {
-            stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];
+            stat = Random.value < 0.5 ? dna[i] : otherParent.dna[i];
             newDna.Add(stat);
         }
 
         Roe roeFish = Instantiate(pezPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
-        roeFish.Init(newDna, random, perfectDna, worstDna, "fish");
+        roeFish.Init(newDna, perfectDna, worstDna, "fish");
 
         roeFish.Mutate();
     }

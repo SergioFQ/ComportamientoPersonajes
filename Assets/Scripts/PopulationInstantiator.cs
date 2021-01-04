@@ -31,38 +31,13 @@ public class PopulationInstantiator : MonoBehaviour
     [SerializeField]
     public int numeroHuevosRana;
 
-
-    // Renacuajos
-    [Range(0.1f, 10)] public float maxTadVel = 10;
-    [Range(0.1f, 10)] public float minTadVel = 0.1f;
-    [Range(0.1f, 10)] public float maxTadAcceleration = 10;
-    [Range(0.1f, 10)] public float minTadAcceleration = 0.1f;
-    [Range(0.1f, 10)] public float maxTadPhys = 10;
-    [Range(0.1f, 10)] public float minTadPhys = 0.1f;
-    [Range(0.1f, 10)] public float maxTadOffspring = 10;
-    [Range(0.1f, 10)] public float minTadOffspring = 0.1f;
-    [Range(0.1f, 10)] public float maxTadEggLayingTime = 10;
-    [Range(0.1f, 10)] public float minTadEggLayingTime = 0.1f;
-    [Range(0.1f, 10)] public float maxTadGrowingTime = 10;
-    [Range(0.1f, 10)] public float minTadGrowingTime = 0.1f;
-    [Range(0.1f, 10)] public float maxTadHatchingTime = 10;
-    [Range(0.1f, 10)] public float minTadHatchingTime = 0.1f;
-    [Range(0.1f, 10)] public float maxTadNutritionalValue = 10;
-    [Range(0.1f, 10)] public float minTadNutritionalValue = 0.1f;
-    [Range(0.1f, 10)] public float maxTadLifespan = 10;
-    [Range(0.1f, 10)] public float minTadLifespan = 0.1f;
-    [Range(0.1f, 10)] public float maxTadPossibilityOfSuccess = 10;
-    [Range(0.1f, 10)] public float minTadPossibilityOfSuccess = 0.1f;
-    [Range(0.1f, 1)] public float minTadMutationRate = 0.01f;
-    [Range(0.1f, 1)] public float maxTadMutationRate = 1;
-
     // Huevos Pez
     [Range(0.1f, 10)] public float maxFishVel = 10;
     [Range(0.1f, 10)] public float minFishVel = 0.1f;
     [Range(0.1f, 10)] public float maxFishAcceleration = 10;
     [Range(0.1f, 10)] public float minFishAcceleration = 0.1f;
-    [Range(0.1f, 10)] public float maxFishPhys = 10;
-    [Range(0.1f, 10)] public float minFishPhys = 0.1f;
+    [Range(0.05f, 0.2f)] public float maxFishPhys = 10;
+    [Range(0.05f, 0.2f)] public float minFishPhys = 0.1f;
     [Range(0.1f, 10)] public float maxFishOffspring = 10;
     [Range(0.1f, 10)] public float minFishOffspring = 0.1f;
     [Range(0.1f, 10)] public float maxFishEggLayingTime = 10;
@@ -73,8 +48,8 @@ public class PopulationInstantiator : MonoBehaviour
     [Range(0.1f, 10)] public float minFishHatchingTime = 0.1f;
     [Range(0.1f, 10)] public float maxFishNutritionalValue = 10;
     [Range(0.1f, 10)] public float minFishNutritionalValue = 0.1f;
-    [Range(0.1f, 10)] public float maxFishLifespan = 10;
-    [Range(0.1f, 10)] public float minFishLifespan = 0.1f;
+    [Range(40f,200)] public float maxFishLifespan = 10;
+    [Range(40f,200)] public float minFishLifespan = 0.1f;
     [Range(0.1f, 10)] public float maxFishPossibilityOfSuccess = 10;
     [Range(0.1f, 10)] public float minFishPossibilityOfSuccess = 0.1f;
     [Range(0.1f, 1)]  public float minFishMutationRate = 0.01f;
@@ -85,8 +60,8 @@ public class PopulationInstantiator : MonoBehaviour
     [Range(0.1f, 10)] public float minFrogVel = 0.1f;
     [Range(0.1f, 10)] public float maxFrogAcceleration = 10;
     [Range(0.1f, 10)] public float minFrogAcceleration = 0.1f;
-    [Range(0.1f, 10)] public float maxFrogPhys = 10;
-    [Range(0.1f, 10)] public float minFrogPhys = 0.1f;
+    [Range(0.05f, 0.2f)] public float maxFrogPhys = 10;
+    [Range(0.05f, 0.2f)] public float minFrogPhys = 0.1f;
     [Range(0.1f, 10)] public float maxFrogOffspring = 10;
     [Range(0.1f, 10)] public float minFrogOffspring = 0.1f;
     [Range(0.1f, 10)] public float maxFrogEggLayingTime = 10;
@@ -97,8 +72,8 @@ public class PopulationInstantiator : MonoBehaviour
     [Range(0.1f, 10)] public float minFrogHatchingTime = 0.1f;
     [Range(0.1f, 10)] public float maxFrogNutritionalValue = 10;
     [Range(0.1f, 10)] public float minFrogNutritionalValue = 0.1f;
-    [Range(0.1f, 10)] public float maxFrogLifespan = 10;
-    [Range(0.1f, 10)] public float minFrogLifespan = 0.1f;
+    [Range(40f,200)] public float maxFrogLifespan = 10;
+    [Range(40f,200)] public float minFrogLifespan = 0.1f;
     [Range(0.1f, 10)] public float maxFrogPossibilityOfSuccess = 10;
     [Range(0.1f, 10)] public float minFrogPossibilityOfSuccess = 0.1f;
     [Range(0.1f, 1)] public float minFrogMutationRate = 0.01f;
@@ -108,8 +83,6 @@ public class PopulationInstantiator : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     { 
-        System.Random r = new System.Random();
-
         //Peces perfect y worst
         List<float> perfectFishDna = new List<float>();
         perfectFishDna.Add(maxFishVel);
@@ -168,22 +141,23 @@ public class PopulationInstantiator : MonoBehaviour
         List<float> fishRoeDna;
         for (int i = 0; i < numeroHuevosPez; i++)
         {
-           fishRoeDna = new List<float>();
-           fishRoeDna.Add(Random.Range(minFishVel, maxFishVel));
-           fishRoeDna.Add(Random.Range(minFishAcceleration, maxFishAcceleration));
-           fishRoeDna.Add(Random.Range(minFishPhys, maxFishPhys));
-           fishRoeDna.Add(Random.Range(minFishOffspring, maxFishOffspring));
-           fishRoeDna.Add(Random.Range(minFishEggLayingTime, maxFishEggLayingTime));
-           fishRoeDna.Add(Random.Range(minFishGrowingTime, maxFishGrowingTime));
-           fishRoeDna.Add(Random.Range(minFishHatchingTime, maxFishHatchingTime));
-           fishRoeDna.Add(Random.Range(minFishNutritionalValue, maxFishNutritionalValue));
-           fishRoeDna.Add(Random.Range(minFishLifespan, maxFishLifespan));
-           fishRoeDna.Add(Random.Range(minFishPossibilityOfSuccess, maxFishPossibilityOfSuccess));
-           fishRoeDna.Add(Random.Range(minFishMutationRate, maxFishMutationRate));
+            fishRoeDna = new List<float>();
+            fishRoeDna.Add(Random.Range(minFishVel, maxFishVel));
+            fishRoeDna.Add(Random.Range(minFishAcceleration, maxFishAcceleration));
+            fishRoeDna.Add(Random.Range(minFishPhys, maxFishPhys));
+            fishRoeDna.Add(Random.Range(minFishOffspring, maxFishOffspring));
+            fishRoeDna.Add(Random.Range(minFishEggLayingTime, maxFishEggLayingTime));
+            fishRoeDna.Add(Random.Range(minFishGrowingTime, maxFishGrowingTime));
+            fishRoeDna.Add(Random.Range(minFishHatchingTime, maxFishHatchingTime));
+            fishRoeDna.Add(Random.Range(minFishNutritionalValue, maxFishNutritionalValue));
+            fishRoeDna.Add(Random.Range(minFishLifespan, maxFishLifespan));
+            fishRoeDna.Add(Random.Range(minFishPossibilityOfSuccess, maxFishPossibilityOfSuccess));
+            fishRoeDna.Add(Random.Range(minFishMutationRate, maxFishMutationRate));
+            Vector3 randomPos = Random.insideUnitSphere*10;
+            randomPos.z = 0;
+            Roe roeFish = Instantiate(huevoPezPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
-            Roe roeFish = Instantiate(huevoPezPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
-
-            roeFish.Init(fishRoeDna, r, perfectFishDna, worstFishDna, "fish");
+            roeFish.Init(fishRoeDna, perfectFishDna, worstFishDna, "fish");
 
         }
 
@@ -204,9 +178,11 @@ public class PopulationInstantiator : MonoBehaviour
             frogRoeDna.Add(Random.Range(minFrogPossibilityOfSuccess, maxFrogPossibilityOfSuccess));
             frogRoeDna.Add(Random.Range(minFrogMutationRate, maxFrogMutationRate));
 
-            Roe roeFrog = Instantiate(huevoRanaPrefab, transform.position, Quaternion.identity).GetComponent<Roe>();
+            Vector3 randomPos = Random.insideUnitSphere*10;
+            randomPos.z = 0;
+            Roe roeFrog = Instantiate(huevoRanaPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
-            roeFrog.Init(frogRoeDna, r, perfectFrogDna, worstFrogDna, "frog");
+            roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna, "frog");
 
         }
     }

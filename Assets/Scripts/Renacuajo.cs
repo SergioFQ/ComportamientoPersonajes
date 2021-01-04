@@ -17,7 +17,7 @@ public class Renacuajo : BaseAgent
     public float radioRenacuajosVecinos = 3f;
 
 
-    public void Init(List<float> d, System.Random r, List<float> perfect, List<float> worst)
+    /*public void Init(List<float> d, List<float> perfect, List<float> worst)
     {
         dna = d;
         perfectDna = perfect;
@@ -29,7 +29,7 @@ public class Renacuajo : BaseAgent
         perfectFrog = perfect;
         ciclo.perfectDna = perfectFrog;
         ciclo.worstDna = worstFrog;*/
-    }
+    //}
 
 
     protected override void WanderAction()

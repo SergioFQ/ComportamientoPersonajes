@@ -8,9 +8,9 @@ public class Fly : BaseAgent
     int lifespan;
     int maxLifespan = 10;
     int minLifespan = 5;
-    public void Init(System.Random r)
+    public void Init()
     {
-        lifespan = r.Next(minLifespan, maxLifespan);
+        lifespan = Random.Range(minLifespan, maxLifespan);
         
     }
 

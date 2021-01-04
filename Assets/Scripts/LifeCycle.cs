@@ -14,7 +14,8 @@ public class LifeCycle : MonoBehaviour
     //private float probabilityOfSucces;
     //private float probabilityOfDead;
     private float rand;
-    private float timeOfLive;
+    [SerializeField]private float timeOfLive;
+    [SerializeField]private float timeInPhase;
     private Plant plantComponent;
     public List<float> dna;
     public List<float> perfectDna;
@@ -45,15 +46,17 @@ public class LifeCycle : MonoBehaviour
             dna = gameObject.GetComponent<Roe>().dna;
             perfectDna = gameObject.GetComponent<Roe>().perfectDna;
             worstDna = gameObject.GetComponent<Roe>().worstDna;
-            StartCoroutine(StartPhase(dna[5]));
         }
         timeOfLive = 0.0f;
-        StartCoroutine(DeadAgent(dna[5]));
+        timeInPhase = 0.0f;
+        //StartCoroutine(StartPhase());
     }
 
     private void Update()
     {
         timeOfLive += Time.deltaTime;
+        timeInPhase += Time.deltaTime;
+        StartPhase();
     }
 
     public void initCycle(List<float> d/*float _duration, float _succes, float _dead*/, float _timeLived, List<float> worst, List<float> perfect)
@@ -64,69 +67,39 @@ public class LifeCycle : MonoBehaviour
         //probabilityOfSucces = _succes;
         //probabilityOfDead = _dead;
         timeOfLive = _timeLived;
-        if (gameObject.CompareTag("Rana") || gameObject.CompareTag("Pez"))
-        {
-            //corrutina de muerte
-            StartCoroutine(DeadAgent(dna[5]));
-        }
-        else
-        {
-            StartCoroutine(StartPhase(dna[5]));
-            //corrutina de muerte
-            StartCoroutine(DeadAgent(dna[5]));
-        }
+        timeInPhase = 0.0f;
+        //StartCoroutine(StartPhase());
     }
-    public void NewPhase(List<float> worst, List<float> perfect)
+    public void NewPhase()
     {
         if (agent != null)
         {
             GameObject obj = Instantiate(agent, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
+            BaseAgent objAgent = obj.GetComponent<BaseAgent>();
             if (baseAgent!=null)
             {
-                obj.GetComponent<BaseAgent>().initObject(baseAgent._agent);
+                objAgent.Init(dna, perfectDna, worstDna);
+                objAgent.initObject(baseAgent._agent);
+                baseAgent.DeadAction();
             }
             else
             {
-                System.Random r = new System.Random();
-                obj.GetComponent<BaseAgent>().Init(dna, r, perfect, worst);
-                obj.GetComponent<BaseAgent>().initObject(gameObject.GetComponent<NavMeshAgent>());
+                objAgent.Init(dna, perfectDna, worstDna);
+                objAgent.initObject(gameObject.GetComponent<NavMeshAgent>());
+                Destroy(gameObject);
             }
             
 
-            obj.GetComponent<LifeCycle>().initCycle(dna, timeOfLive, worst, perfect);
+            obj.GetComponent<LifeCycle>().initCycle(dna, timeOfLive, worstDna, perfectDna);
 
-        Destroy(gameObject);
+
         }
     }
 
-    IEnumerator StartPhase(float dur)
+    void StartPhase()
     {
-        yield return new WaitForSeconds(dur);
-        rand = Random.Range(worstDna[9], perfectDna[9]);
-        if (rand <= dna[9])
+        if (timeOfLive >= dna[8])
         {
-            StopCoroutine(DeadAgent(dur));
-            StopCoroutine(StartPhase(dna[5]));
-            NewPhase(worstDna, perfectDna);
-        }
-        else
-        {
-            StopCoroutine(StartPhase(dna[5]));
-            StartCoroutine(StartPhase(dna[5]));
-        }
-    }
-
-    IEnumerator DeadAgent(float dur)
-    {
-        yield return new WaitForSeconds(dur);
-        rand = Random.Range(worstDna[9], perfectDna[9]);
-        if (rand>dna[9])
-        {
-            if (agent != null)
-            {
-                StopCoroutine(StartPhase(dna[5]));
-            }
-            StopCoroutine(DeadAgent(dna[5]));
             if (gameObject.CompareTag("HuevosPez") || gameObject.CompareTag("HuevosRana"))
             {
                 gameObject.GetComponent<Roe>().DeadRoe();
@@ -136,11 +109,26 @@ public class LifeCycle : MonoBehaviour
                 baseAgent.DeadAction();
             }
         }
-        else
+        else 
         {
-            StopCoroutine(DeadAgent(dna[5]));
-            StartCoroutine(DeadAgent(dna[5]));
+            bool comparison = false;
+            if (gameObject.CompareTag("HuevosPez") || gameObject.CompareTag("HuevosRana"))
+            {
+                comparison = (timeInPhase >= dna[6]);
+            }
+            else
+            {
+                comparison = (timeInPhase >= dna[5]);
+            }
 
+            if (comparison)
+            {
+                rand = Random.Range(worstDna[9], perfectDna[9]);
+                if (rand <= dna[9])
+                {
+                    NewPhase();
+                }
+            }
         }
     }
 

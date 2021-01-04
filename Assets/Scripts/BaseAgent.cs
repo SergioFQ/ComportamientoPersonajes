@@ -24,8 +24,9 @@ public class BaseAgent : MonoBehaviour
     public List<float> dna;
     public List<float> perfectDna;
     public List<float> worstDna;
-    protected System.Random random;
     protected float mutationRate;
+
+    private bool initialized = false;
 
     protected enum state
     {
@@ -53,17 +54,17 @@ public class BaseAgent : MonoBehaviour
     }
     [SerializeField] protected state currentState;
 
-    public  void Init(List<float> d, System.Random r, List<float> perfect, List<float> worst) {
+    public void Init(List<float> d, List<float> perfect, List<float> worst) {
 
         dna = d;
-        random = r;
         worstDna = worst;
         perfectDna = perfect;
+        initialized = true;
     }
 
     public void initObject(NavMeshAgent agente)
     {
-        _agent = agente;
+        //_agent = agente;
     }
     // Start is called before the first frame update
     protected virtual void Start()
@@ -82,8 +83,9 @@ public class BaseAgent : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        if (!initialized) return;
         Vision();
-        hunger -= ((perfectDna[2]-dna[2])*0.5f)*Time.fixedDeltaTime;
+        hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
         if (hunger < 0) DeadAction();
     }
@@ -121,7 +123,7 @@ public class BaseAgent : MonoBehaviour
             Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
             RaycastHit hit;
             Physics.Raycast(transform.position, v, out hit, maxPerceptionL);
-            Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
+            //Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
             hits.Add(hit);
         }
 
@@ -260,6 +262,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void FrogInAction() {}
     public virtual void DeadAction()
     {        
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 
