@@ -99,6 +99,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   canBeEaten: 0
+  dna: []
+  perfectDna: []
+  worstDna: []
 --- !u!135 &-6777932470241928531
 SphereCollider:
   m_ObjectHideFlags: 0

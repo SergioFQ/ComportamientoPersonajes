@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4117162685643756181}
   - component: {fileID: 8854738317247998743}
   - component: {fileID: 1787063095835217116}
+  - component: {fileID: 5597337117551116474}
   m_Layer: 0
   m_Name: HuevosRana
   m_TagString: HuevosRana
@@ -48,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f090c6d18d7454449babd87355b698b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dna: 
+  dna: []
   type: Frog
 --- !u!212 &1490385472755137515
 SpriteRenderer:
@@ -151,6 +152,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5597337117551116474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490385472755137514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ba715c79edd754f9b38e34be2e4421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniCameraController: {fileID: 0}
+  sR: {fileID: 1490385472854208161}
 --- !u!1 &1490385472854208175
 GameObject:
   m_ObjectHideFlags: 0

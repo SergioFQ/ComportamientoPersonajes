@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4117162685643756181}
   - component: {fileID: 7316171194807195304}
   - component: {fileID: 8854738317247998743}
+  - component: {fileID: 2721833300430294878}
   m_Layer: 0
   m_Name: PezJoven
   m_TagString: Pez
@@ -59,7 +60,8 @@ MonoBehaviour:
   isHungry: 0
   hunger: 0
   currentState: 0
-  dna: 
+  ciclo: {fileID: 0}
+  dna: []
   juvenile: 1
 --- !u!212 &1490385472755137515
 SpriteRenderer:
@@ -162,6 +164,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2721833300430294878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490385472755137514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ba715c79edd754f9b38e34be2e4421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniCameraController: {fileID: 0}
+  sR: {fileID: 1490385472854208161}
 --- !u!1 &1490385472854208175
 GameObject:
   m_ObjectHideFlags: 0
