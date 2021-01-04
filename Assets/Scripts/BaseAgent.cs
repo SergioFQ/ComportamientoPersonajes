@@ -83,7 +83,7 @@ public class BaseAgent : MonoBehaviour
                 foodTag[1] = tagsAgents.Renacuajo.ToString();
                 break;
             case "Mosca":
-                predatorTag = tagsAgents.Rana.ToString();
+                predatorTag = null; //tiene depredador pero no huirá de él
                 foodTag[0] = null;
                 break;
             case "Renacuajo":
