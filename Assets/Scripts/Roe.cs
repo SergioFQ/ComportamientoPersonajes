@@ -33,6 +33,7 @@ public class Roe : MonoBehaviour
 
     public void DeadRoe()
     {
+        if (gameObject.GetComponent<LifeCycle>().isTarget) gameObject.GetComponent<Clickeable>().Dead();
         Destroy(gameObject);
     }
     /*

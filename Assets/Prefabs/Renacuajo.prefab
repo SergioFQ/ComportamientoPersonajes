@@ -57,6 +57,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  canBeTarget: 1
   _agent: {fileID: 0}
   isHungry: 0
   hunger: 0

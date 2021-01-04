@@ -7,11 +7,11 @@ public class Frog : BaseAgent
    
     private bool isWet;
     [SerializeField]
-    private float wetness;
+    public float wetness;
     [SerializeField]
     private bool isDry;
     [SerializeField]
-    private float dryness;
+    public float dryness;
     public GameObject ranaPrefab;
 
     protected override void Start()

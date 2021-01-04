@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,16 +13,18 @@ public class LifeCycle : MonoBehaviour
     //private float probabilityOfSucces;
     //private float probabilityOfDead;
     private float rand;
-    [SerializeField]private float timeOfLive;
+    public float timeOfLive;
     [SerializeField]private float timeInPhase;
     private Plant plantComponent;
     public List<float> dna;
     public List<float> perfectDna;
     public List<float> worstDna;
+    public MiniCameraCotroller miniCameraController;
+    public bool isTarget;
     
     public void Start()
     {
-        
+        miniCameraController = FindObjectOfType<MiniCameraCotroller>();
         plantComponent = gameObject.GetComponent<Plant>();
         if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); timeOfLive = 0.0f; return;  }
         rand = Random.value;
@@ -80,19 +81,17 @@ public class LifeCycle : MonoBehaviour
             {
                 objAgent.Init(dna, perfectDna, worstDna);
                 objAgent.initObject(baseAgent._agent);
+                if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 baseAgent.DeadAction();
             }
             else
             {
                 objAgent.Init(dna, perfectDna, worstDna);
                 objAgent.initObject(gameObject.GetComponent<NavMeshAgent>());
+                if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 Destroy(gameObject);
             }
-            
-
             obj.GetComponent<LifeCycle>().initCycle(dna, timeOfLive, worstDna, perfectDna);
-
-
         }
     }
 

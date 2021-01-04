@@ -73,7 +73,6 @@ public class BaseAgent : MonoBehaviour
         maxPerceptionA = 15;
         maxPerceptionL = 10;
         hunger = 1;
-
         _agent = GetComponent<NavMeshAgent>();
     }
     private void Awake()
@@ -263,6 +262,7 @@ public class BaseAgent : MonoBehaviour
     public virtual void DeadAction()
     {        
         StopAllCoroutines();
+        if (gameObject.GetComponent<LifeCycle>().isTarget) gameObject.GetComponent<Clickeable>().Dead();
         Destroy(gameObject);
     }
 
