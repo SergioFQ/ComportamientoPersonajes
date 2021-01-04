@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class Fish : BaseAgent
 {
-   
+    [SerializeField] private LifeCycle ciclo;
     private System.Random random;
-    public List<int> dna;
+    public List<float> dna;
     private float mutationRate;
-    private List<int> perfectFish;
-    private List<int> worstFish;
+    private List<float> perfectFish;
+    private List<float> worstFish;
     public bool juvenile;
 
-    public void Init(List<int> d,  System.Random r, float m, List<int> perfect, List<int> worst)
+    public void Init(List<float> d,  System.Random r, float m, List<float> perfect, List<float> worst)
     {
-
         dna = d;
+        ciclo.dna = dna;
         mutationRate = m;
         random = r;
         worstFish = worst;
-        perfectFish = perfect;
+        perfectFish = perfect;  
+        ciclo.perfectDna = perfectFish;
+        ciclo.worstDna = worstFish;
     }
 
     
@@ -33,7 +35,7 @@ public class Fish : BaseAgent
             // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
             if(random.NextDouble() < av)
             {
-                int offspringNumber = (dna[3] + otherFish.dna[3]) / 2;
+                float offspringNumber = (dna[3] + otherFish.dna[3]) / 2;
                 for(int i = 0; i < offspringNumber; i++)
                 {
                     Crossover(otherFish);
@@ -52,8 +54,8 @@ public class Fish : BaseAgent
         child.Init(random, mutationRate, perfectFish, worstFish, type);
 
 
-        child.dna = new List<int>();
-        int stat;
+        child.dna = new List<float>();
+        float stat;
         for(int i = 0; i < dna.Count; i++)
         {
             stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];

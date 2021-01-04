@@ -19,27 +19,27 @@ public class InitialPopulation : MonoBehaviour
 
     // Peces
     private List<Fish> fishPopulation;
-    public int fishPopulationSize;
-    public int maxFishVel = 10;
-    public int minFishVel = 0;
-    public int maxFishAcceleration = 10;
-    public int minFishAcceleration = 0;
-    public int maxFishPhys = 10;
-    public int minFishPhys = 0;
-    public int maxFishOffspring = 10;
-    public int minFishOffspring = 0;
-    public int maxFishEggLayingTime = 10;
-    public int minFishEggLayingTime = 0;
-    public int maxFishGrowingTime = 10;
-    public int minFishGrowingTime = 0;
-    public int maxFishHatchingTime = 10;
-    public int minFishHatchingTime = 0;
-    public int maxFishNutritionalValue = 10;
-    public int minFishNutritionalValue = 0;
-    public int maxFishLifespan = 10;
-    public int minFishLifespan = 0;
-    public int maxFishPossibilityOfSuccess = 10;
-    public int minFishPossibilityOfSuccess = 0;
+    public float fishPopulationSize;
+    public float maxFishVel = 10;
+    public float minFishVel = 0;
+    public float maxFishAcceleration = 10;
+    public float minFishAcceleration = 0;
+    public float maxFishPhys = 10;
+    public float minFishPhys = 0;
+    public float maxFishOffspring = 10;
+    public float minFishOffspring = 0;
+    public float maxFishEggLayingTime = 10;
+    public float minFishEggLayingTime = 0;
+    public float maxFishGrowingTime = 10;
+    public float minFishGrowingTime = 0;
+    public float maxFishHatchingTime = 10;
+    public float minFishHatchingTime = 0;
+    public float maxFishNutritionalValue = 10;
+    public float minFishNutritionalValue = 0;
+    public float maxFishLifespan = 10;
+    public float minFishLifespan = 0;
+    public float maxFishPossibilityOfSuccess = 10;
+    public float minFishPossibilityOfSuccess = 0;
     public float fishMutationRate = 0.01f;
 
     // Moscas
@@ -48,27 +48,27 @@ public class InitialPopulation : MonoBehaviour
 
     // Ranas
     private List<Frog> frogPopulation;
-    public int frogPopulationSize;
-    public int maxFrogVel = 10;
-    public int minFrogVel = 0;
-    public int maxFrogAcceleration = 10;
-    public int minFrogAcceleration = 0;
-    public int maxFrogPhys = 10;
-    public int minFrogPhys = 0;
-    public int maxFrogOffspring = 10;
-    public int minFrogOffspring = 0;
-    public int maxFrogEggLayingTime = 10;
-    public int minFrogEggLayingTime = 0;
-    public int maxFrogGrowingTime = 10;
-    public int minFrogGrowingTime = 0;
-    public int maxFrogHatchingTime = 10;
-    public int minFrogHatchingTime = 0;
-    public int maxFrogNutritionalValue = 10;
-    public int minFrogNutritionalValue = 0;
-    public int maxFrogLifespan = 10;
-    public int minFrogLifespan = 0;
-    public int maxFrogPossibilityOfSuccess = 10;
-    public int minFrogPossibilityOfSuccess = 0;
+    public float frogPopulationSize;
+    public float maxFrogVel = 10;
+    public float minFrogVel = 0;
+    public float maxFrogAcceleration = 10;
+    public float minFrogAcceleration = 0;
+    public float maxFrogPhys = 10;
+    public float minFrogPhys = 0;
+    public float maxFrogOffspring = 10;
+    public float minFrogOffspring = 0;
+    public float maxFrogEggLayingTime = 10;
+    public float minFrogEggLayingTime = 0;
+    public float maxFrogGrowingTime = 10;
+    public float minFrogGrowingTime = 0;
+    public float maxFrogHatchingTime = 10;
+    public float minFrogHatchingTime = 0;
+    public float maxFrogNutritionalValue = 10;
+    public float minFrogNutritionalValue = 0;
+    public float maxFrogLifespan = 10;
+    public float minFrogLifespan = 0;
+    public float maxFrogPossibilityOfSuccess = 10;
+    public float minFrogPossibilityOfSuccess = 0;
     public float frogMutationRate = 0.01f;
 
     // Plantas
@@ -80,7 +80,7 @@ public class InitialPopulation : MonoBehaviour
         fishPopulation = new List<Fish>();
         System.Random r = new System.Random();
 
-        List<int> perfectFishDna = new List<int>();
+        List<float> perfectFishDna = new List<float>();
         perfectFishDna.Add(maxFishVel);
         perfectFishDna.Add(maxFishAcceleration);
         perfectFishDna.Add(maxFishPhys);
@@ -92,7 +92,7 @@ public class InitialPopulation : MonoBehaviour
         perfectFishDna.Add(maxFishLifespan);
         perfectFishDna.Add(maxFishPossibilityOfSuccess);
 
-        List<int> worstFishDna = new List<int>();
+        List<float> worstFishDna = new List<float>();
         worstFishDna.Add(minFishVel);
         worstFishDna.Add(minFishAcceleration);
         worstFishDna.Add(minFishPhys);
@@ -104,11 +104,11 @@ public class InitialPopulation : MonoBehaviour
         worstFishDna.Add(minFishLifespan);
         worstFishDna.Add(minFishPossibilityOfSuccess);
 
-        List<int> fishDna;
+        List<float> fishDna;
         GameObject g;
         for (int i = 0; i < fishPopulationSize; i++)
         {
-            fishDna = new List<int>();
+            fishDna = new List<float>();
             fishDna.Add(Random.Range(minFishVel, maxFishVel));
             fishDna.Add(Random.Range(minFishAcceleration, maxFishAcceleration));
             fishDna.Add(Random.Range(minFishPhys, maxFishPhys));
@@ -142,7 +142,7 @@ public class InitialPopulation : MonoBehaviour
 
         frogPopulation = new List<Frog>();
 
-        List<int> perfectFrogDna = new List<int>();
+        List<float> perfectFrogDna = new List<float>();
         perfectFrogDna.Add(maxFrogVel);
         perfectFrogDna.Add(maxFrogAcceleration);
         perfectFrogDna.Add(maxFrogPhys);
@@ -154,7 +154,7 @@ public class InitialPopulation : MonoBehaviour
         perfectFrogDna.Add(maxFrogLifespan);
         perfectFrogDna.Add(maxFrogPossibilityOfSuccess);
 
-        List<int> worstFrogDna = new List<int>();
+        List<float> worstFrogDna = new List<float>();
         worstFrogDna.Add(minFrogVel);
         worstFrogDna.Add(minFrogAcceleration);
         worstFrogDna.Add(minFrogPhys);
@@ -166,10 +166,10 @@ public class InitialPopulation : MonoBehaviour
         worstFrogDna.Add(minFrogLifespan);
         worstFrogDna.Add(minFrogPossibilityOfSuccess);
 
-        List<int> frogDna;
+        List<float> frogDna;
         for (int i = 0; i < frogPopulationSize; i++)
         {
-            frogDna = new List<int>();
+            frogDna = new List<float>();
             frogDna.Add(Random.Range(minFrogVel, maxFrogVel));
             frogDna.Add(Random.Range(minFrogAcceleration, maxFrogAcceleration));
             frogDna.Add(Random.Range(minFrogPhys, maxFrogPhys));

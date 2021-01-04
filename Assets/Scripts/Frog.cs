@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class Frog : BaseAgent
 {
+    [SerializeField] private LifeCycle ciclo;
     private System.Random random;
-    public List<int> dna;
+    public List<float> dna;
     private float mutationRate;
-    private List<int> perfectFrog;
-    private List<int> worstFrog;
+    private List<float> perfectFrog;
+    private List<float> worstFrog;
     private bool isWet;
     [SerializeField]
     private float wetness;
+    [SerializeField]
     private bool isDry;
     [SerializeField]
     private float dryness;
 
-    public void Init(List<int> d, System.Random r, float m, List<int> perfect, List<int> worst)
+    public void Init(List<float> d, System.Random r, float m, List<float> perfect, List<float> worst)
     {
-
         dna = d;
+        ciclo.dna = dna;
         mutationRate = m;
         random = r;
         worstFrog = worst;
         perfectFrog = perfect;
-
+        ciclo.perfectDna = perfectFrog;
+        ciclo.worstDna = worstFrog;
     }
 
     protected override void Start()
@@ -32,7 +35,8 @@ public class Frog : BaseAgent
         base.Start();
         wetness = 1;
         dryness = 1;
-
+        isWet = true;
+        isDry = false;
     }
 
     protected override void FixedUpdate()
@@ -43,7 +47,12 @@ public class Frog : BaseAgent
             
             wetness += 0.05f * Time.fixedDeltaTime;
             dryness -= 0.05f * Time.fixedDeltaTime;
-            if (dryness < 0.6) ChangeState(state.FrogOut);
+            if (dryness < 0.6)
+            { 
+                ChangeState(state.FrogOut);
+                isWet = true;
+                isDry = false;
+            } 
             if (dryness < 0) DeadAction();
             
             if (wetness > 1)
@@ -55,7 +64,12 @@ public class Frog : BaseAgent
         else
         {
             wetness -= 0.05f * Time.fixedDeltaTime;
-            if (wetness < 0.6 ) ChangeState(state.FrogIn);
+            if (wetness < 0.6)
+            {
+                ChangeState(state.FrogIn);
+                isWet = false;
+                isDry = true;
+            }
             if (wetness < 0) DeadAction();
 
             dryness += 0.05f * Time.fixedDeltaTime;
@@ -81,7 +95,7 @@ public class Frog : BaseAgent
         // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
         if (random.NextDouble() < av)
         {
-            int offspringNumber = (dna[3] + otherFrog.dna[3]) / 2;
+            float offspringNumber = (dna[3] + otherFrog.dna[3]) / 2;
             for (int i = 0; i < offspringNumber; i++)
             {
                 
@@ -101,8 +115,8 @@ public class Frog : BaseAgent
         child.Init(random, mutationRate, perfectFrog, worstFrog, type);
 
 
-        child.dna = new List<int>();
-        int stat;
+        child.dna = new List<float>();
+        float stat;
         for (int i = 0; i < dna.Count; i++)
         {
             stat = random.NextDouble() < 0.5 ? dna[i] : otherParent.dna[i];
@@ -112,7 +126,6 @@ public class Frog : BaseAgent
         child.Mutate();
         return child;
     }
-
 
 
     float CalculateFitness()

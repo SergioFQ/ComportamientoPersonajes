@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Roe : MonoBehaviour
 {
     // Start is called before the first frame update
-    public List<int> dna;
+    public List<float> dna;
     private System.Random random;
     private float mutationRate;
-    private List<int> perfectInd;
-    private List<int> worstInd;
+    private List<float> perfectInd;
+    private List<float> worstInd;
     public string type;
 
-    public void Init(System.Random r, float m, List<int> perfect, List<int> worst, string t)
+    public void Init(System.Random r, float m, List<float> perfect, List<float> worst, string t)
     {
         mutationRate = m;
         random = r;
@@ -38,7 +39,7 @@ public class Roe : MonoBehaviour
         {
             if (random.NextDouble() < mutationRate)
             {
-                dna[i] = random.Next(worstInd[i], perfectInd[i]);
+                dna[i] = Random.Range(worstInd[i], perfectInd[i]);
             }
         }
     }
