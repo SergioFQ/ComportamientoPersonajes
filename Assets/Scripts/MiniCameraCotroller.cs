@@ -38,14 +38,14 @@ public class MiniCameraCotroller : MonoBehaviour
         {
             infoAux = "";
             infoAux += "AGENT INFO:" + "\n";
-            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLive,2) + "sec \n";
+            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLive) + "s \n";
             if (!target.CompareTag("HuevosRana") && !target.CompareTag("HuevosPez"))
             {
-                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger,2) + "\n";
+                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger,2)*100 + "%\n";
                 if (target.CompareTag("Rana"))
                 {
-                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness,2) + "\n";
-                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness,2) + "\n";
+                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness,2)*100 + "%\n";
+                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness,2)*100 + "%\n";
                 }
             }
             else 
