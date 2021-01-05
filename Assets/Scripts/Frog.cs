@@ -85,7 +85,7 @@ public class Frog : BaseAgent
      */
     protected override void ChangeState(state nextState)
     {
-        if (nextState == state.Pursuit && _pursuitTarget!=null && _pursuitTarget.gameObject!=null && _pursuitTarget.gameObject.CompareTag("Pez") && _pursuitTarget.GetComponent<Fish>()?.juvenile==false) return;
+        if (nextState == state.Pursuit && _pursuitTarget!=null && _pursuitTarget.gameObject!=null && _pursuitTarget.gameObject.CompareTag("Pez") && _pursuitTarget.GetComponent<Fish>() != null && _pursuitTarget.gameObject.CompareTag("Pez") && _pursuitTarget.GetComponent<Fish>().juvenile==false) return;
         if (currentState == state.Pursuit && nextState==state.FrogIn && wetness>hunger) 
         {
             return;
@@ -129,7 +129,7 @@ public class Frog : BaseAgent
     {
         Vector2 dest = new Vector2(transform.position.x, transform.position.y);
         _agent.SetDestination(dest.normalized * 22);
-        Debug.DrawRay(transform.position, transform.position.normalized*22-transform.position);
+        //Debug.DrawRay(transform.position, transform.position.normalized*22-transform.position);
     }
 
     /*
@@ -139,7 +139,7 @@ public class Frog : BaseAgent
     protected override void FrogInAction() 
     {
         _agent.SetDestination(Vector3.zero);
-        Debug.DrawRay(transform.position, -transform.position);
+        //Debug.DrawRay(transform.position, -transform.position);
     }
     #endregion Functions
 }

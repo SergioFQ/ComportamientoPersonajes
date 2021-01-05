@@ -131,9 +131,9 @@ public class BaseAgent : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag(foodTag[i]))
                     {
-                        if (collision.gameObject.CompareTag("Pez") && collision.gameObject.GetComponent<Fish>()?.juvenile == false) return;
+                        if (collision.gameObject.CompareTag("Pez") && collision.gameObject.GetComponent<Fish>() != null && collision.gameObject.GetComponent<Fish>().juvenile == false) return;
                         if ((!collision.gameObject.CompareTag("Plantas")))
-                        {
+                        {//print(collision.tag);print(collision.GetComponent<LifeCycle>().dna);
                             EatAction(collision.GetComponent<LifeCycle>().dna[7]);
                         }
                         if (collision.gameObject.CompareTag("Plantas"))
@@ -257,7 +257,7 @@ public class BaseAgent : MonoBehaviour
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(foodTag[i]))
+                    if (!string.IsNullOrEmpty(foodTag[i]) && collider.CompareTag(foodTag[i]))
                     {
                         if (collider.CompareTag("Plantas"))
                         {
@@ -317,11 +317,11 @@ public class BaseAgent : MonoBehaviour
         if (_pursuitTarget == null || _pursuitTarget.gameObject == null || Vector3.Distance(transform.position, _pursuitTarget.transform.position) > maxPerceptionL) 
         {
             _pursuitTarget = null;
-            if (_pursuitPlant != null) _agent.SetDestination(_pursuitPlant.position);
+            if (_pursuitPlant != null) {_agent.SetDestination(_pursuitPlant.position);Debug.DrawRay(transform.position, _pursuitPlant.position-transform.position, Color.green);}
             return;
         }
         Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
-        _agent.SetDestination(targetPos);
+        _agent.SetDestination(targetPos);Debug.DrawRay(transform.position, _pursuitTarget.gameObject.transform.position-transform.position, Color.red);
     }
 
     /*

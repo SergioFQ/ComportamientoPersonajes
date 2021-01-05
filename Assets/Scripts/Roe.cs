@@ -44,7 +44,7 @@ public class Roe : MonoBehaviour
         }
     }
     /*
-     * DeadRoe: Método encargado de destruir el objeto hueva cunado sea comida o si no llega a crecer. También se encarga de
+     * DeadRoe: Método encargado de destruir el objeto hueva cuando sea comida o si no llega a crecer. También se encarga de
      * quitar el foco de la minicamera de la hueva si esta fuese la que estábamos observando. 
      */
     public void DeadRoe()

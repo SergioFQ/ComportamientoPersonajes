@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * SliderText: clase que asigna a cada texto
+ * de los menús de configuración el valor
+ * de su slider correspondiente.
+ */
 public class SliderText : MonoBehaviour
 {
     [SerializeField] private Slider sl;

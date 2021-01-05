@@ -118,12 +118,11 @@ public class PopulationInstantiator : MonoBehaviour
 
     #region Unity Functions
     /*
-     * Start: método encargado de guardar los listas de los mejores y peores ADNs
+     * StartSimulation: método encargado de guardar los listas de los mejores y peores ADNs
      * y de instanciar a los agentes.
      */
-    private void Start()
+    public void StartSimulation()
     {
-        return;
         //Peces perfect y worst
         List<float> perfectFishDna = new List<float>();
         perfectFishDna.Add(maxFishVel);

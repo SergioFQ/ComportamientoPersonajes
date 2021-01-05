@@ -24,7 +24,7 @@ public class LifeCycle : MonoBehaviour
 
     #region Unity Functions
     /*
-     * Start: inicializa todo los atributos.
+     * Start: inicializa todos los atributos.
      */
     public void Start()
     {
@@ -51,7 +51,7 @@ public class LifeCycle : MonoBehaviour
 
     /*
      * Update: actualiza el tiempo que lleva vivo un agente y el tiempo que lleva en la fase actual (por ejemplo en la fase renacuajo).
-     * Además llama al método StatePhase que definirá si el agente o no cambia de fase.
+     * Además llama al método StatePhase que definirá si el agente cambia o no de fase.
      */
     private void Update()
     {
