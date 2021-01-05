@@ -228,6 +228,7 @@ public class BaseAgent : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag(foodTag[i]))
                     {
+                        if (collision.gameObject.CompareTag("Pez") && collision.gameObject.GetComponent<Fish>()?.juvenile == false) return;
                         if ((!collision.gameObject.CompareTag("Plantas")))
                         {
                             EatAction(collision.GetComponent<LifeCycle>().dna[7]);

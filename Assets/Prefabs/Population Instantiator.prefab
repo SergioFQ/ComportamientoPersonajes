@@ -70,7 +70,7 @@ MonoBehaviour:
   maxFishEggLayingTime: 8
   minFishEggLayingTime: 1
   maxFishGrowingTime: 10
-  minFishGrowingTime: 2
+  minFishGrowingTime: 7.59
   maxFishHatchingTime: 10
   minFishHatchingTime: 2
   maxFishNutritionalValue: 10
@@ -92,7 +92,7 @@ MonoBehaviour:
   maxFrogEggLayingTime: 8
   minFrogEggLayingTime: 1
   maxFrogGrowingTime: 10
-  minFrogGrowingTime: 2
+  minFrogGrowingTime: 8.2
   maxFrogHatchingTime: 10
   minFrogHatchingTime: 2
   maxFrogNutritionalValue: 10
