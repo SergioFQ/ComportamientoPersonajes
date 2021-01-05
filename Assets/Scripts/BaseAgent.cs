@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * BaseAgent: clase base de los comportamientos de los agentes. Todos los agentes usarán esta
+ * clase o una heredada de esta.
+ */
 public class BaseAgent : MonoBehaviour
 {
     public List<RaycastHit> hits;
     public float maxPerceptionL;
     public int maxPerceptionA;
+
     public string predatorTag;
     public string[] foodTag = new string[3];
 
@@ -39,7 +44,6 @@ public class BaseAgent : MonoBehaviour
         Wander,
         Pursuit,
         Evade,
-        Eat,
         FrogOut,
         FrogIn
     }
@@ -59,19 +63,19 @@ public class BaseAgent : MonoBehaviour
     }
     [SerializeField] protected state currentState;
 
-    public void Init(List<float> d, List<float> perfect, List<float> worst) {
-
-        dna = d;
-        worstDna = worst;
-        perfectDna = perfect;
-        initialized = true;
-    }
-
-    public void initObject(NavMeshAgent agente)
+    #region Unity Functions
+    /*
+     * Awake: define los tag de depredador y de comida de cada agente nada
+     * más instanciarlo.
+     */
+    private void Awake()
     {
-        //_agent = agente;
+        SetTags();
     }
-    // Start is called before the first frame update
+
+    /*
+     * Start: inicializa atributos.
+     */
     protected virtual void Start()
     {
         hits = new List<RaycastHit>();
@@ -86,14 +90,13 @@ public class BaseAgent : MonoBehaviour
             _agent.acceleration = dna[1];
         }
     }
-    private void Awake()
-    {
-        SetTags();
-    }
 
+    /*
+     * FixedUpdate: llama al método encargado de detectar al resto de los agentes, tramita 
+     * el hambre y la reproducción de los agentes.
+     */
     protected virtual void FixedUpdate()
     {
-        //if (!initialized) return;
         Vision();
         hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
         waitingTime += Time.deltaTime;
@@ -101,20 +104,76 @@ public class BaseAgent : MonoBehaviour
         if (hunger < 0) DeadAction();
         if (currentState.Equals(state.Wander) && ((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2))
         {
-            //waitingTime = 0;
             if (gameObject.tag.Equals("Pez") && gameObject.GetComponent<Fish>().juvenile)
             {
                 canReproduce = false;
             }
             else
             {
-                Debug.DrawRay(transform.position, transform.forward);
+                //Debug.DrawRay(transform.position, transform.forward);
                 canReproduce = true;
             }
         }
         else { canReproduce = false; }
     }
 
+    /*
+     * OnTriggerEnter: método por el cual el agente se come a un agente si está 
+     * hambriento y si es uno de los agentes que puede comer.
+     */
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag != null && isHungry)
+        {
+            for (int i = 0; i < foodTag.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(foodTag[i]))
+                {
+                    if (collision.gameObject.CompareTag(foodTag[i]))
+                    {
+                        if (collision.gameObject.CompareTag("Pez") && collision.gameObject.GetComponent<Fish>()?.juvenile == false) return;
+                        if ((!collision.gameObject.CompareTag("Plantas")))
+                        {
+                            EatAction(collision.GetComponent<LifeCycle>().dna[7]);
+                        }
+                        if (collision.gameObject.CompareTag("Plantas"))
+                        {
+                            EatAction(1);
+                            if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
+                                collision.gameObject.GetComponent<LifeCycle>().EatPlant();
+                        }
+                        else if (collision.gameObject.CompareTag("HuevosRana") || collision.gameObject.CompareTag("HuevosPez"))
+                        {
+                            collision.GetComponent<Roe>().DeadRoe();
+                        }
+                        else
+                        {
+                            collision.gameObject.GetComponent<BaseAgent>().DeadAction();
+                        }
+                    }
+                }
+                else return;
+            }
+        }
+    }
+    #endregion Unity Functions
+
+    #region Functions
+    /*
+     * Init: inicializa el ADN del agente y recibe también las listas del mejor y peor ADN (valores máximos y mínimos respectivamente).
+     */
+    public void Init(List<float> d, List<float> perfect, List<float> worst)
+    {
+
+        dna = d;
+        worstDna = worst;
+        perfectDna = perfect;
+        initialized = true;
+    }
+
+    /*
+     * SetTags: guarda el tag de su depredador y un array de los tags de su comida.
+     */
     private void SetTags()
     {
         switch (gameObject.tag)
@@ -140,8 +199,12 @@ public class BaseAgent : MonoBehaviour
                 break;
         }
     }
+
+    /*
+     * Vision: lanza un cono de rayos mediante el cual detecta a los agentes cercanos.
+     */
     protected void Vision()
-    {//añadir esfera alrededor
+    {
         hits.Clear();
         for (int i = -maxPerceptionA; i < maxPerceptionA; i += 1)
         {
@@ -162,6 +225,10 @@ public class BaseAgent : MonoBehaviour
         }
     }
 
+    /*
+     * Collision Detected: método llamado cuando un rayo choca con un agente. 
+     * Dependiendo de su tag y diferentes parámetros, cambiará o no de estado.
+     */
     protected bool CollisionDetected (Collider collider)
     {
         BaseAgent otherAgent = collider.gameObject.GetComponent<BaseAgent>();
@@ -218,44 +285,11 @@ public class BaseAgent : MonoBehaviour
         return false;
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag != null && isHungry)
-        {
-            for (int i = 0; i < foodTag.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(foodTag[i]))
-                {
-                    if (collision.gameObject.CompareTag(foodTag[i]))
-                    {
-                        if (collision.gameObject.CompareTag("Pez") && collision.gameObject.GetComponent<Fish>()?.juvenile == false) return;
-                        if ((!collision.gameObject.CompareTag("Plantas")))
-                        {
-                            EatAction(collision.GetComponent<LifeCycle>().dna[7]);
-                        }
-                        if (collision.gameObject.CompareTag("Plantas"))
-                        {
-                            EatAction(1);
-                            if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
-                                collision.gameObject.GetComponent<LifeCycle>().EatPlant();
-                        }
-                        else if (collision.gameObject.CompareTag("HuevosRana") || collision.gameObject.CompareTag("HuevosPez"))
-                        {
-                            collision.GetComponent<Roe>().DeadRoe();
-                        }
-                        else
-                        {
-                            collision.gameObject.GetComponent<BaseAgent>().DeadAction();
-                        }
-                    }
-                }
-                else return;
-            }
-        }
-    }
-    
-   
-    protected virtual void ChangeState(state nextState) {//habría que comprobar inicialmente en que estado nos encontramos
+   /*
+    * ChangeState: método encargado de cambiar el estado del agente por 
+    * otro de los definidos en la máquina de estados.
+    */
+    protected virtual void ChangeState(state nextState) {
 
         if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
         (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null) || 
@@ -267,10 +301,17 @@ public class BaseAgent : MonoBehaviour
         StartCoroutine(currentState.ToString());
     }
 
+    /*
+     * WanderAction: Movimiento que realiza el agente cuando se encuentra en estado Wander.
+     */
     protected virtual void WanderAction()
     {
         _agent.SetDestination(transform.position + transform.forward*_agent.speed + Random.insideUnitSphere*_wanderRadius);
     }
+
+    /*
+     * PursuitAction: Comportamiento que realiza el agente cuando se encuentra en estado de perseguir.
+     */
     protected void PursuitAction()
     {
         if (_pursuitTarget == null || _pursuitTarget.gameObject == null || Vector3.Distance(transform.position, _pursuitTarget.transform.position) > maxPerceptionL) 
@@ -282,6 +323,10 @@ public class BaseAgent : MonoBehaviour
         Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
         _agent.SetDestination(targetPos);
     }
+
+    /*
+     * EvadeAction: Acccion que realiza el agente cuando está en estado de escaapar al ver a un depredador.
+     */
     protected void EvadeAction()
     {
         if (_evadeTarget == null || _evadeTarget.gameObject == null || Vector3.Distance(transform.position, _evadeTarget.transform.position) > maxPerceptionL) 
@@ -292,6 +337,11 @@ public class BaseAgent : MonoBehaviour
         Vector3 targetPos = transform.position - _evadeTarget.transform.position + _evadeTarget.transform.forward * _evadeTarget.speed;
          _agent.SetDestination(targetPos);
     }
+
+    /*
+     * EatAction: método que se encarga de saciar el hambre del agente cuando este se come a otro agente 
+     * de los que puede comer:
+     */
     protected virtual void EatAction(float nutrition)
     {
         hunger += nutrition;
@@ -299,22 +349,39 @@ public class BaseAgent : MonoBehaviour
         {
             isHungry = false;
         }
-        else if(hunger > 1)
+        if(hunger > 1)
         {
             hunger = 1;
         }
     }
-   
+
+    /*
+     * FrogOutAction: Acción que realiza la rana cuando necesita oxígeno y sale del estanque. Este
+     * método es sobrescrito por el agente rana donde se definirá el comportamiento a seguir.
+     */
     protected virtual void FrogOutAction() {}
+
+    /*
+     * FrogInAction: Acción que realiza la rana cuando necesita hidratarse y entra en el estanque.
+     * Este método es sobrescrito por el agente rana donde se definirá el comportamiento a seguir.
+     */
     protected virtual void FrogInAction() {}
+    
+    /*
+     * DeadAction: Método encargado de tramitar la muerte del agente.
+     * 
+     */
     public virtual void DeadAction()
     {        
         StopAllCoroutines();
         if (gameObject.GetComponent<LifeCycle>().isTarget) gameObject.GetComponent<Clickeable>().Dead();
         Destroy(gameObject);
     }
-
-    // Una vez se ha detectado una rana con la que poder reproducirse se calculan las posibilidades y si son favorables se lleva a cabo
+    
+    /*
+     * Reproduction: método que tramita la reproducción de los agentes. Si la reproducción sale bien, llamarán al método CrossOver que se
+     * encargará de instanciar a los nuevos agentes.
+     */
     public void Reproduction(BaseAgent otherParent)
     {
         waitingTime = 0;
@@ -340,7 +407,7 @@ public class BaseAgent : MonoBehaviour
         if (Random.Range(0, 100) < av)
         {
             float offspringNumber = (dna[3] + otherParent.dna[3]) / 2;
-            Debug.Log(offspringNumber);
+            //Debug.Log(offspringNumber);
             for (int i = 0; i < offspringNumber; i++)
             {
                 Crossover(otherParent);
@@ -348,10 +415,13 @@ public class BaseAgent : MonoBehaviour
         }
     }
 
-
+    /*
+     * CrossOver: tras el éxito de la reproducción, se instanciarán nuevos agentes que
+     * utilizarán los ADNs de los padres para crear el suyo propio.
+     */
     public void Crossover(BaseAgent otherParent)
     {
-        Debug.Log("Me he reproducido");
+        //Debug.Log("Me he reproducido");
         List<float> newDna = new List<float>();
         float stat;
         for (int i = 0; i < dna.Count; i++)
@@ -360,11 +430,14 @@ public class BaseAgent : MonoBehaviour
             newDna.Add(stat);
         }
         Roe roe = Instantiate(hijoPrefab, transform.position, Quaternion.identity) .GetComponent<Roe>();
-        roe.Init(newDna, perfectDna, worstDna, gameObject.tag);
+        roe.Init(newDna, perfectDna, worstDna);
 
         roe.Mutate();
     }
 
+    /*
+     * CalculateFitness: método utilizado en la función Reproduction para saber si esta saldrá de forma exitosa o no.
+     */
     protected float CalculateFitness()
     {
         float score;
@@ -377,60 +450,75 @@ public class BaseAgent : MonoBehaviour
 
         return score;
     }
+    #endregion Functions
 
+    #region Coroutines
     //coroutines
 
+    /*
+     * Wander: corrutina del estado Wander que llamará al método WanderAction mientras que el 
+     * agente se encuentre en ese estado.
+     */
     IEnumerator Wander()
     {
         while (currentState.Equals(state.Wander))
         {
             WanderAction();
-            yield return 0;//retornamos algo cualquiera
+            yield return 0;
         }
     }
 
+    /*
+     * Pursuit: corrutina del estado Pursuit que llamará al método PursuitAction mientras que el 
+     * agente se encuentre en ese estado.
+     */
     IEnumerator Pursuit()
     {
         while (currentState.Equals(state.Pursuit))
         {
             PursuitAction();
-            yield return 0;//retornamos algo cualquiera
+            yield return 0;
         }
     }
 
+    /*
+     * Evade: corrutina del estado Evade que llamará al método EvadeAction mientras que el 
+     * agente se encuentre en ese estado.
+     */
     IEnumerator Evade()
     {
         while (currentState.Equals(state.Evade))
         {
             EvadeAction();
-            yield return 0;//retornamos algo cualquiera
-        }
-    }
-    IEnumerator Eat()
-    {
-        while (currentState.Equals(state.Eat))
-        {
-            EatAction(dna[7]);
-            yield return 0;//retornamos algo cualquiera
+            yield return 0;
         }
     }
 
+    /*
+     * FrogIn: corrutina del estado FrogIn que llamará al método FrogInAction mientras que la 
+     * rana se encuentre en ese estado.
+     */
     IEnumerator FrogIn()
     {
         while (currentState.Equals(state.FrogIn))
         {
             FrogInAction();
-            yield return 0;//retornamos algo cualquiera
+            yield return 0;
         }
     }
 
 
+    /*
+     * FrogOut: corrutina del estado FrogIn que llamará al método FrogOutAction mientras que la 
+     * rana se encuentre en ese estado.
+     */
     IEnumerator FrogOut()
     {
         while (currentState.Equals(state.FrogOut))
         {
            FrogOutAction();
-            yield return 0;//retornamos algo cualquiera
+            yield return 0;
         }
     }
+    #endregion Coroutines
 }

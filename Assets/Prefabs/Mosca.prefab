@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1490385472755137517}
-  - component: {fileID: 4115919237309286361}
   - component: {fileID: 1490385472755137515}
   - component: {fileID: 4117162685643756181}
   - component: {fileID: 7316171194807195304}
   - component: {fileID: 8854738317247998743}
   - component: {fileID: 506541721419789670}
   - component: {fileID: 8346247164955128398}
+  - component: {fileID: 703947000078268017}
   m_Layer: 0
   m_Name: Mosca
   m_TagString: Mosca
@@ -38,34 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4115919237309286361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490385472755137514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad99477b91eb4ef4f8ce3b79c5940805, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxPerceptionL: 0
-  maxPerceptionA: 0
-  predatorTag: 
-  foodTag:
-  - 
-  - 
-  - 
-  _agent: {fileID: 0}
-  isHungry: 0
-  hunger: 0
-  canReproduce: 0
-  hijoPrefab: {fileID: 0}
-  dna: []
-  perfectDna: []
-  worstDna: []
-  currentState: 0
 --- !u!212 &1490385472755137515
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -195,13 +167,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   canBeEaten: 0
-  timeOfLive: 0
+  timeOfLife: 0
   timeInPhase: 0
   dna: []
   perfectDna: []
   worstDna: []
   miniCameraController: {fileID: 0}
   isTarget: 0
+--- !u!114 &703947000078268017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490385472755137514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0332b075fdd68c4297b58875802a787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPerceptionL: 0
+  maxPerceptionA: 0
+  predatorTag: 
+  foodTag:
+  - 
+  - 
+  - 
+  _agent: {fileID: 0}
+  isHungry: 0
+  hunger: 0
+  canReproduce: 0
+  hijoPrefab: {fileID: 0}
+  dna: []
+  perfectDna: []
+  worstDna: []
+  currentState: 0
 --- !u!1 &1490385472854208175
 GameObject:
   m_ObjectHideFlags: 0

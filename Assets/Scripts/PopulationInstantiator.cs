@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * PopulationInstantiator: clase encargada de generar todas las huevas, moscas, plantas y rocas en la escena. Además, es
+ * la clase que se encarga de asignar los valores máximos y mínimos del ADN de los agentes.
+ */
 public class PopulationInstantiator : MonoBehaviour
 {
 
@@ -18,13 +22,14 @@ public class PopulationInstantiator : MonoBehaviour
      * 9 - PossibilityOfSuccess (Posibilidad de pasar a la siguiente etapa)
      * 10 - MutationRate (Posibilidad de mutación genética) 
      */
-
+    [Header("Agents Prefabs")]
     public GameObject huevoPezPrefab;
     public GameObject huevoRanaPrefab;
     public GameObject rocaPrefab;
     public GameObject plantaPrefab;
     public GameObject moscaPrefab;
 
+    [Header("Number of Agents")]
     //Campo para indicar el número de renacuajos del flock
     /*[100]*/[SerializeField]public int numeroHuevosPez;
     /*[101]*/[SerializeField] public int numeroHuevosRana;
@@ -36,6 +41,7 @@ public class PopulationInstantiator : MonoBehaviour
     private List<float> worstFlyDna;
 
     // Huevos Pez
+    [Header("Fish Attributes")]
     /*[20]*/[Range(0.1f, 10)] public float maxFishVel = 10;
     /*[21]*/[Range(0.1f, 10)] public float minFishVel = 0.1f;
     /*[22]*/[Range(0.1f, 10)] public float maxFishAcceleration = 10;
@@ -60,6 +66,7 @@ public class PopulationInstantiator : MonoBehaviour
     /*[221]*/[Range(0.1f, 1)] public float maxFishMutationRate = 1;
 
     //Huevos Rana
+    [Header("Frog Attributes")]
     /*[30]*/[Range(0.1f, 10)] public float maxFrogVel = 10;
     /*[31]*/[Range(0.1f, 10)] public float minFrogVel = 0.1f;
     /*[32]*/[Range(0.1f, 10)] public float maxFrogAcceleration = 10;
@@ -84,6 +91,7 @@ public class PopulationInstantiator : MonoBehaviour
     /*[321]*/[Range(0.1f, 1)] public float maxFrogMutationRate = 1;
 
     //Moscas
+    [Header("Fly Attributes")]
     /*[41]*/[Range(0.1f, 10)] public float maxFlyVel = 10;
     /*[42]*/[Range(0.1f, 10)] public float minFlyVel = 0.1f;
     /*[43]*/[Range(0.1f, 10)] public float maxFlyAcceleration = 10;
@@ -107,8 +115,11 @@ public class PopulationInstantiator : MonoBehaviour
     private float minFlyMutationRate = 0;
     private float maxFlyMutationRate = 0;
 
-
-    // Start is called before the first frame update
+    #region Unity Functions
+    /*
+     * Start: método encargado de guardar los listas de los mejores y peores ADNs
+     * y de instanciar a los agentes.
+     */
     private void Start()
     {
         //Peces perfect y worst
@@ -212,7 +223,7 @@ public class PopulationInstantiator : MonoBehaviour
             randomPos.z = 0;
             Roe roeFish = Instantiate(huevoPezPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
-            roeFish.Init(fishRoeDna, perfectFishDna, worstFishDna, "fish");
+            roeFish.Init(fishRoeDna, perfectFishDna, worstFishDna);
 
         }
 
@@ -237,7 +248,7 @@ public class PopulationInstantiator : MonoBehaviour
             randomPos.z = 0;
             Roe roeFrog = Instantiate(huevoRanaPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
-            roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna, "Rana");
+            roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna);
 
         }
 
@@ -262,6 +273,20 @@ public class PopulationInstantiator : MonoBehaviour
         StartCoroutine(FlySpawn());
     }
 
+    /*
+     * OnDestroy: método encargardo de parar todas las corrutinas de la clase una vez se destruyan.
+     */
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+    #endregion Unity Functions
+
+    #region Functions
+    /*
+     * SpawnFly: método encargado de hacer aparecer moscas fuera del agua con un ADN determinado por
+     * el mejor y el peor ADN de moscas.
+     */
     private void SpawnFly()
     {
         List<float> flyDna;
@@ -278,14 +303,14 @@ public class PopulationInstantiator : MonoBehaviour
         flyDna.Add(Random.Range(minFlyPossibilityOfSuccess, maxFlyPossibilityOfSuccess));
         flyDna.Add(Random.Range(minFlyMutationRate, maxFlyMutationRate));
         Vector2 randomPos = new Vector2(((Random.value<0.5f)?(-1):(1))*Random.Range(22,40),Random.Range(-22,20));
-        BaseAgent fly = Instantiate(moscaPrefab, randomPos, Quaternion.identity).GetComponent<Fly>();
+        BaseAgent fly = Instantiate(moscaPrefab, randomPos, Quaternion.identity).GetComponent<BaseAgent>();
         fly.Init(flyDna, perfectFlyDna, worstFlyDna);
     }
 
-    void OnDestroy()
-    {
-        StopAllCoroutines();
-    }
+    /*
+     * FlySpawn: corrutina encargada de llamar al método SpawnFly cada cierto tiempo. Una vez el obejto que
+     * tenga esta clase se ddestruya, se parará la corrutina.
+     */
     IEnumerator FlySpawn()
     {
         while (true)
@@ -294,4 +319,5 @@ public class PopulationInstantiator : MonoBehaviour
             yield return new WaitForSeconds(flyDelay);//retornamos algo cualquiera
         }
     }
+    #endregion Functions
 }
