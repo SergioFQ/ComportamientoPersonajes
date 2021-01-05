@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * MiniCameraController: clase encargada de definir los comportamientos de la minicámara que muestra las
+ * estadísticas de un agente en concreto de la escena elegido por el usuario.
+ */
 public class MiniCameraCotroller : MonoBehaviour
 {
     private GameObject target;
@@ -10,51 +14,65 @@ public class MiniCameraCotroller : MonoBehaviour
     public Text info;
     private string infoAux = "";
 
-    public void SelectTarget(GameObject _target) 
-    {
-        if (!cam.gameObject.activeSelf) cam.gameObject.SetActive(true);
-        if (target != null) TargetToNull();
-        target = _target;
-        target.GetComponent<Clickeable>().IsTarget();
-    }
-
-    public void TargetToNull() 
-    {
-        if (target == null) return;
-        target.GetComponent<Clickeable>().IsNotTarget();
-        target = null;
-        info.text = "";
-    }
-
-    public void CloseMiniCamera() 
-    {
-        TargetToNull();
-        cam.gameObject.SetActive(false);
-    }
-
+    #region Unity Functions
+    /*
+     * Update: actualiza la información del agente por pantalla. 
+     */
     public void Update()
     {
         if (target != null)
         {
             infoAux = "";
             infoAux += "AGENT INFO:" + "\n";
-            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLive,2) + "sec \n";
+            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLife, 2) + "sec \n";
             if (!target.CompareTag("HuevosRana") && !target.CompareTag("HuevosPez"))
             {
-                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger,2) + "\n";
+                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger, 2) + "\n";
                 if (target.CompareTag("Rana"))
                 {
-                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness,2) + "\n";
-                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness,2) + "\n";
+                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness, 2) + "\n";
+                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness, 2) + "\n";
                 }
-            }
-            else 
-            {
-                //Cosas de los huevos
             }
             info.text = infoAux;
             cam.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, cam.transform.position.z);
         }
     }
+    #endregion Unity Functions
 
+    #region Functions
+    /*
+     * SelectTarget: función llamada al clickar sobre un agente de la escena y cuando este evoluciona para mostrar la
+     * información del propio agente.
+     */
+    public void SelectTarget(GameObject _target) 
+    {
+        if (!cam.gameObject.activeSelf) cam.gameObject.SetActive(true);
+        if (target != null) TargetToNull();
+        target = _target;
+        target.GetComponent<Clickeable>().SetTarget();
+    }
+
+    /*
+     * TargetToNull: método usado para quitar el foco del antiguo agente seleccionado cuando este muere o 
+     * cuando el usuario decide seleccionar otro.
+     */
+    public void TargetToNull() 
+    {
+        if (target == null) return;
+        target.GetComponent<Clickeable>().SetNotTarget();
+        target = null;
+        info.text = "";
+    }
+
+    /*
+     * CloseMiniCamera: método encargado de cerrar la minicamera cuando el usuario lo desee o cuando muera el 
+     * agente que estábamos observando.
+     */
+    public void CloseMiniCamera() 
+    {
+        TargetToNull();
+        cam.gameObject.SetActive(false);
+    }
+    #endregion Functions
 }

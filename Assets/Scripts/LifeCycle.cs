@@ -4,37 +4,34 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
+/*
+ * LifeCycle: clase encargada del ciclo de vida de los diferentes objetos.
+ */
 public class LifeCycle : MonoBehaviour
 {
     [SerializeField] private GameObject agent;
-    public bool canBeEaten;
+    [SerializeField] private float timeInPhase;
     private BaseAgent baseAgent;
-    //private float duration = 1f;
-    //private float probabilityOfSucces;
-    //private float probabilityOfDead;
-    private float rand;
-    public float timeOfLive;
-    [SerializeField]private float timeInPhase;
+    public MiniCameraCotroller miniCameraController;
     private Plant plantComponent;
+    public bool canBeEaten;
+    public bool isTarget;
+    public float timeOfLife;
+    private float rand;
     public List<float> dna;
     public List<float> perfectDna;
     public List<float> worstDna;
-    public MiniCameraCotroller miniCameraController;
-    public bool isTarget;
-    
+
+    #region Unity Functions
+    /*
+     * Start: inicializa todo los atributos.
+     */
     public void Start()
     {
         miniCameraController = FindObjectOfType<MiniCameraCotroller>();
         plantComponent = gameObject.GetComponent<Plant>();
-        if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); timeOfLive = 0.0f; return;  }
-        rand = Random.value;
-        //probabilityOfSucces = rand;
-        //Debug.Log("S: "+ probabilityOfSucces);
-        rand = Random.Range(0.50f, 1);
-       // probabilityOfDead = rand;
-        //Debug.Log("D: " + probabilityOfDead);
+        if (gameObject.CompareTag("Plantas")) { StartCoroutine(GrowPlant(plantComponent.plantGrowTime)); timeOfLife = 0.0f; return;  }
         baseAgent = GetComponent<BaseAgent>();
-        //CreateFullCycle();
         if (!gameObject.CompareTag("HuevosRana") && !gameObject.CompareTag("HuevosPez"))
         {
             dna = baseAgent.dna;
@@ -48,29 +45,37 @@ public class LifeCycle : MonoBehaviour
             perfectDna = gameObject.GetComponent<Roe>().perfectDna;
             worstDna = gameObject.GetComponent<Roe>().worstDna;
         }
-        timeOfLive = 0.0f;
+        timeOfLife = 0.0f;
         timeInPhase = 0.0f;
-        //StartCoroutine(StartPhase());
     }
 
+    /*
+     * Update: actualiza el tiempo que lleva vivo un agente y el tiempo que lleva en la fase actual (por ejemplo en la fase renacuajo).
+     * Además llama al método StatePhase que definirá si el agente o no cambia de fase.
+     */
     private void Update()
     {
-        timeOfLive += Time.deltaTime;
+        timeOfLife += Time.deltaTime;
         timeInPhase += Time.deltaTime;
-        if (!gameObject.CompareTag("Plantas")) StartPhase();
+        if (!gameObject.CompareTag("Plantas")) StatePhase();
     }
+    #endregion Unity Functions
 
-    public void initCycle(List<float> d/*float _duration, float _succes, float _dead*/, float _timeLived, List<float> worst, List<float> perfect)
+    #region Agents Functions
+    /*
+     * InitCycle: define las características del agente en su nueva fase.
+     */
+    public void InitCycle(List<float> d, float _timeLived, List<float> worst, List<float> perfect)
     {
         dna = d;
         worstDna = worst;
         perfectDna = perfect;
-        //probabilityOfSucces = _succes;
-        //probabilityOfDead = _dead;
-        timeOfLive = _timeLived;
+        timeOfLife = _timeLived;
         timeInPhase = 0.0f;
-        //StartCoroutine(StartPhase());
     }
+    /*
+     * NewPhase: se encarga de cambiar la fase del agente.
+     */
     public void NewPhase()
     {
         if (agent != null)
@@ -80,24 +85,26 @@ public class LifeCycle : MonoBehaviour
             if (baseAgent!=null)
             {
                 objAgent.Init(dna, perfectDna, worstDna);
-                objAgent.initObject(baseAgent._agent);
                 if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 baseAgent.DeadAction();
             }
             else
             {
                 objAgent.Init(dna, perfectDna, worstDna);
-                objAgent.initObject(gameObject.GetComponent<NavMeshAgent>());
                 if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 Destroy(gameObject);
             }
-            obj.GetComponent<LifeCycle>().initCycle(dna, timeOfLive, worstDna, perfectDna);
+            obj.GetComponent<LifeCycle>().InitCycle(dna, timeOfLife, worstDna, perfectDna);
         }
     }
-
-    void StartPhase()
+    /*
+     * StatePhase: método que determina si el agente actual muere o evoluciona si está en una fase 
+     * que puede evolucionar y lleva suficiente tiempo en esta fase. Además, el cambiar de fase 
+     * viene dado por una probabilidad de éxito.
+     */
+    void StatePhase()
     {
-        if (timeOfLive >= dna[8])
+        if (timeOfLife >= dna[8])
         {
             if (gameObject.CompareTag("HuevosPez") || gameObject.CompareTag("HuevosRana"))
             {
@@ -130,15 +137,23 @@ public class LifeCycle : MonoBehaviour
             }
         }
     }
+    #endregion Agents Functions
 
-    #region Plant things
-
+    #region Plant Functions
+    /*
+     * EatPlant: método usado solo en las plantas. Este método es el encargado de cambiar el sprite de las plantas
+     * cuando un agente se las come y de impedir que se la vuelvan a comer hasta que haya vuelto a crecer.
+     */
     public void EatPlant() 
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = plantComponent.sprites[0];
         canBeEaten = false;
         StartCoroutine(GrowPlant(plantComponent.plantGrowTime));
     }
+    /*
+     * GrowPlant: corrutina encargada de hacer crecer a la planta de nuevo una vez haya sido comida tras un 
+     * tiempo determinado.
+     */
     IEnumerator GrowPlant(float dur)
     {
         yield return new WaitForSeconds(dur);
@@ -146,5 +161,5 @@ public class LifeCycle : MonoBehaviour
         canBeEaten = true;
         StopCoroutine(GrowPlant(dur));
     }
-    #endregion Plant things
+    #endregion Plant Functions
 }

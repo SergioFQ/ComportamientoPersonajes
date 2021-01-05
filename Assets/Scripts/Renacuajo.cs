@@ -4,34 +4,25 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * Renacuajo: clase que hereda de BaseAgent para definir la característica flocking 
+ * propias de los renacuajos que no disponen el resto de agentes.
+ */
 public class Renacuajo : BaseAgent
 {
 
-    public LayerMask renLayer;
-
-    public bool isLeader;
-    public Renacuajo leader;
 
     //Campo para indicar el radio de separación entre renacuajos vecinos
-    [SerializeField]
     public float radioRenacuajosVecinos = 3f;
+    public bool isLeader;
+    public Renacuajo leader;
+    public LayerMask renLayer;
 
-
-    /*public void Init(List<float> d, List<float> perfect, List<float> worst)
-    {
-        dna = d;
-        perfectDna = perfect;
-        worstDna = worst;
-        /*ciclo.dna = dna;
-        mutationRate = m;
-        random = r;
-        worstFrog = worst;
-        perfectFrog = perfect;
-        ciclo.perfectDna = perfectFrog;
-        ciclo.worstDna = worstFrog;*/
-    //}
-
-
+    #region Functions
+    /*
+     * WanderAction: función que sobreescribe el comportamiento wander de BaseAgent para
+     * incluir el comportamiento flocking en los renacuajos.
+     */
     protected override void WanderAction()
     {
 
@@ -92,4 +83,5 @@ public class Renacuajo : BaseAgent
             }
         }
     }
+    #endregion Functions
 }
