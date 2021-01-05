@@ -57,7 +57,7 @@ public class LifeCycle : MonoBehaviour
     {
         timeOfLive += Time.deltaTime;
         timeInPhase += Time.deltaTime;
-        StartPhase();
+        if (!gameObject.CompareTag("Plantas")) StartPhase();
     }
 
     public void initCycle(List<float> d/*float _duration, float _succes, float _dead*/, float _timeLived, List<float> worst, List<float> perfect)
@@ -108,7 +108,7 @@ public class LifeCycle : MonoBehaviour
                 baseAgent.DeadAction();
             }
         }
-        else 
+        else
         {
             bool comparison = false;
             if (gameObject.CompareTag("HuevosPez") || gameObject.CompareTag("HuevosRana"))

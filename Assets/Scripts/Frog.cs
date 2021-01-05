@@ -30,8 +30,8 @@ public class Frog : BaseAgent
         if (Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2))
         {
             
-            wetness += 0.05f * Time.fixedDeltaTime;
-            dryness -= 0.05f * Time.fixedDeltaTime;
+            wetness += 0.1f * Time.fixedDeltaTime;
+            dryness -= 0.025f * Time.fixedDeltaTime;
             if (dryness < 0.6)
             { 
                 ChangeState(state.FrogOut);
@@ -48,7 +48,7 @@ public class Frog : BaseAgent
         }
         else
         {
-            wetness -= 0.05f * Time.fixedDeltaTime;
+            wetness -= 0.025f * Time.fixedDeltaTime;
             if (wetness < 0.6)
             {
                 ChangeState(state.FrogIn);
@@ -57,7 +57,7 @@ public class Frog : BaseAgent
             }
             if (wetness < 0) DeadAction();
 
-            dryness += 0.05f * Time.fixedDeltaTime;
+            dryness += 0.1f * Time.fixedDeltaTime;
           
            
             if (dryness > 1)

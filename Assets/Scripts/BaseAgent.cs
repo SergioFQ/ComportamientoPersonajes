@@ -80,8 +80,11 @@ public class BaseAgent : MonoBehaviour
         hunger = 1;
         waitingTime = 0;
         _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = dna[0];
-        _agent.acceleration = dna[1];
+        if (dna.Count > 0)
+        {
+            _agent.speed = dna[0];
+            _agent.acceleration = dna[1];
+        }
     }
     private void Awake()
     {
@@ -90,7 +93,7 @@ public class BaseAgent : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (!initialized) return;
+        //if (!initialized) return;
         Vision();
         hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
         waitingTime += Time.deltaTime;

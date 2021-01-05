@@ -21,12 +21,21 @@ public class PopulationInstantiator : MonoBehaviour
 
     public GameObject huevoPezPrefab;
     public GameObject huevoRanaPrefab;
+    public GameObject rocaPrefab;
+    public GameObject plantaPrefab;
+    public GameObject moscaPrefab;
 
     //Campo para indicar el número de renacuajos del flock
     [SerializeField]
     public int numeroHuevosPez;
     [SerializeField]
     public int numeroHuevosRana;
+    public int numeroRocas;
+    public int numeroMoscas;
+    public int numeroPlantas;
+    public int flyDelay;
+    private List<float> perfectFlyDna;
+    private List<float> worstFlyDna;
 
     // Huevos Pez
     [Range(0.1f, 10)] public float maxFishVel = 10;
@@ -75,6 +84,30 @@ public class PopulationInstantiator : MonoBehaviour
     [Range(0.1f, 10)] public float minFrogPossibilityOfSuccess = 0.1f;
     [Range(0.1f, 1)] public float minFrogMutationRate = 0.01f;
     [Range(0.1f, 1)] public float maxFrogMutationRate = 1;
+
+    //Moscas
+    [Range(0.1f, 10)] public float maxFlyVel = 10;
+    [Range(0.1f, 10)] public float minFlyVel = 0.1f;
+    [Range(0.1f, 10)] public float maxFlyAcceleration = 10;
+    [Range(0.1f, 10)] public float minFlyAcceleration = 0.1f;
+    [Range(0.05f, 0.2f)] public float maxFlyPhys = 10;
+    [Range(0.05f, 0.2f)] public float minFlyPhys = 0.1f;
+    private float maxFlyOffspring = 0;
+    private float minFlyOffspring = 0;
+    private float maxFlyEggLayingTime = 0;
+    private float minFlyEggLayingTime = 0;
+    private float maxFlyGrowingTime = 0;
+    private float minFlyGrowingTime = 0;
+    private float maxFlyHatchingTime = 0;
+    private float minFlyHatchingTime = 0;
+    [Range(0.1f, 10)] public float maxFlyNutritionalValue = 10;
+    [Range(0.1f, 10)] public float minFlyNutritionalValue = 0.1f;
+    [Range(40f,200)] public float maxFlyLifespan = 10;
+    [Range(40f,200)] public float minFlyLifespan = 0.1f;
+    private float maxFlyPossibilityOfSuccess = 0;
+    private float minFlyPossibilityOfSuccess = 0;
+    private float minFlyMutationRate = 0;
+    private float maxFlyMutationRate = 0;
 
 
     // Start is called before the first frame update
@@ -134,6 +167,33 @@ public class PopulationInstantiator : MonoBehaviour
         worstFrogDna.Add(minFrogPossibilityOfSuccess);
         worstFrogDna.Add(maxFrogMutationRate);
 
+        //Peces perfect y worst
+        perfectFlyDna = new List<float>();
+        perfectFlyDna.Add(maxFlyVel);
+        perfectFlyDna.Add(maxFlyAcceleration);
+        perfectFlyDna.Add(maxFlyPhys);
+        perfectFlyDna.Add(maxFlyOffspring);
+        perfectFlyDna.Add(maxFlyEggLayingTime);
+        perfectFlyDna.Add(maxFlyGrowingTime);
+        perfectFlyDna.Add(maxFlyHatchingTime);
+        perfectFlyDna.Add(maxFlyNutritionalValue);
+        perfectFlyDna.Add(maxFlyLifespan);
+        perfectFlyDna.Add(maxFlyPossibilityOfSuccess);
+        perfectFlyDna.Add(minFlyMutationRate);
+
+        worstFlyDna = new List<float>();
+        worstFlyDna.Add(minFlyVel);
+        worstFlyDna.Add(minFlyAcceleration);
+        worstFlyDna.Add(minFlyPhys);
+        worstFlyDna.Add(minFlyOffspring);
+        worstFlyDna.Add(minFlyEggLayingTime);
+        worstFlyDna.Add(minFlyGrowingTime);
+        worstFlyDna.Add(minFlyHatchingTime);
+        worstFlyDna.Add(minFlyNutritionalValue);
+        worstFlyDna.Add(minFlyLifespan);
+        worstFlyDna.Add(minFlyPossibilityOfSuccess);
+        worstFlyDna.Add(maxFlyMutationRate);
+
         //Instanciador de huevos de pez
         List<float> fishRoeDna;
         for (int i = 0; i < numeroHuevosPez; i++)
@@ -181,6 +241,59 @@ public class PopulationInstantiator : MonoBehaviour
 
             roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna, "Rana");
 
+        }
+
+        for (int i = 0; i < numeroPlantas; i++)
+        {
+            Vector3 randomPos = Random.insideUnitSphere*18;
+            randomPos.z = 0;
+            Instantiate(plantaPrefab, transform.position+randomPos, Quaternion.identity);
+        }
+
+        for (int i = 0; i < numeroRocas; i++)
+        {
+            Vector3 randomPos = Random.insideUnitSphere*18;
+            randomPos.z = 0;
+            Instantiate(rocaPrefab, transform.position+randomPos, Quaternion.identity);
+        }
+        
+        for (int i = 0; i < numeroMoscas; i++)
+        {
+            SpawnFly();
+        }
+        StartCoroutine(FlySpawn());
+    }
+
+    private void SpawnFly()
+    {
+        List<float> flyDna;
+        flyDna = new List<float>();
+        flyDna.Add(Random.Range(minFlyVel, maxFlyVel));
+        flyDna.Add(Random.Range(minFlyAcceleration, maxFlyAcceleration));
+        flyDna.Add(Random.Range(minFlyPhys, maxFlyPhys));
+        flyDna.Add(Random.Range(minFlyOffspring, maxFlyOffspring));
+        flyDna.Add(Random.Range(minFlyEggLayingTime, maxFlyEggLayingTime));
+        flyDna.Add(Random.Range(minFlyGrowingTime, maxFlyGrowingTime));
+        flyDna.Add(Random.Range(minFlyHatchingTime, maxFlyHatchingTime));
+        flyDna.Add(Random.Range(minFlyNutritionalValue, maxFlyNutritionalValue));
+        flyDna.Add(Random.Range(minFlyLifespan, maxFlyLifespan));
+        flyDna.Add(Random.Range(minFlyPossibilityOfSuccess, maxFlyPossibilityOfSuccess));
+        flyDna.Add(Random.Range(minFlyMutationRate, maxFlyMutationRate));
+        Vector2 randomPos = new Vector2(((Random.value<0.5f)?(-1):(1))*Random.Range(22,40),Random.Range(-22,20));
+        BaseAgent fly = Instantiate(moscaPrefab, randomPos, Quaternion.identity).GetComponent<Fly>();
+        fly.Init(flyDna, perfectFlyDna, worstFlyDna);
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+    IEnumerator FlySpawn()
+    {
+        while (true)
+        {
+            SpawnFly();
+            yield return new WaitForSeconds(flyDelay);//retornamos algo cualquiera
         }
     }
 }

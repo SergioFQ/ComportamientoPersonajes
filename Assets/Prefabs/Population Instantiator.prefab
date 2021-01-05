@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7789686764191393257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7789686764191393263}
+  - component: {fileID: 7789686764191393262}
+  m_Layer: 0
+  m_Name: Population Instantiator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7789686764191393263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789686764191393257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7789686764191393262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789686764191393257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38eb365bf34cc2b44aae01ff263cb533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  huevoPezPrefab: {fileID: 1490385472755137514, guid: 07efe4fce0362bf4d888eb01e8d8cbaf,
+    type: 3}
+  huevoRanaPrefab: {fileID: 1490385472755137514, guid: aad21d07c2456f04ca82104df27cda9d,
+    type: 3}
+  rocaPrefab: {fileID: 5648708473135977028, guid: c98964a440d3cbb43bbb6edb030bcc80,
+    type: 3}
+  plantaPrefab: {fileID: 5175014028163238597, guid: ae55779cead5b8d4c833486a1d510f01,
+    type: 3}
+  moscaPrefab: {fileID: 1490385472755137514, guid: 519fb6fa15dd09f44a4dc1d9a7a0b61b,
+    type: 3}
+  numeroHuevosPez: 15
+  numeroHuevosRana: 15
+  numeroRocas: 10
+  numeroMoscas: 20
+  numeroPlantas: 20
+  flyDelay: 20
+  maxFishVel: 3
+  minFishVel: 1
+  maxFishAcceleration: 6
+  minFishAcceleration: 2
+  maxFishPhys: 0.2
+  minFishPhys: 0.05
+  maxFishOffspring: 10
+  minFishOffspring: 1
+  maxFishEggLayingTime: 8
+  minFishEggLayingTime: 1
+  maxFishGrowingTime: 10
+  minFishGrowingTime: 2
+  maxFishHatchingTime: 10
+  minFishHatchingTime: 2
+  maxFishNutritionalValue: 10
+  minFishNutritionalValue: 1
+  maxFishLifespan: 200
+  minFishLifespan: 40
+  maxFishPossibilityOfSuccess: 10
+  minFishPossibilityOfSuccess: 0.1
+  minFishMutationRate: 0.1
+  maxFishMutationRate: 1
+  maxFrogVel: 3
+  minFrogVel: 1
+  maxFrogAcceleration: 6
+  minFrogAcceleration: 2
+  maxFrogPhys: 0.2
+  minFrogPhys: 0.05
+  maxFrogOffspring: 10
+  minFrogOffspring: 1
+  maxFrogEggLayingTime: 8
+  minFrogEggLayingTime: 1
+  maxFrogGrowingTime: 10
+  minFrogGrowingTime: 2
+  maxFrogHatchingTime: 10
+  minFrogHatchingTime: 2
+  maxFrogNutritionalValue: 10
+  minFrogNutritionalValue: 1
+  maxFrogLifespan: 200
+  minFrogLifespan: 40
+  maxFrogPossibilityOfSuccess: 10
+  minFrogPossibilityOfSuccess: 0.1
+  minFrogMutationRate: 0.1
+  maxFrogMutationRate: 1
+  maxFlyVel: 10
+  minFlyVel: 0.1
+  maxFlyAcceleration: 10
+  minFlyAcceleration: 0.1
+  maxFlyPhys: 0.05
+  minFlyPhys: 0.2
+  maxFlyNutritionalValue: 10
+  minFlyNutritionalValue: 0.1
+  maxFlyLifespan: 55.5
+  minFlyLifespan: 40
