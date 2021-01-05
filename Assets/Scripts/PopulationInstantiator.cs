@@ -22,6 +22,7 @@ public class PopulationInstantiator : MonoBehaviour
      * 9 - PossibilityOfSuccess (Posibilidad de pasar a la siguiente etapa)
      * 10 - MutationRate (Posibilidad de mutación genética) 
      */
+
     [Header("Agents Prefabs")]
     public GameObject huevoPezPrefab;
     public GameObject huevoRanaPrefab;
@@ -122,6 +123,7 @@ public class PopulationInstantiator : MonoBehaviour
      */
     private void Start()
     {
+        return;
         //Peces perfect y worst
         List<float> perfectFishDna = new List<float>();
         perfectFishDna.Add(maxFishVel);

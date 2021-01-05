@@ -75,30 +75,7 @@ public class MiniCameraCotroller : MonoBehaviour
         cam.gameObject.SetActive(false);
     }
 
-    public void Update()
-    {
-        if (target != null)
-        {
-            infoAux = "";
-            infoAux += "AGENT INFO:" + "\n";
-            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLive) + "s \n";
-            if (!target.CompareTag("HuevosRana") && !target.CompareTag("HuevosPez"))
-            {
-                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger,2)*100 + "%\n";
-                if (target.CompareTag("Rana"))
-                {
-                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness,2)*100 + "%\n";
-                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness,2)*100 + "%\n";
-                }
-            }
-            else 
-            {
-                //Cosas de los huevos
-            }
-            info.text = infoAux;
-            cam.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, cam.transform.position.z);
-        }
-    }
+    
 
     #endregion Functions
 }
