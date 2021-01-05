@@ -19,13 +19,10 @@ public class PopulationInstantiator : MonoBehaviour
      * 10 - MutationRate (Posibilidad de mutación genética) 
      */
 
-    public GameObject renacuajoPrefab;
     public GameObject huevoPezPrefab;
     public GameObject huevoRanaPrefab;
 
     //Campo para indicar el número de renacuajos del flock
-    [SerializeField]
-    public int numeroRenacuajos;
     [SerializeField]
     public int numeroHuevosPez;
     [SerializeField]
@@ -108,7 +105,7 @@ public class PopulationInstantiator : MonoBehaviour
         worstFishDna.Add(minFishNutritionalValue);
         worstFishDna.Add(minFishLifespan);
         worstFishDna.Add(minFishPossibilityOfSuccess);
-        perfectFishDna.Add(maxFishMutationRate);
+        worstFishDna.Add(maxFishMutationRate);
 
         //Ranas perfect y worst
         List<float> perfectFrogDna = new List<float>();
@@ -135,7 +132,7 @@ public class PopulationInstantiator : MonoBehaviour
         worstFrogDna.Add(minFrogNutritionalValue);
         worstFrogDna.Add(minFrogLifespan);
         worstFrogDna.Add(minFrogPossibilityOfSuccess);
-        perfectFrogDna.Add(maxFrogMutationRate);
+        worstFrogDna.Add(maxFrogMutationRate);
 
         //Instanciador de huevos de pez
         List<float> fishRoeDna;
@@ -182,7 +179,7 @@ public class PopulationInstantiator : MonoBehaviour
             randomPos.z = 0;
             Roe roeFrog = Instantiate(huevoRanaPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
-            roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna, "frog");
+            roeFrog.Init(frogRoeDna, perfectFrogDna, worstFrogDna, "Rana");
 
         }
     }

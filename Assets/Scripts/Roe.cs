@@ -22,7 +22,7 @@ public class Roe : MonoBehaviour
    
     public void Mutate()
     {
-        for (int i = 0; i < dna.Count-1; i++)
+        for (int i = 0; i < dna.Count - 1; i++)
         {
             if (Random.value < dna[10])
             {

@@ -60,9 +60,13 @@ MonoBehaviour:
   _agent: {fileID: 0}
   isHungry: 0
   hunger: 0
-  currentState: 0
-  ciclo: {fileID: 0}
+  canReproduce: 0
+  hijoPrefab: {fileID: 1490385472755137514, guid: 07efe4fce0362bf4d888eb01e8d8cbaf,
+    type: 3}
   dna: []
+  perfectDna: []
+  worstDna: []
+  currentState: 0
   juvenile: 0
 --- !u!212 &1490385472755137515
 SpriteRenderer:

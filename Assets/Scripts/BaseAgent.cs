@@ -21,6 +21,11 @@ public class BaseAgent : MonoBehaviour
     public bool isHungry;
     public float hunger;
 
+    public bool canReproduce;
+    [SerializeField]  GameObject hijoPrefab;
+    private Time repTime;
+    private float waitingTime;
+
     public List<float> dna;
     public List<float> perfectDna;
     public List<float> worstDna;
@@ -73,7 +78,10 @@ public class BaseAgent : MonoBehaviour
         maxPerceptionA = 15;
         maxPerceptionL = 10;
         hunger = 1;
+        waitingTime = 0;
         _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = dna[0];
+        _agent.acceleration = dna[1];
     }
     private void Awake()
     {
@@ -85,8 +93,23 @@ public class BaseAgent : MonoBehaviour
         if (!initialized) return;
         Vision();
         hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
+        waitingTime += Time.deltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
         if (hunger < 0) DeadAction();
+        if (currentState.Equals(state.Wander) && ((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2))
+        {
+            //waitingTime = 0;
+            if (gameObject.tag.Equals("Pez") && gameObject.GetComponent<Fish>().juvenile)
+            {
+                canReproduce = false;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.forward);
+                canReproduce = true;
+            }
+        }
+        else { canReproduce = false; }
     }
 
     private void SetTags()
@@ -138,7 +161,17 @@ public class BaseAgent : MonoBehaviour
 
     protected bool CollisionDetected (Collider collider)
     {
-        if (gameObject.tag == collider.tag) return false;
+        BaseAgent otherAgent = collider.gameObject.GetComponent<BaseAgent>();
+        if (gameObject.tag == collider.tag && canReproduce && otherAgent.canReproduce)
+        {
+            canReproduce = false;
+            otherAgent.canReproduce = false;
+            Reproduction(otherAgent);
+        }
+        if (gameObject.tag == collider.tag)
+        {
+            return false;
+        }
         if (!string.IsNullOrEmpty(predatorTag) && collider.gameObject.CompareTag(predatorTag))
         {
             NavMeshAgent colAgent = collider.gameObject.GetComponent<NavMeshAgent>();
@@ -192,9 +225,13 @@ public class BaseAgent : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag(foodTag[i]))
                     {
-                        EatAction();
+                        if ((!collision.gameObject.CompareTag("Plantas")))
+                        {
+                            EatAction(collision.GetComponent<LifeCycle>().dna[7]);
+                        }
                         if (collision.gameObject.CompareTag("Plantas"))
                         {
+                            EatAction(1);
                             if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
                                 collision.gameObject.GetComponent<LifeCycle>().EatPlant();
                         }
@@ -251,10 +288,17 @@ public class BaseAgent : MonoBehaviour
         Vector3 targetPos = transform.position - _evadeTarget.transform.position + _evadeTarget.transform.forward * _evadeTarget.speed;
          _agent.SetDestination(targetPos);
     }
-    protected virtual void EatAction()
+    protected virtual void EatAction(float nutrition)
     {
-        hunger = 1;
-        isHungry = false;
+        hunger += nutrition;
+        if(hunger > 0.6)
+        {
+            isHungry = false;
+        }
+        else if(hunger > 1)
+        {
+            hunger = 1;
+        }
     }
    
     protected virtual void FrogOutAction() {}
@@ -266,17 +310,66 @@ public class BaseAgent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Una vez se ha detectado una rana con la que poder reproducirse se calculan las posibilidades y si son favorables se lleva a cabo
+    public void Reproduction(BaseAgent otherParent)
+    {
+        waitingTime = 0;
+        if (otherParent.tag == "Pez")
+        {
+            if(gameObject.GetComponent<Fish>().juvenile || otherParent.GetComponent<Fish>().juvenile)
+            {
+                return;
+            }
+        }
+        else if(otherParent.tag == "Rana")
+        {
+            if(Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) > Mathf.Pow(20.5f, 2))
+            {
+                return;
+            }
+        }
+        
+        
+        float other = otherParent.CalculateFitness();
+        double av = (CalculateFitness() + other) / 2;
+        // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
+        if (Random.Range(0, 100) < av)
+        {
+            float offspringNumber = (dna[3] + otherParent.dna[3]) / 2;
+            Debug.Log(offspringNumber);
+            for (int i = 0; i < offspringNumber; i++)
+            {
+                Crossover(otherParent);
+            }
+        }
+    }
 
+
+    public void Crossover(BaseAgent otherParent)
+    {
+        Debug.Log("Me he reproducido");
+        List<float> newDna = new List<float>();
+        float stat;
+        for (int i = 0; i < dna.Count; i++)
+        {
+            stat = Random.value < 0.5 ? dna[i] : otherParent.dna[i];
+            newDna.Add(stat);
+        }
+        Roe roe = Instantiate(hijoPrefab, transform.position, Quaternion.identity) .GetComponent<Roe>();
+        roe.Init(newDna, perfectDna, worstDna, gameObject.tag);
+
+        roe.Mutate();
+    }
 
     protected float CalculateFitness()
     {
         float score;
-        float media = 0;
-        for (int i = 0; i < perfectDna.Count-1; i++)
+        float tanto = 0;
+        for (int i = 0; i < perfectDna.Count - 1; i++)
         {
-            media += (float)dna[i] / perfectDna[i];
+            tanto += (float)((dna[i] - worstDna[i]) / (perfectDna[i] - worstDna[i])) * 100;
         }
-        score = (float)media / (dna.Count-1);
+        score = (float)tanto / (dna.Count-1);
 
         return score;
     }
@@ -313,7 +406,7 @@ public class BaseAgent : MonoBehaviour
     {
         while (currentState.Equals(state.Eat))
         {
-            EatAction();
+            EatAction(dna[7]);
             yield return 0;//retornamos algo cualquiera
         }
     }
