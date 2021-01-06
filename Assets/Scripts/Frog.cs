@@ -64,6 +64,10 @@ public class Frog : BaseAgent
                 isWet = false;
                 isDry = true;
             }
+            if (hunger < 0.6)
+            {
+                ChangeState(state.FrogIn);
+            }
             if (wetness < 0) DeadAction();
 
             dryness += 0.1f * Time.fixedDeltaTime;

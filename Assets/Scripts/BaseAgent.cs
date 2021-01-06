@@ -82,7 +82,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void Start()
     {
         hits = new List<RaycastHit>();
-        maxPerceptionA = 15;
+        maxPerceptionA = 60;
         maxPerceptionL = 10;
         hunger = 1;
         waitingTime = 0;
@@ -102,12 +102,12 @@ public class BaseAgent : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         Vision();
-        if (!noHunger) hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
+        if (!noHunger) hunger -= ((0.25f-dna[2])*0.25f)*Time.fixedDeltaTime;
         waitingTime += Time.deltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
 
         if (hunger < 0) DeadAction();
-        if (/*currentState.Equals(state.Wander) && */((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2))
+        if (((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2) && Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2))
         {
             if (gameObject.tag.Equals("Pez") && gameObject.GetComponent<Fish>().juvenile)
             {
@@ -116,14 +116,14 @@ public class BaseAgent : MonoBehaviour
             else
             {
                 //Debug.DrawRay(transform.position, transform.forward);
-                canReproduce = hunger > 0.2;
+                canReproduce = hunger > 0.6;
             }
         }
         else { canReproduce = false; }
 
         if (isHungry || canReproduce) 
         {
-            _agent.speed = _baseSpeed*1.5f;
+            _agent.speed = _baseSpeed*2;
         }
         else
         {
@@ -169,12 +169,26 @@ public class BaseAgent : MonoBehaviour
                 else return;
             }
         }
+    }
+    
+    /*
+     * OnTriggerStay: método por el cual el agente se intenta
+     * reproducir si colisiona con otro agente del mismo tipo
+     * y ambos pueden.
+     */
+    private void OnTriggerStay(Collider collision)
+    {
         BaseAgent otherAgent = collision.gameObject.GetComponent<BaseAgent>();
+        
         if (gameObject.tag == collision.tag && canReproduce && otherAgent.canReproduce)
         {
-            canReproduce = false;
-            otherAgent.canReproduce = false;
-            Reproduction(otherAgent);
+            if (Reproduction(otherAgent))
+            {
+                canReproduce = false;
+                otherAgent.canReproduce = false;
+                ChangeState(state.Wander);
+                otherAgent.ChangeState(state.Wander);
+            }
         }
     }
     #endregion Unity Functions
@@ -228,7 +242,7 @@ public class BaseAgent : MonoBehaviour
     protected void Vision()
     {
         hits.Clear();
-        for (int i = -maxPerceptionA; i < maxPerceptionA; i += 1)
+        for (int i = -maxPerceptionA; i < maxPerceptionA; i += 4)
         {
             Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
             RaycastHit hit;
@@ -258,8 +272,8 @@ public class BaseAgent : MonoBehaviour
         {
             _pursuitTarget = otherAgent._agent;
             ChangeState(state.Pursuit);
-            //otherAgent._pursuitTarget = _agent;
-            //otherAgent.ChangeState(state.Pursuit);
+            otherAgent._pursuitTarget = _agent;
+            otherAgent.ChangeState(state.Pursuit);
         }
         if (gameObject.tag == collider.tag)
         {
@@ -315,7 +329,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void ChangeState(state nextState) {
 
         if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
-        (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null) || 
+        (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null && !(!canReproduce && _pursuitTarget.tag == tag)) || 
         (currentState == state.Evade && nextState == state.Pursuit) || 
         currentState == nextState) return;
 
@@ -406,21 +420,21 @@ public class BaseAgent : MonoBehaviour
      * Reproduction: método que tramita la reproducción de los agentes. Si la reproducción sale bien, llamarán al método CrossOver que se
      * encargará de instanciar a los nuevos agentes.
      */
-    public void Reproduction(BaseAgent otherParent)
+    public bool Reproduction(BaseAgent otherParent)
     {
         waitingTime = 0;
         if (otherParent.tag == "Pez")
         {
             if(gameObject.GetComponent<Fish>().juvenile || otherParent.GetComponent<Fish>().juvenile)
             {
-                return;
+                return false;
             }
         }
         else if(otherParent.tag == "Rana")
         {
             if(Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) > Mathf.Pow(20.5f, 2))
             {
-                return;
+                return false;
             }
         }
         
@@ -436,7 +450,9 @@ public class BaseAgent : MonoBehaviour
             {
                 Crossover(otherParent);
             }
+            return true;
         }
+        return false;
     }
 
     /*

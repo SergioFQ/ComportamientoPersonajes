@@ -124,7 +124,7 @@ public class LifeCycle : MonoBehaviour
             }
             else
             {
-                comparison = (timeInPhase >= dna[5]);
+                comparison = (timeInPhase >= dna[5]) && baseAgent.hunger > 0.3f;
             }
 
             if (comparison)

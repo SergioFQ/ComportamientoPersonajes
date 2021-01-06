@@ -31,7 +31,7 @@ public class MiniCameraCotroller : MonoBehaviour
                 infoAux += "Hunger: " + Mathf.Round(target.gameObject.GetComponent<BaseAgent>().hunger*100) + "%\n";
                 if (target.CompareTag("Rana"))
                 {
-                    infoAux += "Dryness: " + Mathf.Round(target.gameObject.GetComponent<Frog>().dryness*100) + "%\n";
+                    infoAux += "Oxygen: " + Mathf.Round(target.gameObject.GetComponent<Frog>().dryness*100) + "%\n";
                     infoAux += "Wetness: " + Mathf.Round(target.gameObject.GetComponent<Frog>().wetness*100) + "%\n";
                 }
             }
