@@ -43,60 +43,60 @@ public class PopulationInstantiator : MonoBehaviour
 
     // Huevos Pez
     [Header("Fish Attributes")]
-    /*[20]*/[Range(0.1f, 10)] public float maxFishVel = 10;
-    /*[21]*/[Range(0.1f, 10)] public float minFishVel = 0.1f;
-    /*[22]*/[Range(0.1f, 10)] public float maxFishAcceleration = 10;
-    /*[23]*/[Range(0.1f, 10)] public float minFishAcceleration = 0.1f;
+    /*[20]*/[Range(0.1f, 200)] public float maxFishVel = 10;
+    /*[21]*/[Range(0.1f, 200)] public float minFishVel = 0.1f;
+    /*[22]*/[Range(0.1f, 200)] public float maxFishAcceleration = 10;
+    /*[23]*/[Range(0.1f, 200)] public float minFishAcceleration = 0.1f;
     /*[24]*/[Range(0.05f, 0.2f)] public float maxFishPhys = 10;
     /*[25]*/[Range(0.05f, 0.2f)] public float minFishPhys = 0.1f;
-    /*[26]*/[Range(0.1f, 10)] public float maxFishOffspring = 10;
-    /*[27]*/[Range(0.1f, 10)] public float minFishOffspring = 0.1f;
-    /*[28]*/[Range(0.1f, 10)] public float maxFishEggLayingTime = 10;
-    /*[29]*/[Range(0.1f, 10)] public float minFishEggLayingTime = 0.1f;
-    /*[210]*/[Range(0.1f, 10)] public float maxFishGrowingTime = 10;
-    /*[211]*/[Range(0.1f, 10)] public float minFishGrowingTime = 0.1f;
-    /*[212]*/[Range(0.1f, 10)] public float maxFishHatchingTime = 10;
-    /*[213]*/[Range(0.1f, 10)] public float minFishHatchingTime = 0.1f;
-    /*[214]*/[Range(0.1f, 10)] public float maxFishNutritionalValue = 10;
-    /*[215]*/[Range(0.1f, 10)] public float minFishNutritionalValue = 0.1f;
-    /*[216]*/[Range(40f,200)] public float maxFishLifespan = 10;
-    /*[217]*/[Range(40f,200)] public float minFishLifespan = 0.1f;
-    /*[218]*/[Range(0.1f, 10)] public float maxFishPossibilityOfSuccess = 10;
-    /*[219]*/[Range(0.1f, 10)] public float minFishPossibilityOfSuccess = 0.1f;
+    /*[26]*/[Range(0.1f, 200)] public float maxFishOffspring = 10;
+    /*[27]*/[Range(0.1f, 200)] public float minFishOffspring = 0.1f;
+    /*[28]*/[Range(0.1f, 200)] public float maxFishEggLayingTime = 10;
+    /*[29]*/[Range(0.1f, 200)] public float minFishEggLayingTime = 0.1f;
+    /*[210]*/[Range(0.1f, 200)] public float maxFishGrowingTime = 10;
+    /*[211]*/[Range(0.1f, 200)] public float minFishGrowingTime = 0.1f;
+    /*[212]*/[Range(0.1f, 200)] public float maxFishHatchingTime = 10;
+    /*[213]*/[Range(0.1f, 200)] public float minFishHatchingTime = 0.1f;
+    /*[214]*/[Range(0.1f, 200)] public float maxFishNutritionalValue = 10;
+    /*[215]*/[Range(0.1f, 200)] public float minFishNutritionalValue = 0.1f;
+    /*[216]*/[Range(0.1f,200)] public float maxFishLifespan = 10;
+    /*[217]*/[Range(0.1f,200)] public float minFishLifespan = 0.1f;
+    /*[218]*/[Range(0.1f, 200)] public float maxFishPossibilityOfSuccess = 10;
+    /*[219]*/[Range(0.1f, 200)] public float minFishPossibilityOfSuccess = 0.1f;
     /*[220]*/[Range(0.1f, 1)]  public float minFishMutationRate = 0.01f;
     /*[221]*/[Range(0.1f, 1)] public float maxFishMutationRate = 1;
 
     //Huevos Rana
     [Header("Frog Attributes")]
-    /*[30]*/[Range(0.1f, 10)] public float maxFrogVel = 10;
-    /*[31]*/[Range(0.1f, 10)] public float minFrogVel = 0.1f;
-    /*[32]*/[Range(0.1f, 10)] public float maxFrogAcceleration = 10;
-    /*[33]*/[Range(0.1f, 10)] public float minFrogAcceleration = 0.1f;
+    /*[30]*/[Range(0.1f, 200)] public float maxFrogVel = 10;
+    /*[31]*/[Range(0.1f, 200)] public float minFrogVel = 0.1f;
+    /*[32]*/[Range(0.1f, 200)] public float maxFrogAcceleration = 10;
+    /*[33]*/[Range(0.1f, 200)] public float minFrogAcceleration = 0.1f;
     /*[34]*/[Range(0.05f, 0.2f)] public float maxFrogPhys = 10;
     /*[35]*/[Range(0.05f, 0.2f)] public float minFrogPhys = 0.1f;
-    /*[36]*/[Range(0.1f, 10)] public float maxFrogOffspring = 10;
-    /*[37]*/[Range(0.1f, 10)] public float minFrogOffspring = 0.1f;
-    /*[38]*/[Range(0.1f, 10)] public float maxFrogEggLayingTime = 10;
-    /*[39]*/[Range(0.1f, 10)] public float minFrogEggLayingTime = 0.1f;
-    /*[310]*/[Range(0.1f, 10)] public float maxFrogGrowingTime = 10;
-    /*[311]*/[Range(0.1f, 10)] public float minFrogGrowingTime = 0.1f;
-    /*[312]*/[Range(0.1f, 10)] public float maxFrogHatchingTime = 10;
-    /*[313]*/[Range(0.1f, 10)] public float minFrogHatchingTime = 0.1f;
-    /*[314]*/[Range(0.1f, 10)] public float maxFrogNutritionalValue = 10;
-    /*[315]*/[Range(0.1f, 10)] public float minFrogNutritionalValue = 0.1f;
-    /*[316]*/[Range(40f,200)] public float maxFrogLifespan = 10;
-    /*[317]*/[Range(40f,200)] public float minFrogLifespan = 0.1f;
-    /*[318]*/[Range(0.1f, 10)] public float maxFrogPossibilityOfSuccess = 10;
-    /*[319]*/[Range(0.1f, 10)] public float minFrogPossibilityOfSuccess = 0.1f;
+    /*[36]*/[Range(0.1f, 200)] public float maxFrogOffspring = 10;
+    /*[37]*/[Range(0.1f, 200)] public float minFrogOffspring = 0.1f;
+    /*[38]*/[Range(0.1f, 200)] public float maxFrogEggLayingTime = 10;
+    /*[39]*/[Range(0.1f, 200)] public float minFrogEggLayingTime = 0.1f;
+    /*[310]*/[Range(0.1f, 200)] public float maxFrogGrowingTime = 10;
+    /*[311]*/[Range(0.1f, 200)] public float minFrogGrowingTime = 0.1f;
+    /*[312]*/[Range(0.1f, 200)] public float maxFrogHatchingTime = 10;
+    /*[313]*/[Range(0.1f, 200)] public float minFrogHatchingTime = 0.1f;
+    /*[314]*/[Range(0.1f, 200)] public float maxFrogNutritionalValue = 10;
+    /*[315]*/[Range(0.1f, 200)] public float minFrogNutritionalValue = 0.1f;
+    /*[316]*/[Range(0.1f,200)] public float maxFrogLifespan = 10;
+    /*[317]*/[Range(0.1f,200)] public float minFrogLifespan = 0.1f;
+    /*[318]*/[Range(0.1f, 200)] public float maxFrogPossibilityOfSuccess = 10;
+    /*[319]*/[Range(0.1f, 200)] public float minFrogPossibilityOfSuccess = 0.1f;
     /*[320]*/[Range(0.1f, 1)] public float minFrogMutationRate = 0.01f;
     /*[321]*/[Range(0.1f, 1)] public float maxFrogMutationRate = 1;
 
     //Moscas
     [Header("Fly Attributes")]
-    /*[41]*/[Range(0.1f, 10)] public float maxFlyVel = 10;
-    /*[42]*/[Range(0.1f, 10)] public float minFlyVel = 0.1f;
-    /*[43]*/[Range(0.1f, 10)] public float maxFlyAcceleration = 10;
-    /*[44]*/[Range(0.1f, 10)] public float minFlyAcceleration = 0.1f;
+    /*[41]*/[Range(0.1f, 200)] public float maxFlyVel = 10;
+    /*[42]*/[Range(0.1f, 200)] public float minFlyVel = 0.1f;
+    /*[43]*/[Range(0.1f, 200)] public float maxFlyAcceleration = 10;
+    /*[44]*/[Range(0.1f, 200)] public float minFlyAcceleration = 0.1f;
     [Range(0.05f, 0.2f)] public float maxFlyPhys = 10;
     [Range(0.05f, 0.2f)] public float minFlyPhys = 0.1f;
     private float maxFlyOffspring = 0;
@@ -107,14 +107,16 @@ public class PopulationInstantiator : MonoBehaviour
     private float minFlyGrowingTime = 0;
     private float maxFlyHatchingTime = 0;
     private float minFlyHatchingTime = 0;
-    [Range(0.1f, 10)] public float maxFlyNutritionalValue = 10;
-    [Range(0.1f, 10)] public float minFlyNutritionalValue = 0.1f;
-    /*[45]*/[Range(40f,200)] public float maxFlyLifespan = 10;
-    /*[46]*/[Range(40f,200)] public float minFlyLifespan = 0.1f;
+    [Range(0.1f, 200)] public float maxFlyNutritionalValue = 10;
+    [Range(0.1f, 200)] public float minFlyNutritionalValue = 0.1f;
+    /*[45]*/[Range(0.1f,200)] public float maxFlyLifespan = 10;
+    /*[46]*/[Range(0.1f,200)] public float minFlyLifespan = 0.1f;
     private float maxFlyPossibilityOfSuccess = 0;
     private float minFlyPossibilityOfSuccess = 0;
     private float minFlyMutationRate = 0;
     private float maxFlyMutationRate = 0;
+
+    public LayerMask noRockLayer;
 
     #region Unity Functions
     /*
@@ -204,6 +206,7 @@ public class PopulationInstantiator : MonoBehaviour
         worstFlyDna.Add(minFlyPossibilityOfSuccess);
         worstFlyDna.Add(maxFlyMutationRate);
 
+        Vector3 randomPos;
         //Instanciador de huevos de pez
         List<float> fishRoeDna;
         for (int i = 0; i < numeroHuevosPez; i++)
@@ -220,7 +223,7 @@ public class PopulationInstantiator : MonoBehaviour
             fishRoeDna.Add(Random.Range(minFishLifespan, maxFishLifespan));
             fishRoeDna.Add(Random.Range(minFishPossibilityOfSuccess, maxFishPossibilityOfSuccess));
             fishRoeDna.Add(Random.Range(minFishMutationRate, maxFishMutationRate));
-            Vector3 randomPos = Random.insideUnitSphere*10;
+            randomPos = Random.insideUnitSphere*10;
             randomPos.z = 0;
             Roe roeFish = Instantiate(huevoPezPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
@@ -245,7 +248,7 @@ public class PopulationInstantiator : MonoBehaviour
             frogRoeDna.Add(Random.Range(minFrogPossibilityOfSuccess, maxFrogPossibilityOfSuccess));
             frogRoeDna.Add(Random.Range(minFrogMutationRate, maxFrogMutationRate));
 
-            Vector3 randomPos = Random.insideUnitSphere*10;
+            randomPos = Random.insideUnitSphere*10;
             randomPos.z = 0;
             Roe roeFrog = Instantiate(huevoRanaPrefab, transform.position+randomPos, Quaternion.identity).GetComponent<Roe>();
 
@@ -255,15 +258,22 @@ public class PopulationInstantiator : MonoBehaviour
 
         for (int i = 0; i < numeroPlantas; i++)
         {
-            Vector3 randomPos = Random.insideUnitSphere*18;
+            randomPos = Random.insideUnitSphere*18;
             randomPos.z = 0;
             Instantiate(plantaPrefab, transform.position+randomPos, Quaternion.identity);
         }
 
+        bool freeSpace;
         for (int i = 0; i < numeroRocas; i++)
         {
-            Vector3 randomPos = Random.insideUnitSphere*18;
-            randomPos.z = 0;
+            freeSpace = false;
+            randomPos = Vector3.zero;
+            while (!freeSpace)
+            {
+                randomPos = Random.insideUnitSphere*18;
+                randomPos.z = 0;
+                if (!Physics.CheckSphere(randomPos, 1.04f, noRockLayer)) freeSpace = true;
+            }
             Instantiate(rocaPrefab, transform.position+randomPos, Quaternion.identity);
         }
         
@@ -305,7 +315,7 @@ public class PopulationInstantiator : MonoBehaviour
         flyDna.Add(Random.Range(minFlyMutationRate, maxFlyMutationRate));
         Vector2 randomPos = new Vector2(((Random.value<0.5f)?(-1):(1))*Random.Range(22,40),Random.Range(-22,20));
         BaseAgent fly = Instantiate(moscaPrefab, randomPos, Quaternion.identity).GetComponent<BaseAgent>();
-        fly.Init(flyDna, perfectFlyDna, worstFlyDna);
+        fly.Init(flyDna, perfectFlyDna, worstFlyDna,1);
     }
 
     /*

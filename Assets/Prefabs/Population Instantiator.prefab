@@ -97,7 +97,7 @@ MonoBehaviour:
   minFrogHatchingTime: 2
   maxFrogNutritionalValue: 10
   minFrogNutritionalValue: 1
-  maxFrogLifespan: 200
+  maxFrogLifespan: 74.5
   minFrogLifespan: 40
   maxFrogPossibilityOfSuccess: 10
   minFrogPossibilityOfSuccess: 0.1
@@ -113,3 +113,6 @@ MonoBehaviour:
   minFlyNutritionalValue: 0.1
   maxFlyLifespan: 55.5
   minFlyLifespan: 40
+  noRockLayer:
+    serializedVersion: 2
+    m_Bits: 257

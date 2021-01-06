@@ -98,7 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  timeInPhase: 0
+  miniCameraController: {fileID: 0}
   canBeEaten: 0
+  isTarget: 0
+  timeOfLife: 0
   dna: []
   perfectDna: []
   worstDna: []
@@ -113,7 +117,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 1.83
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9047162650175994633
 MonoBehaviour:

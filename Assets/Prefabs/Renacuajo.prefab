@@ -57,20 +57,22 @@ MonoBehaviour:
   - 
   - 
   - 
-  canBeTarget: 1
   _agent: {fileID: 0}
   isHungry: 0
   hunger: 0
-  currentState: 0
+  canReproduce: 0
+  hijoPrefab: {fileID: 0}
   dna: []
   perfectDna: []
   worstDna: []
+  noHunger: 0
+  currentState: 0
+  radioRenacuajosVecinos: 1
+  isLeader: 0
+  leader: {fileID: 0}
   renLayer:
     serializedVersion: 2
     m_Bits: 256
-  isLeader: 0
-  leader: {fileID: 0}
-  radioRenacuajosVecinos: 1
 --- !u!212 &1490385472755137515
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -137,7 +139,7 @@ NavMeshAgent:
   m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.69
   m_BaseOffset: 0.345
@@ -199,7 +201,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1490385472755137514, guid: 3ba7a8e48682a3c40a69186e4fc18b0e, type: 3}
+  timeInPhase: 0
+  miniCameraController: {fileID: 0}
   canBeEaten: 0
+  isTarget: 0
+  timeOfLife: 0
   dna: []
   perfectDna: []
   worstDna: []

@@ -38,6 +38,9 @@ public class BaseAgent : MonoBehaviour
 
     private bool initialized = false;
 
+    public bool noHunger = false;
+    private float _baseSpeed;
+
     protected enum state
     {
         None,
@@ -87,6 +90,7 @@ public class BaseAgent : MonoBehaviour
         if (dna.Count > 0)
         {
             _agent.speed = dna[0];
+            _baseSpeed = dna[0];
             _agent.acceleration = dna[1];
         }
     }
@@ -98,11 +102,12 @@ public class BaseAgent : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         Vision();
-        hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
+        if (!noHunger) hunger -= ((0.25f-dna[2])*0.5f)*Time.fixedDeltaTime;
         waitingTime += Time.deltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
+
         if (hunger < 0) DeadAction();
-        if (currentState.Equals(state.Wander) && ((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2))
+        if (/*currentState.Equals(state.Wander) && */((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2))
         {
             if (gameObject.tag.Equals("Pez") && gameObject.GetComponent<Fish>().juvenile)
             {
@@ -111,10 +116,19 @@ public class BaseAgent : MonoBehaviour
             else
             {
                 //Debug.DrawRay(transform.position, transform.forward);
-                canReproduce = true;
+                canReproduce = hunger > 0.2;
             }
         }
         else { canReproduce = false; }
+
+        if (isHungry || canReproduce) 
+        {
+            _agent.speed = _baseSpeed*1.5f;
+        }
+        else
+        {
+            _agent.speed = _baseSpeed;
+        }
     }
 
     /*
@@ -155,6 +169,13 @@ public class BaseAgent : MonoBehaviour
                 else return;
             }
         }
+        BaseAgent otherAgent = collision.gameObject.GetComponent<BaseAgent>();
+        if (gameObject.tag == collision.tag && canReproduce && otherAgent.canReproduce)
+        {
+            canReproduce = false;
+            otherAgent.canReproduce = false;
+            Reproduction(otherAgent);
+        }
     }
     #endregion Unity Functions
 
@@ -162,13 +183,14 @@ public class BaseAgent : MonoBehaviour
     /*
      * Init: inicializa el ADN del agente y recibe también las listas del mejor y peor ADN (valores máximos y mínimos respectivamente).
      */
-    public void Init(List<float> d, List<float> perfect, List<float> worst)
+    public void Init(List<float> d, List<float> perfect, List<float> worst, float hunger)
     {
 
         dna = d;
         worstDna = worst;
         perfectDna = perfect;
         initialized = true;
+        this.hunger = hunger;
     }
 
     /*
@@ -211,7 +233,7 @@ public class BaseAgent : MonoBehaviour
             Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
             RaycastHit hit;
             Physics.Raycast(transform.position, v, out hit, maxPerceptionL);
-            //Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
+            Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
             hits.Add(hit);
         }
 
@@ -234,9 +256,10 @@ public class BaseAgent : MonoBehaviour
         BaseAgent otherAgent = collider.gameObject.GetComponent<BaseAgent>();
         if (gameObject.tag == collider.tag && canReproduce && otherAgent.canReproduce)
         {
-            canReproduce = false;
-            otherAgent.canReproduce = false;
-            Reproduction(otherAgent);
+            _pursuitTarget = otherAgent._agent;
+            ChangeState(state.Pursuit);
+            //otherAgent._pursuitTarget = _agent;
+            //otherAgent.ChangeState(state.Pursuit);
         }
         if (gameObject.tag == collider.tag)
         {
@@ -253,13 +276,13 @@ public class BaseAgent : MonoBehaviour
         }
         else
         {
-            if (!collider.gameObject.CompareTag(gameObject.tag) && isHungry)
+            if (!collider.gameObject.CompareTag(gameObject.tag) && isHungry && (_pursuitTarget != null && !CompareTag(_pursuitTarget.tag)))
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
                     if (!string.IsNullOrEmpty(foodTag[i]) && collider.CompareTag(foodTag[i]))
                     {
-                        if (collider.CompareTag("Plantas"))
+                        if (collider.CompareTag(tagsAgents.Plantas.ToString()))
                         {
                             if (collider.gameObject.GetComponent<LifeCycle>().canBeEaten)
                             {
@@ -320,8 +343,9 @@ public class BaseAgent : MonoBehaviour
             if (_pursuitPlant != null) {_agent.SetDestination(_pursuitPlant.position);Debug.DrawRay(transform.position, _pursuitPlant.position-transform.position, Color.green);}
             return;
         }
-        Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
-        _agent.SetDestination(targetPos);Debug.DrawRay(transform.position, _pursuitTarget.gameObject.transform.position-transform.position, Color.red);
+        //Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
+        _agent.SetDestination(_pursuitTarget.gameObject.transform.position);Debug.DrawRay(transform.position, _pursuitTarget.gameObject.transform.position-transform.position, Color.red);
+        //_agent.SetDestination(targetPos);Debug.DrawRay(transform.position, targetPos-transform.position, Color.magenta);
     }
 
     /*

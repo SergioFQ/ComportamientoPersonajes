@@ -24,14 +24,15 @@ public class MiniCameraCotroller : MonoBehaviour
         {
             infoAux = "";
             infoAux += "AGENT INFO:" + "\n";
-            infoAux += "Time alive: " + System.Math.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLife, 2) + "sec \n";
+            infoAux += "Time alive: " + Mathf.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLife) + "s \n";
+            infoAux += "Time left: " + (Mathf.Round(target.gameObject.GetComponent<LifeCycle>().dna[8]) - Mathf.Round(target.gameObject.GetComponent<LifeCycle>().timeOfLife)) + "s \n";
             if (!target.CompareTag("HuevosRana") && !target.CompareTag("HuevosPez"))
             {
-                infoAux += "Hunger: " + System.Math.Round(target.gameObject.GetComponent<BaseAgent>().hunger, 2) + "\n";
+                infoAux += "Hunger: " + Mathf.Round(target.gameObject.GetComponent<BaseAgent>().hunger*100) + "%\n";
                 if (target.CompareTag("Rana"))
                 {
-                    infoAux += "Dryness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().dryness, 2) + "\n";
-                    infoAux += "Wetness: " + System.Math.Round(target.gameObject.GetComponent<Frog>().wetness, 2) + "\n";
+                    infoAux += "Dryness: " + Mathf.Round(target.gameObject.GetComponent<Frog>().dryness*100) + "%\n";
+                    infoAux += "Wetness: " + Mathf.Round(target.gameObject.GetComponent<Frog>().wetness*100) + "%\n";
                 }
             }
             info.text = infoAux;

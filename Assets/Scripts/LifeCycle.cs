@@ -80,17 +80,17 @@ public class LifeCycle : MonoBehaviour
     {
         if (agent != null)
         {
-            GameObject obj = Instantiate(agent, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
+            GameObject obj = Instantiate(agent, new Vector2(this.transform.position.x, this.transform.position.y), this.transform.rotation);
             BaseAgent objAgent = obj.GetComponent<BaseAgent>();
             if (baseAgent!=null)
             {
-                objAgent.Init(dna, perfectDna, worstDna);
+                objAgent.Init(dna, perfectDna, worstDna, baseAgent.hunger);
                 if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 baseAgent.DeadAction();
             }
             else
             {
-                objAgent.Init(dna, perfectDna, worstDna);
+                objAgent.Init(dna, perfectDna, worstDna, 1);
                 if (isTarget) obj.GetComponent<Clickeable>().Evolve();
                 Destroy(gameObject);
             }
@@ -156,7 +156,7 @@ public class LifeCycle : MonoBehaviour
      */
     IEnumerator GrowPlant(float dur)
     {
-        yield return new WaitForSeconds(dur);
+        yield return new WaitForSeconds(Random.Range(dur-dur/2, dur+dur/2));
         gameObject.GetComponent<SpriteRenderer>().sprite = plantComponent.sprites[1];
         canBeEaten = true;
         StopCoroutine(GrowPlant(dur));

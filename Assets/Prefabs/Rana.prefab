@@ -66,10 +66,12 @@ MonoBehaviour:
   dna: []
   perfectDna: []
   worstDna: []
+  noHunger: 0
   currentState: 0
-  wetness: 0
   isDry: 0
+  wetness: 0
   dryness: 0
+  ranaPrefab: {fileID: 0}
 --- !u!212 &1490385472755137515
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ NavMeshAgent:
   m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.69
   m_BaseOffset: 0.345
@@ -198,7 +200,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  timeInPhase: 0
+  miniCameraController: {fileID: 0}
   canBeEaten: 0
+  isTarget: 0
+  timeOfLife: 0
   dna: []
   perfectDna: []
   worstDna: []

@@ -60,9 +60,13 @@ MonoBehaviour:
   _agent: {fileID: 0}
   isHungry: 0
   hunger: 0
-  currentState: 0
-  ciclo: {fileID: 0}
+  canReproduce: 0
+  hijoPrefab: {fileID: 0}
   dna: []
+  perfectDna: []
+  worstDna: []
+  noHunger: 0
+  currentState: 0
   juvenile: 1
 --- !u!212 &1490385472755137515
 SpriteRenderer:
@@ -130,7 +134,7 @@ NavMeshAgent:
   m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.69
   m_BaseOffset: 0.345
@@ -192,7 +196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1490385472755137514, guid: 946f2d8975143b9429808a1f3cabfa65, type: 3}
+  timeInPhase: 0
+  miniCameraController: {fileID: 0}
   canBeEaten: 0
+  isTarget: 0
+  timeOfLife: 0
   dna: []
   perfectDna: []
   worstDna: []
