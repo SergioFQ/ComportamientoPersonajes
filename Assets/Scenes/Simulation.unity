@@ -1312,37 +1312,47 @@ PrefabInstance:
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: numeroPlantas
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishLifespan
-      value: 150
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogLifespan
-      value: 150
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishLifespan
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogLifespan
-      value: 80
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: numeroHuevosPez
-      value: 25
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFishOffspring
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFrogOffspring
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogOffspring
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1352,17 +1362,17 @@ PrefabInstance:
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishGrowingTime
-      value: 80
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogGrowingTime
-      value: 80
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishGrowingTime
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1371,13 +1381,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
+      propertyPath: noRockLayer.m_Bits
+      value: 75009
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
       propertyPath: maxFishHatchingTime
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogHatchingTime
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1391,28 +1406,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
+      propertyPath: maxFrogEggLayingTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
       propertyPath: maxFlyNutritionalValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFlyNutritionalValue
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishNutritionalValue
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogNutritionalValue
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishNutritionalValue
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogNutritionalValue
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393263, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -2855,7 +2880,7 @@ PrefabInstance:
     - target: {fileID: 1254872517695204555, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1254872517695204555, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -3460,7 +3485,7 @@ PrefabInstance:
     - target: {fileID: 3418523792202201889, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3418523792202201889, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -4165,7 +4190,7 @@ PrefabInstance:
     - target: {fileID: 7460258091315073045, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7460258091315073045, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -4405,7 +4430,7 @@ PrefabInstance:
     - target: {fileID: 9076783778824301533, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 9076783778824301533, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}

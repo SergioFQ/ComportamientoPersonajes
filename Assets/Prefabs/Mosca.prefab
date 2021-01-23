@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 506541721419789670}
   - component: {fileID: 8346247164955128398}
   - component: {fileID: 703947000078268017}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Mosca
   m_TagString: Mosca
   m_Icon: {fileID: 0}
@@ -203,6 +203,12 @@ MonoBehaviour:
   worstDna: []
   noHunger: 1
   noVision: 1
+  sameLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  otherLayer:
+    serializedVersion: 2
+    m_Bits: 0
   currentState: 0
 --- !u!1 &1490385472854208175
 GameObject:
@@ -214,7 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1490385472854208160}
   - component: {fileID: 1490385472854208161}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

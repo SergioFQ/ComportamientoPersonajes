@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1787063095835217116}
   - component: {fileID: 5597337117551116474}
   - component: {fileID: 9146096484078164894}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: HuevosRana
   m_TagString: HuevosRana
   m_Icon: {fileID: 0}
@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dna: []
+  worstDna: []
+  perfectDna: []
   type: Frog
 --- !u!212 &1490385472755137515
 SpriteRenderer:
@@ -180,7 +182,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1490385472755137514, guid: 5a43a5b16100458499a4f2698caf7f55, type: 3}
+  timeInPhase: 0
+  miniCameraController: {fileID: 0}
   canBeEaten: 0
+  isTarget: 0
+  timeOfLife: 0
   dna: []
   perfectDna: []
   worstDna: []
@@ -194,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1490385472854208160}
   - component: {fileID: 1490385472854208161}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

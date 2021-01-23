@@ -57,7 +57,7 @@ public class Frog : BaseAgent
         }
         else
         {
-            wetness -= 0.025f * Time.fixedDeltaTime;
+            wetness -= 0.05f * Time.fixedDeltaTime;
             if (wetness < 0.6)
             {
                 ChangeState(state.FrogIn);

@@ -66,6 +66,13 @@ MonoBehaviour:
   perfectDna: []
   worstDna: []
   noHunger: 0
+  noVision: 0
+  sameLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  otherLayer:
+    serializedVersion: 2
+    m_Bits: 71680
   currentState: 0
   radioRenacuajosVecinos: 1
   isLeader: 0

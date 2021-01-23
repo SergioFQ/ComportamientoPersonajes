@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8854738317247998743}
   - component: {fileID: 9061922634279357019}
   - component: {fileID: 7354296136693996294}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Rana
   m_TagString: Rana
   m_Icon: {fileID: 0}
@@ -67,6 +67,13 @@ MonoBehaviour:
   perfectDna: []
   worstDna: []
   noHunger: 0
+  noVision: 0
+  sameLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  otherLayer:
+    serializedVersion: 2
+    m_Bits: 198656
   currentState: 0
   isDry: 0
   wetness: 0
@@ -218,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1490385472854208160}
   - component: {fileID: 1490385472854208161}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

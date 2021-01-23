@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8854738317247998743}
   - component: {fileID: 311100943148868837}
   - component: {fileID: 3052247837734622432}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pez
   m_TagString: Pez
   m_Icon: {fileID: 0}
@@ -67,6 +67,13 @@ MonoBehaviour:
   perfectDna: []
   worstDna: []
   noHunger: 0
+  noVision: 0
+  sameLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  otherLayer:
+    serializedVersion: 2
+    m_Bits: 106752
   currentState: 0
   juvenile: 0
 --- !u!212 &1490385472755137515
@@ -215,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1490385472854208160}
   - component: {fileID: 1490385472854208161}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

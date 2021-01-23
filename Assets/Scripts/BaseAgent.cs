@@ -42,6 +42,9 @@ public class BaseAgent : MonoBehaviour
     public bool noVision = false;
     private float _baseSpeed;
 
+    public LayerMask sameLayer;
+    public LayerMask otherLayer;
+
     protected enum state
     {
         None,
@@ -118,14 +121,14 @@ public class BaseAgent : MonoBehaviour
             else
             {
                 //Debug.DrawRay(transform.position, transform.forward);
-                canReproduce = hunger > 0.6;
+                canReproduce = hunger > 0.3;
             }
         }
         else { canReproduce = false; }
 
         if (isHungry || canReproduce) 
         {
-            _agent.speed = _baseSpeed*2;
+            _agent.speed = _baseSpeed*1.25f;
         }
         else
         {
@@ -220,8 +223,9 @@ public class BaseAgent : MonoBehaviour
         {
             case "Pez":
                 predatorTag = tagsAgents.Rana.ToString();
-                foodTag[0] = tagsAgents.HuevosRana.ToString();
-                foodTag[1] = tagsAgents.Renacuajo.ToString();
+                //foodTag[0] = tagsAgents.HuevosRana.ToString();
+                foodTag[0] = tagsAgents.Renacuajo.ToString();
+                foodTag[1] = tagsAgents.Plantas.ToString();
                 break;
             case "Mosca":
                 predatorTag = null; //tiene depredador pero no huirá de él
@@ -252,8 +256,11 @@ public class BaseAgent : MonoBehaviour
         for (int i = -maxPerceptionA; i < maxPerceptionA; i += interval)
         {
             v = Quaternion.Euler(0, 0, i) * transform.forward;
-            Physics.Raycast(transform.position, v, out hit, maxPerceptionL);
+            Physics.Raycast(transform.position, v, out hit, maxPerceptionL, sameLayer);
             Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
+            hits.Add(hit);
+            
+            Physics.Raycast(transform.position, v, out hit, maxPerceptionL, otherLayer);
             hits.Add(hit);
         }
 
@@ -499,7 +506,7 @@ public class BaseAgent : MonoBehaviour
         float tanto = 0;
         for (int i = 0; i < perfectDna.Count - 1; i++)
         {
-            tanto += (float)((dna[i] - worstDna[i]) / (perfectDna[i] - worstDna[i])) * 100;
+            tanto += (float)((dna[i] - worstDna[i]) / Mathf.Max((perfectDna[i] - worstDna[i]), 0.01f)) * 100;
         }
         score = (float)tanto / (dna.Count-1);
 
