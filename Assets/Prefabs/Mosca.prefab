@@ -202,6 +202,7 @@ MonoBehaviour:
   perfectDna: []
   worstDna: []
   noHunger: 1
+  noVision: 1
   currentState: 0
 --- !u!1 &1490385472854208175
 GameObject:

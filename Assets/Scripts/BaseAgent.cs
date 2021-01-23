@@ -39,6 +39,7 @@ public class BaseAgent : MonoBehaviour
     private bool initialized = false;
 
     public bool noHunger = false;
+    public bool noVision = false;
     private float _baseSpeed;
 
     protected enum state
@@ -101,7 +102,8 @@ public class BaseAgent : MonoBehaviour
      */
     protected virtual void FixedUpdate()
     {
-        Vision();
+        ChangeState(state.Wander);
+        if (!noVision) Vision();
         if (!noHunger) hunger -= ((0.25f-dna[2])*0.25f)*Time.fixedDeltaTime;
         waitingTime += Time.deltaTime;
         if (hunger < 0.6 && !isHungry) isHungry = true;
@@ -152,9 +154,11 @@ public class BaseAgent : MonoBehaviour
                         }
                         if (collision.gameObject.CompareTag("Plantas"))
                         {
-                            EatAction(1);
                             if (collision.gameObject.GetComponent<LifeCycle>().canBeEaten)
+                            {
                                 collision.gameObject.GetComponent<LifeCycle>().EatPlant();
+                                EatAction(1);
+                            }
                         }
                         else if (collision.gameObject.CompareTag("HuevosRana") || collision.gameObject.CompareTag("HuevosPez"))
                         {
@@ -242,16 +246,17 @@ public class BaseAgent : MonoBehaviour
     protected void Vision()
     {
         hits.Clear();
-        for (int i = -maxPerceptionA; i < maxPerceptionA; i += 4)
+        Vector2 v;
+        RaycastHit hit;
+        int interval = maxPerceptionA*2/15;
+        for (int i = -maxPerceptionA; i < maxPerceptionA; i += interval)
         {
-            Vector2 v = Quaternion.Euler(0, 0, i) * transform.forward;
-            RaycastHit hit;
+            v = Quaternion.Euler(0, 0, i) * transform.forward;
             Physics.Raycast(transform.position, v, out hit, maxPerceptionL);
             Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
             hits.Add(hit);
         }
 
-        ChangeState(state.Wander);
         foreach (RaycastHit h in hits)
         {
             if (h.collider != null)
@@ -290,7 +295,7 @@ public class BaseAgent : MonoBehaviour
         }
         else
         {
-            if (!collider.gameObject.CompareTag(gameObject.tag) && isHungry && (_pursuitTarget != null && !CompareTag(_pursuitTarget.tag)))
+            if (!collider.gameObject.CompareTag(gameObject.tag) && isHungry && (_pursuitTarget == null || _pursuitPlant == null))
             {
                 for (int i = 0; i < foodTag.Length; i++)
                 {
@@ -329,7 +334,7 @@ public class BaseAgent : MonoBehaviour
     protected virtual void ChangeState(state nextState) {
 
         if ((currentState == state.Evade && nextState == state.Wander && _evadeTarget != null) || 
-        (currentState == state.Pursuit && nextState == state.Wander && _pursuitTarget != null && !(!canReproduce && _pursuitTarget.tag == tag)) || 
+        (currentState == state.Pursuit && nextState == state.Wander && (_pursuitTarget != null) && !(!canReproduce && _pursuitTarget.tag == tag)) || 
         (currentState == state.Evade && nextState == state.Pursuit) || 
         currentState == nextState) return;
 
@@ -354,7 +359,17 @@ public class BaseAgent : MonoBehaviour
         if (_pursuitTarget == null || _pursuitTarget.gameObject == null || Vector3.Distance(transform.position, _pursuitTarget.transform.position) > maxPerceptionL) 
         {
             _pursuitTarget = null;
-            if (_pursuitPlant != null) {_agent.SetDestination(_pursuitPlant.position);Debug.DrawRay(transform.position, _pursuitPlant.position-transform.position, Color.green);}
+            if (_pursuitPlant != null) {
+                if (!_pursuitPlant.GetComponent<LifeCycle>().canBeEaten)
+                {
+                    _pursuitPlant = null;
+                }
+                else
+                {
+                    _agent.SetDestination(_pursuitPlant.position);
+                    Debug.DrawRay(transform.position, _pursuitPlant.position-transform.position, Color.green);
+                }
+            }
             return;
         }
         //Vector3 targetPos = _pursuitTarget.gameObject.transform.position + _pursuitTarget.gameObject.transform.forward * _pursuitTarget.speed;
