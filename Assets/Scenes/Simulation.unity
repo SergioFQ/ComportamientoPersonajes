@@ -1306,18 +1306,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
+      propertyPath: maxFlyPhys
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFrogVel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFishVel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFrogVel
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFishPhys
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFrogPhys
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFishPhys
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFrogPhys
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
       propertyPath: numeroMoscas
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: numeroPlantas
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishLifespan
-      value: 85
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1327,22 +1367,22 @@ PrefabInstance:
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishLifespan
-      value: 70
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogLifespan
-      value: 85
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: numeroHuevosPez
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishOffspring
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1352,17 +1392,17 @@ PrefabInstance:
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogOffspring
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: numeroHuevosRana
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFishGrowingTime
-      value: 25
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1372,7 +1412,7 @@ PrefabInstance:
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishGrowingTime
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -1386,28 +1426,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
+      propertyPath: maxFishAcceleration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
       propertyPath: maxFishHatchingTime
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogHatchingTime
-      value: 20
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFishAcceleration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFishHatchingTime
-      value: 15
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFrogAcceleration
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: minFrogHatchingTime
-      value: 15
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: maxFishEggLayingTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
       propertyPath: maxFrogEggLayingTime
-      value: 5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFishEggLayingTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
+        type: 3}
+      propertyPath: minFrogEggLayingTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7789686764191393262, guid: 66174d265eb32bf498144b4adf21acda,
         type: 3}
@@ -2685,12 +2755,12 @@ PrefabInstance:
     - target: {fileID: 649394858184876805, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 649394858184876805, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 649394858184876805, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -2925,12 +2995,12 @@ PrefabInstance:
     - target: {fileID: 1448376930594634794, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 3.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1448376930594634794, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1449652816261157035, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -2940,12 +3010,12 @@ PrefabInstance:
     - target: {fileID: 1449652816261157035, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 3.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1449652816261157035, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1460115812139908455, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -3000,12 +3070,12 @@ PrefabInstance:
     - target: {fileID: 1709259256747113405, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 3.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1709259256747113405, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1765227436604200057, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -3085,12 +3155,12 @@ PrefabInstance:
     - target: {fileID: 2083492591634326652, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 3.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2083492591634326652, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2204023868219646534, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -3210,12 +3280,12 @@ PrefabInstance:
     - target: {fileID: 2944220594819649663, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2944220594819649663, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2944220594819649663, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -3920,12 +3990,12 @@ PrefabInstance:
     - target: {fileID: 6127809570586849941, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6127809570586849941, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6127809570586849941, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
@@ -4110,12 +4180,12 @@ PrefabInstance:
     - target: {fileID: 7159491155977009924, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MaxValue
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7159491155977009924, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}
       propertyPath: m_MinValue
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7159491155977009924, guid: e3f2b7a7f9f7bbe43b39f8231e106038,
         type: 3}

@@ -30,6 +30,8 @@ public class BaseAgent : MonoBehaviour
     [SerializeField]  GameObject hijoPrefab;
     private Time repTime;
     private float waitingTime;
+    private float reproductionLimit = 1;
+    private float timesReproduced = 0;
 
     public List<float> dna;
     public List<float> perfectDna;
@@ -85,6 +87,8 @@ public class BaseAgent : MonoBehaviour
      */
     protected virtual void Start()
     {
+        /*if (tag == "Pez")
+            reproductionLimit = Random.Range(0,3);*/
         hits = new List<RaycastHit>();
         maxPerceptionA = 60;
         maxPerceptionL = 10;
@@ -112,7 +116,7 @@ public class BaseAgent : MonoBehaviour
         if (hunger < 0.6 && !isHungry) isHungry = true;
 
         if (hunger < 0) DeadAction();
-        if (((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2) && Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2))
+        if ((timesReproduced < reproductionLimit) && (((gameObject.tag.Equals("Pez") || gameObject.tag.Equals("Rana")) && waitingTime > dna[4]*2) && Mathf.Pow(transform.position.x, 2) + Mathf.Pow(transform.position.y, 2) < Mathf.Pow(20.5f, 2)))
         {
             if (gameObject.tag.Equals("Pez") && gameObject.GetComponent<Fish>().juvenile)
             {
@@ -239,7 +243,7 @@ public class BaseAgent : MonoBehaviour
                 predatorTag = null;
                 foodTag[0] = tagsAgents.Mosca.ToString();
                 foodTag[1] = tagsAgents.Pez.ToString();
-                foodTag[2] = tagsAgents.Plantas.ToString();
+                //foodTag[2] = tagsAgents.Plantas.ToString();
                 break;
         }
     }
@@ -256,7 +260,7 @@ public class BaseAgent : MonoBehaviour
         for (int i = -maxPerceptionA; i < maxPerceptionA; i += interval)
         {
             v = Quaternion.Euler(0, 0, i) * transform.forward;
-            Physics.Raycast(transform.position, v, out hit, maxPerceptionL, sameLayer);
+            Physics.Raycast(transform.position, v*2, out hit, maxPerceptionL, sameLayer);
             Debug.DrawRay(transform.position, v * maxPerceptionL, hit.collider!=null?Color.red:Color.green);
             hits.Add(hit);
             
@@ -466,12 +470,13 @@ public class BaseAgent : MonoBehaviour
         // Las posibilidades de reproduccion son mas altas conforme mayor sea el fitness de ambos
         if (Random.Range(0, 100) < av)
         {
-            float offspringNumber = (dna[3] + otherParent.dna[3]) / 2;
+            float offspringNumber = Random.Range(1, (dna[3] + otherParent.dna[3]) / 2);
             //Debug.Log(offspringNumber);
             for (int i = 0; i < offspringNumber; i++)
             {
                 Crossover(otherParent);
             }
+            timesReproduced++;
             return true;
         }
         return false;

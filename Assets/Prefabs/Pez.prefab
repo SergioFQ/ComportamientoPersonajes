@@ -73,7 +73,7 @@ MonoBehaviour:
     m_Bits: 4096
   otherLayer:
     serializedVersion: 2
-    m_Bits: 106752
+    m_Bits: 73984
   currentState: 0
   juvenile: 0
 --- !u!212 &1490385472755137515

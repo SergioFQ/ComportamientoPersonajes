@@ -47,8 +47,8 @@ public class PopulationInstantiator : MonoBehaviour
     /*[21]*/[Range(0.1f, 200)] public float minFishVel = 0.1f;
     /*[22]*/[Range(0.1f, 200)] public float maxFishAcceleration = 10;
     /*[23]*/[Range(0.1f, 200)] public float minFishAcceleration = 0.1f;
-    /*[24]*/[Range(0.05f, 0.2f)] public float maxFishPhys = 10;
-    /*[25]*/[Range(0.05f, 0.2f)] public float minFishPhys = 0.1f;
+    /*[24]*/[Range(0.05f, 200)] public float maxFishPhys = 10;
+    /*[25]*/[Range(0.05f, 200)] public float minFishPhys = 0.1f;
     /*[26]*/[Range(0.1f, 200)] public float maxFishOffspring = 10;
     /*[27]*/[Range(0.1f, 200)] public float minFishOffspring = 0.1f;
     /*[28]*/[Range(0.1f, 200)] public float maxFishEggLayingTime = 10;
@@ -72,8 +72,8 @@ public class PopulationInstantiator : MonoBehaviour
     /*[31]*/[Range(0.1f, 200)] public float minFrogVel = 0.1f;
     /*[32]*/[Range(0.1f, 200)] public float maxFrogAcceleration = 10;
     /*[33]*/[Range(0.1f, 200)] public float minFrogAcceleration = 0.1f;
-    /*[34]*/[Range(0.05f, 0.2f)] public float maxFrogPhys = 10;
-    /*[35]*/[Range(0.05f, 0.2f)] public float minFrogPhys = 0.1f;
+    /*[34]*/[Range(0.05f, 200)] public float maxFrogPhys = 10;
+    /*[35]*/[Range(0.05f, 200)] public float minFrogPhys = 0.1f;
     /*[36]*/[Range(0.1f, 200)] public float maxFrogOffspring = 10;
     /*[37]*/[Range(0.1f, 200)] public float minFrogOffspring = 0.1f;
     /*[38]*/[Range(0.1f, 200)] public float maxFrogEggLayingTime = 10;
