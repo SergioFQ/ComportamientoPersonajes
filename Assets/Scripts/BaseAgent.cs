@@ -531,7 +531,7 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.Wander))
         {
             WanderAction();
-            yield return 0;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -544,7 +544,7 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.Pursuit))
         {
             PursuitAction();
-            yield return 0;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -557,7 +557,7 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.Evade))
         {
             EvadeAction();
-            yield return 0;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -570,7 +570,7 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.FrogIn))
         {
             FrogInAction();
-            yield return 0;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -584,7 +584,7 @@ public class BaseAgent : MonoBehaviour
         while (currentState.Equals(state.FrogOut))
         {
            FrogOutAction();
-            yield return 0;
+            yield return new WaitForSeconds(0.1f);
         }
     }
     #endregion Coroutines
